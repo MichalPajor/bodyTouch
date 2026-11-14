@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "comment": "Built-in zone list (spec 4.2). Ids: dot-separated hierarchy, side encoded in the root segment (-l / -r). 'drawable': false = zone never drawn as a target (body parts not suitable for a party game), but it still owns triangles so every pin has a zone. Hard and Hardcore levels are added in stage 8.",
+  "zones": [
+    { "id": "head", "level": "Easy", "parentId": null, "namePl": "Głowa", "side": "Center" },
+    { "id": "neck", "level": "Easy", "parentId": null, "namePl": "Szyja", "side": "Center" },
+    { "id": "chest", "level": "Easy", "parentId": null, "namePl": "Klatka piersiowa", "side": "Center" },
+    { "id": "belly", "level": "Easy", "parentId": null, "namePl": "Brzuch", "side": "Center" },
+    { "id": "upper-back", "level": "Easy", "parentId": null, "namePl": "Górna część pleców", "side": "Center" },
+    { "id": "lower-back", "level": "Easy", "parentId": null, "namePl": "Dolna część pleców", "side": "Center" },
+    { "id": "pelvis", "level": "Easy", "parentId": null, "namePl": "Miednica", "side": "Center", "drawable": false },
+    { "id": "arm-l", "level": "Easy", "parentId": null, "namePl": "Lewa ręka", "side": "Left" },
+    { "id": "arm-r", "level": "Easy", "parentId": null, "namePl": "Prawa ręka", "side": "Right" },
+    { "id": "leg-l", "level": "Easy", "parentId": null, "namePl": "Lewa noga", "side": "Left" },
+    { "id": "leg-r", "level": "Easy", "parentId": null, "namePl": "Prawa noga", "side": "Right" },
+
+    { "id": "head.face", "level": "Medium", "parentId": "head", "namePl": "Twarz", "side": "Center" },
+    { "id": "head.scalp", "level": "Medium", "parentId": "head", "namePl": "Czubek i tył głowy", "side": "Center" },
+    { "id": "head.ear-l", "level": "Medium", "parentId": "head", "namePl": "Lewe ucho", "side": "Left" },
+    { "id": "head.ear-r", "level": "Medium", "parentId": "head", "namePl": "Prawe ucho", "side": "Right" },
+
+    { "id": "neck.front", "level": "Medium", "parentId": "neck", "namePl": "Przód szyi", "side": "Center" },
+    { "id": "neck.back", "level": "Medium", "parentId": "neck", "namePl": "Kark", "side": "Center" },
+
+    { "id": "chest.l", "level": "Medium", "parentId": "chest", "namePl": "Lewa strona klatki piersiowej", "side": "Left" },
+    { "id": "chest.r", "level": "Medium", "parentId": "chest", "namePl": "Prawa strona klatki piersiowej", "side": "Right" },
+
+    { "id": "belly.center", "level": "Medium", "parentId": "belly", "namePl": "Środek brzucha", "side": "Center" },
+    { "id": "belly.flank-l", "level": "Medium", "parentId": "belly", "namePl": "Lewy bok", "side": "Left" },
+    { "id": "belly.flank-r", "level": "Medium", "parentId": "belly", "namePl": "Prawy bok", "side": "Right" },
+
+    { "id": "upper-back.l", "level": "Medium", "parentId": "upper-back", "namePl": "Lewa strona górnej części pleców", "side": "Left" },
+    { "id": "upper-back.r", "level": "Medium", "parentId": "upper-back", "namePl": "Prawa strona górnej części pleców", "side": "Right" },
+
+    { "id": "lower-back.l", "level": "Medium", "parentId": "lower-back", "namePl": "Lewa strona dolnej części pleców", "side": "Left" },
+    { "id": "lower-back.r", "level": "Medium", "parentId": "lower-back", "namePl": "Prawa strona dolnej części pleców", "side": "Right" },
+
+    { "id": "pelvis.all", "level": "Medium", "parentId": "pelvis", "namePl": "Miednica", "side": "Center", "drawable": false },
+
+    { "id": "arm-l.shoulder", "level": "Medium", "parentId": "arm-l", "namePl": "Lewy bark", "side": "Left" },
+    { "id": "arm-l.upper-arm", "level": "Medium", "parentId": "arm-l", "namePl": "Lewe ramię", "side": "Left" },
+    { "id": "arm-l.elbow", "level": "Medium", "parentId": "arm-l", "namePl": "Lewy łokieć", "side": "Left" },
+    { "id": "arm-l.forearm", "level": "Medium", "parentId": "arm-l", "namePl": "Lewe przedramię", "side": "Left" },
+    { "id": "arm-l.hand", "level": "Medium", "parentId": "arm-l", "namePl": "Lewa dłoń", "side": "Left" },
+
+    { "id": "arm-r.shoulder", "level": "Medium", "parentId": "arm-r", "namePl": "Prawy bark", "side": "Right" },
+    { "id": "arm-r.upper-arm", "level": "Medium", "parentId": "arm-r", "namePl": "Prawe ramię", "side": "Right" },
+    { "id": "arm-r.elbow", "level": "Medium", "parentId": "arm-r", "namePl": "Prawy łokieć", "side": "Right" },
+    { "id": "arm-r.forearm", "level": "Medium", "parentId": "arm-r", "namePl": "Prawe przedramię", "side": "Right" },
+    { "id": "arm-r.hand", "level": "Medium", "parentId": "arm-r", "namePl": "Prawa dłoń", "side": "Right" },
+
+    { "id": "leg-l.hip", "level": "Medium", "parentId": "leg-l", "namePl": "Lewe biodro", "side": "Left" },
+    { "id": "leg-l.thigh", "level": "Medium", "parentId": "leg-l", "namePl": "Lewe udo", "side": "Left" },
+    { "id": "leg-l.knee", "level": "Medium", "parentId": "leg-l", "namePl": "Lewe kolano", "side": "Left" },
+    { "id": "leg-l.shin", "level": "Medium", "parentId": "leg-l", "namePl": "Lewa goleń", "side": "Left" },
+    { "id": "leg-l.calf", "level": "Medium", "parentId": "leg-l", "namePl": "Lewa łydka", "side": "Left" },
+    { "id": "leg-l.foot", "level": "Medium", "parentId": "leg-l", "namePl": "Lewa stopa", "side": "Left" },
+
+    { "id": "leg-r.hip", "level": "Medium", "parentId": "leg-r", "namePl": "Prawe biodro", "side": "Right" },
+    { "id": "leg-r.thigh", "level": "Medium", "parentId": "leg-r", "namePl": "Prawe udo", "side": "Right" },
+    { "id": "leg-r.knee", "level": "Medium", "parentId": "leg-r", "namePl": "Prawe kolano", "side": "Right" },
+    { "id": "leg-r.shin", "level": "Medium", "parentId": "leg-r", "namePl": "Prawa goleń", "side": "Right" },
+    { "id": "leg-r.calf", "level": "Medium", "parentId": "leg-r", "namePl": "Prawa łydka", "side": "Right" },
+    { "id": "leg-r.foot", "level": "Medium", "parentId": "leg-r", "namePl": "Prawa stopa", "side": "Right" }
+  ]
+}

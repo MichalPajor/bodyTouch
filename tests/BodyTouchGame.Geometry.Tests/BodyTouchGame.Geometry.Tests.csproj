@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\BodyTouchGame.Geometry\BodyTouchGame.Geometry.csproj" />
+    <ProjectReference Include="..\..\tools\BodyDataTool\BodyDataTool.csproj" />
   </ItemGroup>
 
 </Project>
