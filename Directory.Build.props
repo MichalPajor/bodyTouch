@@ -1,0 +1,19 @@
+<Project>
+  <!--
+    The repository lives on a Windows drive mounted in WSL (drvfs/9p), where MSBuild
+    cannot set file timestamps or permissions. On Linux, build outputs go to the native
+    Linux filesystem instead. Override the location with the BTG_BUILD_ROOT variable.
+  -->
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <BtgBuildRoot Condition="'$(BTG_BUILD_ROOT)' != ''">$(BTG_BUILD_ROOT)</BtgBuildRoot>
+    <BtgBuildRoot Condition="'$(BtgBuildRoot)' == ''">$(HOME)/build/BodyTouchGame</BtgBuildRoot>
+    <BaseIntermediateOutputPath>$(BtgBuildRoot)/obj/$(MSBuildProjectName)/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(BtgBuildRoot)/bin/$(MSBuildProjectName)/</BaseOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+</Project>

@@ -24,3 +24,6 @@ local.properties
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Built packages for manual testing
+dist/
