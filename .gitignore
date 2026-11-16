@@ -34,3 +34,11 @@ tools/blender/build/
 
 # Python
 __pycache__/
+
+# Documentation, plans, reports and review screenshots stay local (not in git / GitHub)
+docs/
+screens/
+*.md
+*.html
+# ...except the 3D view page, which is application code
+!src/BodyTouchGame.App/Resources/Raw/wwwroot/index.html
