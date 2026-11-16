@@ -2,6 +2,8 @@ using System.Globalization;
 using BodyTouchGame.App.Bridge;
 using BodyTouchGame.App.Resources.Strings;
 using BodyTouchGame.App.Services;
+using BodyTouchGame.Core.Config;
+using BodyTouchGame.Core.Zones;
 using BodyTouchGame.Geometry;
 
 namespace BodyTouchGame.App.Views;
@@ -17,7 +19,7 @@ public partial class PrototypePage : ContentPage
 
     private readonly BodyDataService _bodyData;
     private readonly BodyViewBridge _bridge;
-    private List<ZoneInfo> _zones = [];
+    private List<ZoneDefinition> _zones = [];
     private PinPlacedMessage? _lastPin;
     private int _sideToggle;
     private static readonly double[] PixelRatios = [2.0, 1.5, 1.0];
@@ -44,7 +46,7 @@ public partial class PrototypePage : ContentPage
             var model = await _bridge.LoadModelAsync(BodyDataService.ModelUrl);
             await dataTask;
 
-            _zones = _bodyData.Zones!.Zones.Where(z => z.Level == "Medium" && z.Drawable).ToList();
+            _zones = _bodyData.Zones!.Zones.Where(z => z.Level == ZoneLevel.Medium && z.Drawable).ToList();
             ZonePicker.ItemsSource = _zones.Select(z => z.NamePl).ToList();
             ZonePicker.SelectedIndex = Math.Max(0, _zones.FindIndex(z => z.Id == DefaultZone));
             StatusLabel.Text = string.Format(Culture, AppResources.PrototypeLoaded, model?.LoadMs ?? 0, _bodyData.GraphLoadMs);
@@ -57,7 +59,7 @@ public partial class PrototypePage : ContentPage
         }
     }
 
-    private ZoneInfo? SelectedZone => ZonePicker.SelectedIndex >= 0 && ZonePicker.SelectedIndex < _zones.Count ? _zones[ZonePicker.SelectedIndex] : null;
+    private ZoneDefinition? SelectedZone => ZonePicker.SelectedIndex >= 0 && ZonePicker.SelectedIndex < _zones.Count ? _zones[ZonePicker.SelectedIndex] : null;
 
     private async void OnZoneChanged(object? sender, EventArgs e)
     {
