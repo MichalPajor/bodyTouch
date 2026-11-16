@@ -21,7 +21,6 @@ public partial class PrototypePage : ContentPage
     private readonly BodyViewBridge _bridge;
     private List<ZoneDefinition> _zones = [];
     private PinPlacedMessage? _lastPin;
-    private int _sideToggle;
     private static readonly double[] PixelRatios = [2.0, 1.5, 1.0];
     private int _pixelRatioIndex;
 
@@ -29,7 +28,7 @@ public partial class PrototypePage : ContentPage
     {
         InitializeComponent();
         _bodyData = bodyData;
-        _bridge = new BodyViewBridge(WebView);
+        _bridge = Body.Bridge;
         _bridge.PinPlaced += OnPinPlaced;
         _bridge.Error += (_, e) => StatusLabel.Text = string.Format(Culture, AppResources.PrototypeError, e.Message);
         _bridge.StatsReceived += OnStats;
@@ -42,8 +41,8 @@ public partial class PrototypePage : ContentPage
         try
         {
             var dataTask = _bodyData.LoadAsync();
-            await _bridge.WhenReady;
-            var model = await _bridge.LoadModelAsync(BodyDataService.ModelUrl);
+            var model = await Body.WhenModelLoaded;
+            await _bridge.SetStatsVisibleAsync(true);
             await dataTask;
 
             _zones = _bodyData.Zones!.Zones.Where(z => z.Level == ZoneLevel.Medium && z.Drawable).ToList();
@@ -122,9 +121,4 @@ public partial class PrototypePage : ContentPage
         ResolutionButton.Text = string.Format(Culture, AppResources.PrototypeResolution, applied);
     }
 
-    private async void OnZoomIn(object? sender, EventArgs e) => await _bridge.ZoomByAsync(1.4);
-    private async void OnZoomOut(object? sender, EventArgs e) => await _bridge.ZoomByAsync(1 / 1.4);
-    private async void OnViewFront(object? sender, EventArgs e) => await _bridge.ResetCameraAsync("Front");
-    private async void OnViewBack(object? sender, EventArgs e) => await _bridge.ResetCameraAsync("Back");
-    private async void OnViewSide(object? sender, EventArgs e) => await _bridge.ResetCameraAsync(_sideToggle++ % 2 == 0 ? "Left" : "Right");
 }

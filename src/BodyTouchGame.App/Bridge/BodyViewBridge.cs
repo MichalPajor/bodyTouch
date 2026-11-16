@@ -57,6 +57,16 @@ public sealed class BodyViewBridge
         _webView.InvokeJavaScriptAsync("bodyView.setPixelRatio", BridgeJsonContext.Default.Double,
             [ratio], [BridgeJsonContext.Default.Double]);
 
+    /// <summary>CSS pixels covered by native overlays at the top / bottom; the model is framed between them.</summary>
+    public Task SetViewInsetsAsync(double top, double bottom) =>
+        _webView.InvokeJavaScriptAsync("bodyView.setViewInsets", BridgeJsonContext.Default.Boolean,
+            [top, bottom], [BridgeJsonContext.Default.Double, BridgeJsonContext.Default.Double]);
+
+    /// <summary>Diagnostic FPS counter in the page (hidden by default).</summary>
+    public Task SetStatsVisibleAsync(bool visible) =>
+        _webView.InvokeJavaScriptAsync("bodyView.setStatsVisible", BridgeJsonContext.Default.Boolean,
+            [visible], [BridgeJsonContext.Default.Boolean]);
+
     public Task StartBenchmarkAsync() =>
         _webView.InvokeJavaScriptAsync("bodyView.startBenchmark", BridgeJsonContext.Default.Boolean);
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Start screen (mockup 1). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.StartPage"
+             x:DataType="vm:StartViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <!-- The mockup frame includes the status bar (56 px top padding); on the device it is separate. -->
+        <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="16" Padding="20,12,20,16">
+            <!-- Title -->
+            <VerticalStackLayout Spacing="6">
+                <!-- Spans do not inherit the label font on Android: the font is set on each span. -->
+                <Label FontSize="40" LineHeight="0.8" CharacterSpacing="-1">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static res:AppResources.TitleLine1}" FontFamily="{StaticResource FontTitle}" />
+                            <Span Text="&#10;" FontFamily="{StaticResource FontTitle}" />
+                            <Span Text="{x:Static res:AppResources.TitleLine2}" FontFamily="{StaticResource FontTitle}" TextColor="{StaticResource Primary}" />
+                            <Span Text="&#10;" FontFamily="{StaticResource FontTitle}" />
+                            <Span Text="{x:Static res:AppResources.TitleLine3}" FontFamily="{StaticResource FontTitle}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Text="{x:Static res:AppResources.Tagline}" FontFamily="{StaticResource FontSemiBold}" FontSize="16"
+                       TextColor="{StaticResource Muted}" />
+            </VerticalStackLayout>
+
+            <!-- Mannequin and last game -->
+            <Grid Grid.Row="1">
+                <Image Source="start_mannequin.png" MaximumWidthRequest="210" MaximumHeightRequest="340" Aspect="AspectFit"
+                       HorizontalOptions="End" VerticalOptions="Fill" Margin="0,0,-12,0"
+                       SemanticProperties.Description="{x:Static res:AppResources.MannequinDescription}" />
+                <Grid IsVisible="{Binding HasLastGame}" HorizontalOptions="Start" VerticalOptions="End" Margin="0,0,0,40"
+                      ColumnDefinitions="3,Auto" BackgroundColor="{StaticResource Surface}">
+                    <BoxView Color="{StaticResource PartyCyan}" />
+                    <Border Grid.Column="1" BackgroundColor="Transparent" Padding="14,10" StrokeThickness="0">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="{x:Static res:AppResources.LastGame}" FontSize="12" TextColor="{StaticResource Muted}" />
+                            <Label Text="{Binding LastGameText}" FontFamily="{StaticResource FontBold}" FontSize="15" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.ColumnSpan="2" BackgroundColor="Transparent" InputTransparent="True" />
+                </Grid>
+            </Grid>
+
+            <!-- Play: 64 px, 22 px text, 6 px hard shadow (mockup 1) -->
+            <controls:PartyButton Grid.Row="2" Text="{x:Static res:AppResources.Play}" Command="{Binding PlayCommand}"
+                                  ButtonHeight="64" FontSize="22" ShadowOffset="6" Margin="0,0,-6,-6" />
+
+            <Grid Grid.Row="3" ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                <controls:AccentTile Text="{x:Static res:AppResources.Players}" AccentColor="{StaticResource PartyPink}" Command="{Binding PlayersCommand}" />
+                <controls:AccentTile Grid.Column="1" Text="{x:Static res:AppResources.Rankings}" AccentColor="{StaticResource PartyCyan}" Command="{Binding RankingsCommand}" />
+                <controls:AccentTile Grid.Column="2" Text="{x:Static res:AppResources.Settings}" AccentColor="{StaticResource PartyViolet}" Command="{Binding SettingsCommand}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

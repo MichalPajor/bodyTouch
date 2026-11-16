@@ -23,4 +23,36 @@
   <data name="ViewBack" xml:space="preserve"><value>Tył</value></data>
   <data name="ZoomIn" xml:space="preserve"><value>+</value></data>
   <data name="ZoomOut" xml:space="preserve"><value>−</value></data>
+  <!-- Stage 5: Start screen (mockup 1) -->
+  <data name="TitleLine1" xml:space="preserve"><value>BODY</value></data>
+  <data name="TitleLine2" xml:space="preserve"><value>TOUCH</value></data>
+  <data name="TitleLine3" xml:space="preserve"><value>GAME</value></data>
+  <data name="Tagline" xml:space="preserve"><value>Zasłoń oczy. Dotknij. Zgadnij.</value></data>
+  <data name="Play" xml:space="preserve"><value>GRAJ</value></data>
+  <data name="Players" xml:space="preserve"><value>Gracze</value></data>
+  <data name="Rankings" xml:space="preserve"><value>Rankingi</value></data>
+  <data name="Settings" xml:space="preserve"><value>Ustawienia</value></data>
+  <data name="LastGame" xml:space="preserve"><value>Ostatnia gra</value></data>
+  <data name="LastGameWinner" xml:space="preserve"><value>{0} na 1. miejscu · {1} pkt</value></data>
+  <data name="LastGameTie" xml:space="preserve"><value>Remis: {0} · {1} pkt</value></data>
+  <data name="MannequinDescription" xml:space="preserve"><value>Model 3D manekina</value></data>
+
+  <!-- Stage 5: Settings screen (mockup 10) -->
+  <data name="SectionGame" xml:space="preserve"><value>GRA</value></data>
+  <data name="SectionEffects" xml:space="preserve"><value>EFEKTY</value></data>
+  <data name="SectionData" xml:space="preserve"><value>DANE</value></data>
+  <data name="DefaultConfig" xml:space="preserve"><value>Domyślna konfiguracja gry</value></data>
+  <data name="ZoneEditor" xml:space="preserve"><value>Edytor stref i własnych punktów</value></data>
+  <data name="ExcludedZones" xml:space="preserve"><value>Strefy wykluczone</value></data>
+  <data name="Sounds" xml:space="preserve"><value>Dźwięki</value></data>
+  <data name="Vibrations" xml:space="preserve"><value>Wibracje</value></data>
+  <data name="ConfettiOnHit" xml:space="preserve"><value>Konfetti przy trafieniu</value></data>
+  <data name="ExportData" xml:space="preserve"><value>Eksport kopii danych</value></data>
+  <data name="ImportData" xml:space="preserve"><value>Import kopii danych</value></data>
+  <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · wersja {0}</value></data>
+
+  <!-- 3D view panel -->
+  <data name="RotateHint" xml:space="preserve"><value>Obróć palcem</value></data>
+  <data name="ZoomInDescription" xml:space="preserve"><value>Przybliż</value></data>
+  <data name="ZoomOutDescription" xml:space="preserve"><value>Oddal</value></data>
 </root>

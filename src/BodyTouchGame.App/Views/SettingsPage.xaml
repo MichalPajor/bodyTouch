@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Settings screen (mockup 10). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <!-- Scrolls on short screens; otherwise the content fills the screen and the version sits at the bottom
+             (MinimumHeightRequest of the grid follows the viewport height, see code-behind). -->
+        <ScrollView x:Name="Scroller">
+        <Grid x:Name="ContentGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto" RowSpacing="16" Padding="20,12,20,16">
+            <Label Text="{x:Static res:AppResources.Settings}" Style="{StaticResource ScreenTitle}" />
+
+            <Label Grid.Row="1" Text="{x:Static res:AppResources.SectionGame}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource PartyPink}" />
+            <Border Grid.Row="2" Padding="0">
+                <VerticalStackLayout>
+                    <controls:SettingsRow Text="{x:Static res:AppResources.DefaultConfig}" Command="{Binding DefaultConfigCommand}" />
+                    <controls:SettingsRow Text="{x:Static res:AppResources.ZoneEditor}" Command="{Binding ZoneEditorCommand}" />
+                    <controls:SettingsRow Text="{x:Static res:AppResources.ExcludedZones}" Command="{Binding ExcludedZonesCommand}" ShowDivider="False" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Grid.Row="3" Text="{x:Static res:AppResources.SectionEffects}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource PartyCyan}" />
+            <Border Grid.Row="4" Padding="0">
+                <VerticalStackLayout>
+                    <controls:SettingsToggleRow Text="{x:Static res:AppResources.Sounds}" IsToggled="{Binding SoundEnabled}" />
+                    <controls:SettingsToggleRow Text="{x:Static res:AppResources.Vibrations}" IsToggled="{Binding VibrationEnabled}" />
+                    <controls:SettingsToggleRow Text="{x:Static res:AppResources.ConfettiOnHit}" IsToggled="{Binding ConfettiEnabled}" ShowDivider="False" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Grid.Row="5" Text="{x:Static res:AppResources.SectionData}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource PartyViolet}" />
+            <Border Grid.Row="6" Padding="0">
+                <VerticalStackLayout>
+                    <controls:SettingsRow Text="{x:Static res:AppResources.ExportData}" Command="{Binding ExportDataCommand}" />
+                    <controls:SettingsRow Text="{x:Static res:AppResources.ImportData}" Command="{Binding ImportDataCommand}" ShowDivider="False" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Grid.Row="8" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <!-- Developer entry: a tap on the version opens the stage 3 3D prototype (temporary, until stage 6). -->
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenPrototypeCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

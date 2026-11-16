@@ -32,6 +32,7 @@ const state = {
   revealGroup: null,
   pageStart: performance.now(),
   frames: [],                  // timestamps of recent frames
+  insets: { top: 0, bottom: 0 }, // CSS px covered by native overlays (view buttons); the model is framed between
   bench: null,
 };
 
@@ -53,6 +54,7 @@ window.addEventListener('unhandledrejection', (e) => send('onError', { message: 
 // ------------------------------------------------------------------ scene
 
 const container = document.getElementById('view');
+const statsEl = document.getElementById('stats');
 const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 renderer.setClearColor(COLORS.surface);
@@ -77,6 +79,17 @@ controls.screenSpacePanning = true;
 controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
 
 const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.85, metalness: 0, vertexColors: true });
+// Soft rim light along the silhouette ("delikatna poświata krawędzi", spec 13): fresnel term added to the shading.
+const RIM = { color: new THREE.Color('#BFB4FF'), strength: 0.32, power: 3.0 };
+material.onBeforeCompile = (shader) => {
+  shader.uniforms.uRimColor = { value: RIM.color };
+  shader.uniforms.uRimStrength = { value: RIM.strength };
+  shader.uniforms.uRimPower = { value: RIM.power };
+  shader.fragmentShader = 'uniform vec3 uRimColor;\nuniform float uRimStrength;\nuniform float uRimPower;\n' +
+    shader.fragmentShader.replace('#include <opaque_fragment>', `#include <opaque_fragment>
+      float rimTerm = pow(1.0 - clamp(dot(normal, normalize(vViewPosition)), 0.0, 1.0), uRimPower);
+      gl_FragColor.rgb += uRimColor * rimTerm * uRimStrength;`);
+};
 const eyeMaterial = new THREE.MeshStandardMaterial({ color: COLORS.mannequin, roughness: 0.6, metalness: 0 });
 
 function resize() {
@@ -84,6 +97,9 @@ function resize() {
   const h = container.clientHeight || 1;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
+  // Shift the picture so its centre is the centre of the area not covered by overlays.
+  const shift = (state.insets.bottom - state.insets.top) / 2;
+  if (shift !== 0) camera.setViewOffset(w, h, 0, shift, w, h); else camera.clearViewOffset();
   camera.updateProjectionMatrix();
   if (state.body) {
     updateHome(state.body);
@@ -209,6 +225,19 @@ function clearReveal() {
   return true;
 }
 
+/** CSS pixels at the top and bottom covered by native overlays; the model is framed in the remaining area. */
+function setViewInsets(top, bottom) {
+  state.insets = { top: Math.max(0, top || 0), bottom: Math.max(0, bottom || 0) };
+  resize();
+  return true;
+}
+
+/** Shows or hides the diagnostic FPS counter (hidden by default). */
+function setStatsVisible(visible) {
+  statsEl.style.display = visible ? 'block' : 'none';
+  return true;
+}
+
 /** Render resolution relative to CSS pixels (quality / performance knob; default min(devicePixelRatio, 2)). */
 function setPixelRatio(ratio) {
   renderer.setPixelRatio(Math.min(ratio, window.devicePixelRatio || 1));
@@ -224,7 +253,7 @@ function zoomBy(factor) {
   return true;
 }
 
-window.bodyView = { loadModel, setMode, resetCamera, setZoneColors, showReveal, clearReveal, zoomBy, setPixelRatio, startBenchmark: () => { startBenchmark(); return true; } };
+window.bodyView = { loadModel, setMode, resetCamera, setZoneColors, showReveal, clearReveal, zoomBy, setPixelRatio, setViewInsets, setStatsVisible, startBenchmark: () => { startBenchmark(); return true; } };
 
 // ------------------------------------------------------------------ helpers
 
@@ -253,7 +282,9 @@ function updateHome(body) {
   const size = box.getSize(new THREE.Vector3());
   const centre = box.getCenter(new THREE.Vector3());
   const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
-  const fitHeight = (size.y / 2) / Math.tan(halfFov);
+  const h = container.clientHeight || 1;
+  const free = Math.max(0.3, (h - state.insets.top - state.insets.bottom) / h);   // share of the height not covered
+  const fitHeight = (size.y / 2) / (Math.tan(halfFov) * free);
   const fitWidth = (size.x / 2) / (Math.tan(halfFov) * camera.aspect);
   const distance = Math.max(fitHeight, fitWidth) * 1.12 + size.z / 2;
   state.home = { target: centre, distance };
@@ -348,7 +379,6 @@ function placePin(point) {
 
 // ------------------------------------------------------------------ render loop, FPS meter, benchmark
 
-const statsEl = document.getElementById('stats');
 let lastStats = 0;
 
 function frame(now) {
