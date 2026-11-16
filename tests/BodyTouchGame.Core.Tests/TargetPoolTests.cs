@@ -36,12 +36,12 @@ public class TargetPoolTests
     }
 
     [Fact]
-    public void ExcludedZoneBlocksItselfItsChildrenAndItsParent()
+    public void ExcludedZoneBlocksItselfAndTheZonesInsideButNotItsParent()
     {
         var both = new ZoneSetSelection([ZoneLevel.Easy, ZoneLevel.Medium]);
 
-        // Excluding a Medium zone blocks it and its Easy parent (they overlap); siblings stay.
-        Assert.Equal(["arm-l", "leg-l", "head.scalp", "arm-l.hand", "arm-l.elbow", "leg-l.knee", "leg-l.foot"],
+        // Excluding a Medium zone blocks only it; its Easy parent and siblings stay.
+        Assert.Equal(["head", "arm-l", "leg-l", "head.scalp", "arm-l.hand", "arm-l.elbow", "leg-l.knee", "leg-l.foot"],
             ZoneIds(Builder.Build(both, ["head.face"])));
         // Excluding an Easy zone blocks all its children.
         Assert.Equal(["head", "leg-l", "head.face", "head.scalp", "leg-l.knee", "leg-l.foot"],

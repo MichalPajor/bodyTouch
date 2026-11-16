@@ -25,9 +25,9 @@ public sealed class SystemRandomSource(Random? random = null) : IRandomSource
 /// <item>custom points belonging to a selected level or selected individually (also inside non-drawable zones, D12);</item>
 /// <item>minus everything excluded by the model's profile.</item>
 /// </list>
-/// A built-in zone is excluded when it, any of its ancestors or any of its descendants is excluded (they overlap
-/// on the body: excluding "face" also blocks "head", excluding "head" blocks "face"). A custom point is excluded
-/// when one of the zones containing its centre is excluded.
+/// An excluded zone blocks itself and every zone lying inside it (its descendants): excluding "head" blocks "face",
+/// excluding "face" does not block "head" (owner's decision after stage 4). A custom point is excluded when one of
+/// the zones containing its centre is excluded.
 /// </summary>
 public sealed class TargetPoolBuilder(ZoneCatalog catalog)
 {
@@ -91,7 +91,6 @@ public sealed class TargetPoolBuilder(ZoneCatalog catalog)
         {
             if (!catalog.TryGet(id, out _)) continue;           // unknown ids (e.g. from an older model) are ignored
             blocked.Add(id);
-            foreach (var a in catalog.Ancestors(id)) blocked.Add(a.Id);
             foreach (var d in catalog.Descendants(id)) blocked.Add(d.Id);
         }
 
