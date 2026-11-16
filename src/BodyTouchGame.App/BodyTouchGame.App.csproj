@@ -18,6 +18,10 @@
 		       <MauiXaml Update="MyPage.xaml" Inflator="Runtime" /> (force runtime inflation) -->
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 
+		<!-- HybridWebView (3D view) uses dynamic System.Text.Json for InvokeDotNet; it is disabled in trimmed builds
+		     unless enabled explicitly. Our own payloads use the source-generated BridgeJsonContext. -->
+		<MauiHybridWebViewSupported>true</MauiHybridWebViewSupported>
+
 		<!-- Display name -->
 		<ApplicationTitle>Body Touch Game</ApplicationTitle>
 
@@ -47,6 +51,18 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- UI strings (Polish by default). The strongly typed AppResources class is generated at build time. -->
+		<EmbeddedResource Update="Resources\Strings\AppResources.resx">
+			<StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+			<StronglyTypedNamespace>BodyTouchGame.App.Resources.Strings</StronglyTypedNamespace>
+			<StronglyTypedClassName>AppResources</StronglyTypedClassName>
+			<StronglyTypedFileName>$(IntermediateOutputPath)AppResources.Designer.cs</StronglyTypedFileName>
+			<StronglyTypedManifestPrefix>BodyTouchGame.App.Resources.Strings</StronglyTypedManifestPrefix>
+			<PublicClass>true</PublicClass>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

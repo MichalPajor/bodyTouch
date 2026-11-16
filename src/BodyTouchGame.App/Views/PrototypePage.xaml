@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Stage 3: technical prototype of the 3D view (temporary test screen, replaced by real screens in stages 5-6). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.PrototypePage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#0D0A1A">
+    <ContentPage.Resources>
+        <Style TargetType="Button" x:Key="ToolButton">
+            <Setter Property="BackgroundColor" Value="#171329" />
+            <Setter Property="BorderColor" Value="#2E2650" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="TextColor" Value="#F4F2FF" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="Padding" Value="10,0" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#F4F2FF" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="12,8,12,12" RowSpacing="8">
+        <Label Text="{x:Static res:AppResources.PrototypeTitle}" FontSize="18" FontAttributes="Bold" />
+
+        <Grid Grid.Row="1">
+            <Border Stroke="#2E2650" StrokeThickness="1" BackgroundColor="#171329" Padding="0">
+                <HybridWebView x:Name="WebView" HybridRoot="wwwroot" DefaultFile="index.html" />
+            </Border>
+            <VerticalStackLayout HorizontalOptions="End" VerticalOptions="Start" Margin="8" Spacing="6">
+                <Button Text="{x:Static res:AppResources.ZoomIn}" Style="{StaticResource ToolButton}" WidthRequest="44" Clicked="OnZoomIn" />
+                <Button Text="{x:Static res:AppResources.ZoomOut}" Style="{StaticResource ToolButton}" WidthRequest="44" Clicked="OnZoomOut" />
+            </VerticalStackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="End" Margin="8" Spacing="6">
+                <Button Text="{x:Static res:AppResources.ViewFront}" Style="{StaticResource ToolButton}" Clicked="OnViewFront" />
+                <Button Text="{x:Static res:AppResources.ViewSide}" Style="{StaticResource ToolButton}" Clicked="OnViewSide" />
+                <Button Text="{x:Static res:AppResources.ViewBack}" Style="{StaticResource ToolButton}" Clicked="OnViewBack" />
+            </HorizontalStackLayout>
+        </Grid>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="6">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="{x:Static res:AppResources.PrototypeTarget}" VerticalOptions="Center" TextColor="#B3ACD6" />
+                <Picker x:Name="ZonePicker" Grid.Column="1" TextColor="#F4F2FF" BackgroundColor="#171329"
+                        SelectedIndexChanged="OnZoneChanged" />
+            </Grid>
+            <Label x:Name="ResultLabel" Text="{x:Static res:AppResources.PrototypeHint}" FontSize="15" FontAttributes="Bold" TextColor="#FF9A3C" />
+            <Label x:Name="StatusLabel" Text="{x:Static res:AppResources.PrototypeLoading}" TextColor="#B3ACD6" />
+            <Label x:Name="BenchmarkLabel" TextColor="#22D3EE" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <Button x:Name="ResolutionButton" Style="{StaticResource ToolButton}" Clicked="OnResolution" />
+                <Button x:Name="BenchmarkButton" Grid.Column="1" Text="{x:Static res:AppResources.PrototypeBenchmark}"
+                        Style="{StaticResource ToolButton}" Clicked="OnBenchmark" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
