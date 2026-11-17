@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Player profile (own design D7): avatar and name, statistics (spec 10), chart, heat map, exclusions, delete. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.PlayerProfilePage"
+             x:DataType="vm:PlayerProfileViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <ScrollView>
+            <VerticalStackLayout Spacing="14" Padding="20,12,20,20">
+                <Label Text="{x:Static res:AppResources.PlayerProfile}" Style="{StaticResource Caption}" />
+
+                <!-- Avatar + name; the avatar opens the avatar editor, the pencil renames -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
+                    <Grid WidthRequest="78" HeightRequest="78">
+                        <BoxView Color="{StaticResource PartyPink}" Margin="6,6,0,0" />
+                        <controls:Avatar Name="{Binding Name}" Color="{Binding Color}" Emoji="{Binding Emoji}" Size="72" HorizontalOptions="Start" VerticalOptions="Start" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ToggleAvatarEditorCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="{Binding Name}" FontFamily="{StaticResource FontTitle}" FontSize="26" LineBreakMode="TailTruncation" />
+                        <Label Text="{x:Static res:AppResources.ChangeAvatar}" FontSize="13" TextColor="{StaticResource Muted}" TextDecorations="Underline">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleAvatarEditorCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
+                    <Border Grid.Column="2" WidthRequest="44" HeightRequest="44" Padding="0" BackgroundColor="{StaticResource Background}" VerticalOptions="Center"
+                            SemanticProperties.Description="{x:Static res:AppResources.RenameDescription}">
+                        <controls:LineIcon Data="M4 20 L8.5 19 L19 8.5 L15.5 5 L5 15.5 Z M13.5 7 L17 10.5" StrokeColor="{StaticResource Text}" StrokeWidth="2"
+                                           IconSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RenameCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- Avatar editor: colours and emoji -->
+                <Border Padding="14,12" IsVisible="{Binding ShowAvatarEditor}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{x:Static res:AppResources.AvatarColor}" Style="{StaticResource Caption}" />
+                        <FlexLayout BindableLayout.ItemsSource="{Binding ColorOptions}" Wrap="Wrap" AlignContent="Start" AlignItems="Start">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="vm:AvatarColorOption">
+                                    <Grid WidthRequest="40" HeightRequest="40" Margin="0,0,8,8">
+                                        <BoxView Color="{StaticResource Text}" IsVisible="{Binding IsSelected}" />
+                                        <BoxView Color="{Binding Color}" Margin="3" />
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlayerProfileViewModel}}, Path=SetColorCommand, x:DataType=vm:PlayerProfileViewModel}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                        <Label Text="{x:Static res:AppResources.AvatarEmoji}" Style="{StaticResource Caption}" />
+                        <FlexLayout BindableLayout.ItemsSource="{Binding EmojiOptions}" Wrap="Wrap" AlignContent="Start" AlignItems="Start">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="vm:AvatarEmojiOption">
+                                    <Border WidthRequest="40" HeightRequest="40" Margin="0,0,8,8" Padding="0" BackgroundColor="{StaticResource Background}">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                                <Setter Property="StrokeThickness" Value="2" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="{Binding Text}" FontFamily="{x:Null}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlayerProfileViewModel}}, Path=SetEmojiCommand, x:DataType=vm:PlayerProfileViewModel}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Statistics -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                    <controls:InfoTile Caption="{x:Static res:AppResources.StatRounds}" Value="{Binding RoundsText}" AccentColor="{StaticResource PartyPink}" />
+                    <controls:InfoTile Grid.Column="1" Caption="{x:Static res:AppResources.StatAverageDistance}" Value="{Binding AverageDistanceText}" AccentColor="{StaticResource PartyCyan}" />
+                    <controls:InfoTile Grid.Column="2" Caption="{x:Static res:AppResources.StatAveragePoints}" Value="{Binding AveragePointsText}" AccentColor="{StaticResource PartyViolet}" />
+                </Grid>
+                <controls:AccentRow Caption="{x:Static res:AppResources.BestZone}" Value="{Binding BestZoneText}" AccentColor="#22C55E" />
+                <controls:AccentRow Caption="{x:Static res:AppResources.WorstZone}" Value="{Binding WorstZoneText}" AccentColor="#EF4444" />
+
+                <!-- Chart -->
+                <Border Padding="14,12">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{x:Static res:AppResources.TrendTitle}" FontFamily="{StaticResource FontBold}" FontSize="15" />
+                        <controls:TrendChart Values="{Binding Trend}" HeightRequest="150" IsVisible="{Binding HasTrend}" />
+                        <Label Text="{x:Static res:AppResources.TrendHint}" FontSize="12" TextColor="{StaticResource Muted}" IsVisible="{Binding HasTrend}" />
+                        <Label Text="{x:Static res:AppResources.TrendTooFew}" FontSize="13" TextColor="{StaticResource Muted}" IsVisible="{Binding HasNoTrend}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <controls:PartyButton Text="{x:Static res:AppResources.HeatmapTitle}" Command="{Binding OpenHeatmapCommand}" Margin="0,4,-5,-5" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button Text="{x:Static res:AppResources.ExcludedZones}" Style="{StaticResource SecondaryButton}" Command="{Binding OpenExclusionsCommand}" />
+                    <Button Grid.Column="1" Text="{x:Static res:AppResources.DeletePlayer}" Style="{StaticResource SecondaryButton}" TextColor="{StaticResource PartyPink}"
+                            Command="{Binding DeleteCommand}" />
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

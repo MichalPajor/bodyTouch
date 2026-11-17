@@ -9,7 +9,7 @@ internal static class Res
     public static string Font(string key) => (string)Application.Current!.Resources[key];
 }
 
-/// <summary>Square avatar with the player's initial (mockups 2 and 9).</summary>
+/// <summary>Square avatar with the player's emoji or, without one, the initial (mockups 2 and 9).</summary>
 public sealed class Avatar : ContentView
 {
     public static readonly BindableProperty NameProperty =
@@ -20,6 +20,9 @@ public sealed class Avatar : ContentView
 
     public static readonly BindableProperty SizeProperty =
         BindableProperty.Create(nameof(Size), typeof(double), typeof(Avatar), 42.0, propertyChanged: (b, _, _) => ((Avatar)b).Update());
+
+    public static readonly BindableProperty EmojiProperty =
+        BindableProperty.Create(nameof(Emoji), typeof(string), typeof(Avatar), null, propertyChanged: (b, _, _) => ((Avatar)b).Update());
 
     private readonly Label _label;
     private readonly Grid _box;
@@ -36,11 +39,22 @@ public sealed class Avatar : ContentView
     public string Name { get => (string)GetValue(NameProperty); set => SetValue(NameProperty, value); }
     public string Color { get => (string)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
     public double Size { get => (double)GetValue(SizeProperty); set => SetValue(SizeProperty, value); }
+    public string? Emoji { get => (string?)GetValue(EmojiProperty); set => SetValue(EmojiProperty, value); }
 
     private void Update()
     {
         _box.WidthRequest = _box.HeightRequest = Size;
         _box.BackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb(string.IsNullOrEmpty(Color) ? "#FF3D9A" : Color);
+        if (!string.IsNullOrEmpty(Emoji))
+        {
+            // Emoji come from the system emoji font.
+            _label.FontFamily = null;
+            _label.FontSize = Size * 0.5;
+            _label.Text = Emoji;
+            return;
+        }
+
+        _label.FontFamily = Res.Font("FontTitle");
         _label.FontSize = Size * 0.43;
         _label.Text = string.IsNullOrWhiteSpace(Name) ? "?" : Name.Trim()[..1].ToUpperInvariant();
     }

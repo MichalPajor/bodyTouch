@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Heat map (spec 10, own design D7): zones coloured from red (misses) to green (hits), arrows of repeated mistakes. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="BodyTouchGame.App.Views.HeatmapPage"
+             x:DataType="vm:HeatmapViewModel">
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="Not" />
+        <DataTemplate x:Key="PlayerChip" x:DataType="vm:ChoiceItem">
+            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" ButtonHeight="40"
+                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HeatmapViewModel}}, Path=SelectPlayerCommand, x:DataType=vm:HeatmapViewModel}"
+                                   CommandParameter="{Binding .}" />
+        </DataTemplate>
+        <DataTemplate x:Key="PresetChip" x:DataType="vm:ChoiceItem">
+            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsOption="True" ButtonHeight="36"
+                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HeatmapViewModel}}, Path=SelectPresetCommand, x:DataType=vm:HeatmapViewModel}"
+                                   CommandParameter="{Binding .}" />
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto" RowSpacing="10" Padding="20,12,20,16">
+            <Label Text="{x:Static res:AppResources.HeatmapTitle}" Style="{StaticResource ScreenTitle}" />
+            <Label Grid.Row="1" Text="{x:Static res:AppResources.NoPlayersYet}" FontSize="15" IsVisible="{Binding HasPlayers, Converter={StaticResource Not}}" />
+
+            <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasPlayers}">
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Players}" BindableLayout.ItemTemplate="{StaticResource PlayerChip}" Spacing="6" />
+            </ScrollView>
+            <ScrollView Grid.Row="2" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" IsVisible="{Binding HasPlayers}">
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Presets}" BindableLayout.ItemTemplate="{StaticResource PresetChip}" Spacing="6" />
+            </ScrollView>
+
+            <controls:BodyView x:Name="Body" Grid.Row="3" />
+
+            <!-- Legend: red (misses) → yellow → green (hits); tapped zone details -->
+            <VerticalStackLayout Grid.Row="4" Spacing="6">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <Label Text="{x:Static res:AppResources.LegendMisses}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center" />
+                    <BoxView Grid.Column="1" HeightRequest="10" VerticalOptions="Center">
+                        <BoxView.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#EF4444" Offset="0" />
+                                <GradientStop Color="#FACC15" Offset="0.5" />
+                                <GradientStop Color="#22C55E" Offset="1" />
+                            </LinearGradientBrush>
+                        </BoxView.Background>
+                    </BoxView>
+                    <Label Grid.Column="2" Text="{x:Static res:AppResources.LegendHits}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center" />
+                </Grid>
+                <Label Text="{Binding InfoText}" FontFamily="{StaticResource FontBold}" FontSize="14" />
+            </VerticalStackLayout>
+
+            <Border Grid.Row="5" Padding="0">
+                <VerticalStackLayout>
+                    <controls:SettingsToggleRow Text="{x:Static res:AppResources.ShowArrows}" IsToggled="{Binding ShowArrows}" ShowDivider="False" />
+                    <Label Text="{x:Static res:AppResources.ArrowsHint}" FontSize="12" TextColor="{StaticResource Muted}" Margin="14,-8,14,10" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>

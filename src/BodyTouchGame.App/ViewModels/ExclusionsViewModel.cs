@@ -24,8 +24,11 @@ public sealed partial class ExclusionPlayerItem(Player player) : ObservableObjec
 /// Excluded zones per player (Settings → Strefy wykluczone, spec 7 item 4): a tap on the model (Editor mode)
 /// excludes or restores the zone of the chosen level. An excluded zone also covers the zones inside it.
 /// </summary>
-public sealed partial class ExclusionsViewModel(IPlayerRepository players, IExclusionRepository exclusions, BodyDataService bodyData) : ObservableObject
+public sealed partial class ExclusionsViewModel(IPlayerRepository players, IExclusionRepository exclusions, BodyDataService bodyData)
+    : ObservableObject, IQueryAttributable
 {
+    private long? _requestedPlayer;
+
     public const string ExcludedColor = "#4A4560";
     public const string CoveredColor = "#5E5878";
 
@@ -44,6 +47,12 @@ public sealed partial class ExclusionsViewModel(IPlayerRepository players, IExcl
 
     private ZoneLevel CurrentLevel => Levels.FirstOrDefault(l => l.IsSelected)?.Level ?? ZoneLevel.Easy;
 
+    /// <summary>"player" = id of the player to show first (from the player profile).</summary>
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("player", out var id) && long.TryParse(id?.ToString(), out var value)) _requestedPlayer = value;
+    }
+
     public async Task LoadAsync(BodyViewBridge bridge, Task modelLoaded)
     {
         _bridge = bridge;
@@ -57,7 +66,7 @@ public sealed partial class ExclusionsViewModel(IPlayerRepository players, IExcl
         foreach (var level in Enum.GetValues<ZoneLevel>())
             Levels.Add(new LevelItem(level, catalog.HasLevel(level)) { IsSelected = level == ZoneLevel.Easy });
 
-        var previous = Players.FirstOrDefault(p => p.IsSelected)?.Player.Id;
+        var previous = Players.FirstOrDefault(p => p.IsSelected)?.Player.Id ?? _requestedPlayer;
         Players.Clear();
         foreach (var player in await players.GetAllAsync()) Players.Add(new ExclusionPlayerItem(player));
         HasPlayers = Players.Count > 0;

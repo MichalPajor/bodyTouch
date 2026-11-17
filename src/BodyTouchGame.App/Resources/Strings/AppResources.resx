@@ -188,4 +188,42 @@
   <data name="NewGame" xml:space="preserve"><value>Nowa gra</value></data>
   <data name="Done" xml:space="preserve"><value>Gotowe</value></data>
   <data name="ZoneSetCountOnlyFormat" xml:space="preserve"><value>Do losowania: {0}</value></data>
+  <data name="NoPlayers" xml:space="preserve"><value>Nie ma jeszcze graczy. Dodaj pierwszego!</value></data>
+  <data name="PlayerProfile" xml:space="preserve"><value>Profil gracza</value></data>
+  <data name="ChangeAvatar" xml:space="preserve"><value>Zmień awatar</value></data>
+  <data name="AvatarColor" xml:space="preserve"><value>Kolor</value></data>
+  <data name="AvatarEmoji" xml:space="preserve"><value>Emoji</value></data>
+  <data name="NoEmoji" xml:space="preserve"><value>Aa</value></data>
+  <data name="RenameTitle" xml:space="preserve"><value>Nazwa gracza</value></data>
+  <data name="RenameDescription" xml:space="preserve"><value>Zmień nazwę</value></data>
+  <data name="StatRounds" xml:space="preserve"><value>Rundy</value></data>
+  <data name="StatAverageDistance" xml:space="preserve"><value>Śr. odległość</value></data>
+  <data name="StatAveragePoints" xml:space="preserve"><value>Śr. punkty</value></data>
+  <data name="BestZone" xml:space="preserve"><value>Najlepsza strefa</value></data>
+  <data name="WorstZone" xml:space="preserve"><value>Najgorsza strefa</value></data>
+  <data name="ZoneStatFormat" xml:space="preserve"><value>{0} · {1:0.0} cm</value></data>
+  <data name="AvgPointsFormat" xml:space="preserve"><value>{0:0.#}</value></data>
+  <data name="TrendTitle" xml:space="preserve"><value>Średnia odległość w czasie</value></data>
+  <data name="TrendHint" xml:space="preserve"><value>Punkt = jedna sesja, ostatnia na niebiesko. Niżej = lepiej.</value></data>
+  <data name="TrendTooFew" xml:space="preserve"><value>Wykres pojawi się po dwóch sesjach z trafieniami.</value></data>
+  <data name="HeatmapTitle" xml:space="preserve"><value>Mapa cieplna</value></data>
+  <data name="DeletePlayer" xml:space="preserve"><value>Usuń gracza</value></data>
+  <data name="DeletePlayerTitle" xml:space="preserve"><value>Usunąć gracza?</value></data>
+  <data name="DeletePlayerMessageFormat" xml:space="preserve"><value>{0} zniknie z list i rankingów. Rozegrane rundy zostają w historii.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Usuń</value></data>
+  <data name="RankingHintFormat" xml:space="preserve"><value>Średnia punktów na rundę · min. {0} rund</value></data>
+  <data name="RankingBelowFormat" xml:space="preserve"><value>Poniżej progu (min. {0} rund)</value></data>
+  <data name="RankingEmpty" xml:space="preserve"><value>Ranking pojawi się po rozegraniu sesji z presetem.</value></data>
+  <data name="RankingNoQualifiedFormat" xml:space="preserve"><value>Nikt nie ma jeszcze {0} rund w tym presecie.</value></data>
+  <data name="RankingDetailFormat" xml:space="preserve"><value>{0} · śr. {1}</value></data>
+  <data name="PointsPerRound" xml:space="preserve"><value>pkt / rundę</value></data>
+  <data name="AllPresets" xml:space="preserve"><value>Wszystkie</value></data>
+  <data name="ShowArrows" xml:space="preserve"><value>Strzałki pomyłek</value></data>
+  <data name="HeatmapHint" xml:space="preserve"><value>Stuknij strefę, aby zobaczyć szczegóły.</value></data>
+  <data name="HeatmapNoData" xml:space="preserve"><value>Brak rund dla tego wyboru.</value></data>
+  <data name="HeatZoneFormat" xml:space="preserve"><value>{0} · {1} · śr. {2} · {3:0} pkt</value></data>
+  <data name="HeatZoneNoneFormat" xml:space="preserve"><value>{0}: brak rund</value></data>
+  <data name="LegendMisses" xml:space="preserve"><value>myli się</value></data>
+  <data name="LegendHits" xml:space="preserve"><value>trafia</value></data>
+  <data name="ArrowsHint" xml:space="preserve"><value>Strzałka: cel → strefa wskazywana zamiast niego (min. 3 razy).</value></data>
 </root>

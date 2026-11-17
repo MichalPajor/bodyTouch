@@ -41,6 +41,10 @@ public static class Routes
     public const string GameConfig = "game-config";
     public const string ZoneSet = "zone-set";
     public const string Game = "game";
+    public const string Players = "players";
+    public const string Player = "player";
+    public const string Rankings = "rankings";
+    public const string Heatmap = "heatmap";
 }
 
 public interface INavigationService

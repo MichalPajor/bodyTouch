@@ -117,8 +117,9 @@ public sealed class PartyDialog : ContentPage
         var card = new Border
         {
             Padding = 0,
-            Margin = new Thickness(20, 0),
-            VerticalOptions = LayoutOptions.Center,
+            // An input dialog sits near the top so the on-screen keyboard does not cover its buttons.
+            Margin = kind == PartyDialogKind.Input ? new Thickness(20, 64, 20, 0) : new Thickness(20, 0),
+            VerticalOptions = kind == PartyDialogKind.Input ? LayoutOptions.Start : LayoutOptions.Center,
             BackgroundColor = Res.Color("SurfaceSolid"),
             Content = new Grid
             {

@@ -16,6 +16,7 @@ public sealed partial class PlayerItem(Player player, string stats) : Observable
     public Player Player { get; } = player;
     public string Name => Player.Name;
     public string Color => Player.AvatarColor;
+    public string? Emoji => Player.AvatarEmoji;
     public string Stats { get; } = stats;
 
     [ObservableProperty]
@@ -24,7 +25,7 @@ public sealed partial class PlayerItem(Player player, string stats) : Observable
 
 /// <summary>New game, step 1 (mockup 2): who plays and in which order.</summary>
 public sealed partial class PlayersSelectViewModel(
-    IPlayerRepository players, ISessionRepository sessions, GameSetupService setup, INavigationService navigation, IDialogService dialogs)
+    IPlayerRepository players, HistoryService history, GameSetupService setup, INavigationService navigation, PlayerEditor editor)
     : ObservableObject
 {
     public ObservableCollection<PlayerItem> Players { get; } = [];
@@ -38,7 +39,7 @@ public sealed partial class PlayersSelectViewModel(
     public async Task LoadAsync()
     {
         var all = await players.GetAllAsync();
-        var rounds = await sessions.GetAllRoundsAsync();
+        var rounds = await history.GetAsync();
         // The page reappears also after a dialog closes: keep the selection made on the screen, otherwise start
         // from the players of the previous game.
         var previouslySelected = Players.Count > 0
@@ -46,16 +47,7 @@ public sealed partial class PlayersSelectViewModel(
             : setup.Players.Select(p => p.Id).ToHashSet();
         Players.Clear();
         foreach (var player in all)
-        {
-            var own = rounds.Where(r => r.Round.GuesserId == player.Id).Select(r => r.Round).ToList();
-            var measured = own.Where(r => r.DistanceCm is { } d && float.IsFinite(d)).Select(r => (double)r.DistanceCm!.Value).ToList();
-            var stats = own.Count == 0
-                ? AppResources.PlayerNoRounds
-                : measured.Count == 0
-                    ? PolishPlural.Rounds(own.Count)
-                    : string.Format(CultureInfo.CurrentCulture, AppResources.PlayerStatsFormat, PolishPlural.Rounds(own.Count), measured.Average());
-            Players.Add(new PlayerItem(player, stats) { IsSelected = previouslySelected.Contains(player.Id) });
-        }
+            Players.Add(new PlayerItem(player, HistoryService.ShortStats(player.Id, rounds)) { IsSelected = previouslySelected.Contains(player.Id) });
 
         UpdateTexts();
     }
@@ -71,26 +63,10 @@ public sealed partial class PlayersSelectViewModel(
     [RelayCommand]
     private async Task AddPlayerAsync()
     {
-        var name = await dialogs.PromptAsync(AppResources.AddPlayerTitle, AppResources.AddPlayerMessage, AppResources.Add, Player.MaxNameLength);
-        if (name is null) return;
-        name = name.Trim();
-        if (name.Length == 0)
-        {
-            await dialogs.AlertAsync(AppResources.AddPlayerTitle, AppResources.NameEmpty);
-            return;
-        }
-
-        try
-        {
-            var all = await players.GetAllAsync();
-            var added = await players.AddAsync(new Player(0, name, AvatarPalette.Next(all.Count), null, DateTimeOffset.UtcNow));
-            Players.Add(new PlayerItem(added, AppResources.PlayerNoRounds) { IsSelected = SelectedCount < RoleScheduler.MaxPlayers });
-            UpdateTexts();
-        }
-        catch (DuplicateNameException)
-        {
-            await dialogs.AlertAsync(AppResources.AddPlayerTitle, AppResources.NameTaken);
-        }
+        var added = await editor.AddAsync();
+        if (added is null) return;
+        Players.Add(new PlayerItem(added, AppResources.PlayerNoRounds) { IsSelected = SelectedCount < RoleScheduler.MaxPlayers });
+        UpdateTexts();
     }
 
     [RelayCommand]

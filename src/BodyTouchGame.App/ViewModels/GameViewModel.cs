@@ -16,7 +16,7 @@ namespace BodyTouchGame.App.ViewModels;
 
 public sealed record ProgressSegment(Color Color, double Width);
 
-public sealed record PodiumItem(string Name, string Color, string Points, int Place, double BarHeight);
+public sealed record PodiumItem(string Name, string Color, string? Emoji, string Points, int Place, double BarHeight);
 
 /// <summary>
 /// The game screen: drives <see cref="GameSession"/> (Core) through the round states, sends the view commands of
@@ -72,8 +72,10 @@ public sealed partial class GameViewModel(
     // ---- who is next / tiles
     [ObservableProperty] public partial string GuesserName { get; set; } = string.Empty;
     [ObservableProperty] public partial string GuesserColor { get; set; } = "#22D3EE";
+    [ObservableProperty] public partial string? GuesserEmoji { get; set; }
     [ObservableProperty] public partial string ModelName { get; set; } = string.Empty;
     [ObservableProperty] public partial string ModelColor { get; set; } = "#FF3D9A";
+    [ObservableProperty] public partial string? ModelEmoji { get; set; }
     [ObservableProperty] public partial string WhoIsNextHint { get; set; } = string.Empty;
     [ObservableProperty] public partial string TouchText { get; set; } = string.Empty;
     [ObservableProperty] public partial string MovementText { get; set; } = string.Empty;
@@ -364,8 +366,10 @@ public sealed partial class GameViewModel(
         var s = _session!;
         GuesserName = s.Guesser.Name;
         GuesserColor = s.Guesser.AvatarColor;
+        GuesserEmoji = s.Guesser.AvatarEmoji;
         ModelName = s.Model.Name;
         ModelColor = s.Model.AvatarColor;
+        ModelEmoji = s.Model.AvatarEmoji;
         WhoIsNextHint = string.Format(Culture, AppResources.WhoIsNextHintFormat, s.Guesser.Name, s.Model.Name);
         TouchText = ConfigTexts.TouchMethod(s.Config.TouchMethod);
         MovementText = ConfigTexts.Movement(s.Config.MovementAllowed);
@@ -435,7 +439,7 @@ public sealed partial class GameViewModel(
         {
             var standing = top[i];
             var place = Math.Clamp(standing.Rank, 1, 3);
-            Podium.Add(new PodiumItem(names[standing.PlayerId], placeColors[place - 1],
+            Podium.Add(new PodiumItem(names[standing.PlayerId], placeColors[place - 1], s.Players.First(p => p.Id == standing.PlayerId).AvatarEmoji,
                 string.Format(Culture, AppResources.PointsShortFormat, standing.TotalPoints), standing.Rank, heights[place - 1]));
         }
 

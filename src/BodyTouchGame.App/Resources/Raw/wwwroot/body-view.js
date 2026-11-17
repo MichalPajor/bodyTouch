@@ -14,6 +14,7 @@ const COLORS = {
   pin: '#5B8CFF',
   target: '#FF9A3C',
   path: '#FFFFFF',
+  arrow: '#22D3EE',
 };
 const MAX_ZOOM = 8;            // spec 12: zoom up to about 8x
 const PIN_RADIUS_CM = 1.1;
@@ -44,6 +45,7 @@ const state = {
   pin: null,                   // guesser's pin { mesh, point }
   revealGroup: null,
   revealAnim: null,
+  arrowGroup: null,            // heat map: arrows target zone -> most often guessed zone
   cameraTween: null,
   vertexGrid: null,
   home: { target: new THREE.Vector3(), distance: 300 },
@@ -160,7 +162,8 @@ async function loadModel(url) {
   return { triangles, loadMs: performance.now() - started, pageMs: performance.now() - state.pageStart };
 }
 
-/** mode: View | Draw | Guess | Reveal | Editor. options: { allowTargetPin, level } (level = Editor zone level). */
+/** mode: View | Draw | Guess | Reveal | Editor | Heatmap. options: { allowTargetPin, level } (level = zone level
+ *  reported by onZoneTapped in Editor and Heatmap). */
 function setMode(mode, options = {}) {
   state.mode = mode;
   state.allowTargetPin = mode === 'Draw' && !!options.allowTargetPin;
@@ -305,6 +308,83 @@ function clearReveal() {
   return true;
 }
 
+/**
+ * Heat map, second layer (spec 10): arrows from a target zone to the zone most often guessed instead of it.
+ * arrows: [{ fromZoneId, toZoneId, count }]. Each arrow arcs above the skin; thickness grows with the count.
+ */
+function setArrows(arrows = []) {
+  clearArrows();
+  const group = new THREE.Group();
+  const material = new THREE.MeshBasicMaterial({ color: COLORS.arrow });
+  for (const a of arrows) {
+    const from = zoneAnchor(a.fromZoneId);
+    const to = zoneAnchor(a.toZoneId);
+    if (!from || !to) continue;
+    const start = from.point.clone().addScaledVector(from.normal, 1.2);
+    const end = to.point.clone().addScaledVector(to.normal, 1.2);
+    const length = start.distanceTo(end);
+    if (length < 0.5) continue;
+    const bend = from.normal.clone().add(to.normal);
+    if (bend.lengthSq() < 1e-4) bend.copy(from.normal);
+    const control = start.clone().add(end).multiplyScalar(0.5).addScaledVector(bend.normalize(), Math.max(6, length * 0.35));
+    const curve = new THREE.QuadraticBezierCurve3(start, control, end);
+    const radius = 0.35 + 0.1 * Math.min(a.count || 1, 6);
+    const headLength = 4 + radius * 2;
+    // The shaft stops where the head begins.
+    const shaftEnd = Math.max(0.05, 1 - headLength / Math.max(curve.getLength(), headLength + 1));
+    const shaftPoints = [];
+    for (let i = 0; i <= 24; i++) shaftPoints.push(curve.getPoint(shaftEnd * i / 24));
+    group.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(shaftPoints), 32, radius, 8, false), material));
+    const head = new THREE.Mesh(new THREE.ConeGeometry(radius * 3.2, headLength, 16), material);
+    const tip = curve.getPoint(1);
+    const tangent = curve.getTangent(1).normalize();
+    head.position.copy(tip).addScaledVector(tangent, -headLength / 2);
+    head.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), tangent);
+    group.add(head);
+  }
+  scene.add(group);
+  state.arrowGroup = group;
+  return true;
+}
+
+function clearArrows() {
+  if (state.arrowGroup) {
+    scene.remove(state.arrowGroup);
+    state.arrowGroup.traverse((o) => { o.geometry?.dispose(); });
+    state.arrowGroup = null;
+  }
+  return true;
+}
+
+/** A point on the skin in the middle of a zone (the zone vertex closest to the zone centroid) and its normal, world space. */
+function zoneAnchor(zoneId) {
+  const zone = state.zoneById.get(zoneId);
+  if (!zone) return null;
+  const geometry = state.body.geometry;
+  const index = geometry.index.array;
+  const pos = geometry.attributes.position;
+  const nrm = geometry.attributes.normal;
+  const labels = state.zones.triangleZones[zone.level];
+  if (!labels) return null;
+  const vertices = new Set();
+  const centre = new THREE.Vector3();
+  for (let t = 0; t < labels.length; t++) {
+    if (labels[t] !== zone.index) continue;
+    for (let k = 0; k < 3; k++) vertices.add(index[t * 3 + k]);
+  }
+  if (vertices.size === 0) return null;
+  for (const v of vertices) centre.add(new THREE.Vector3(pos.getX(v), pos.getY(v), pos.getZ(v)));
+  centre.divideScalar(vertices.size);
+  let best = -1, bestD = Infinity;
+  for (const v of vertices) {
+    const d = (pos.getX(v) - centre.x) ** 2 + (pos.getY(v) - centre.y) ** 2 + (pos.getZ(v) - centre.z) ** 2;
+    if (d < bestD) { bestD = d; best = v; }
+  }
+  const point = state.body.localToWorld(new THREE.Vector3(pos.getX(best), pos.getY(best), pos.getZ(best)));
+  const normal = new THREE.Vector3(nrm.getX(best), nrm.getY(best), nrm.getZ(best)).transformDirection(state.body.matrixWorld);
+  return { point, normal };
+}
+
 /** Diagnostics for the target-secrecy check (spec 5): what the view currently holds. */
 function getDebugState() {
   return {
@@ -312,6 +392,7 @@ function getDebugState() {
     hasTarget: state.target !== null || state.highlight !== null || state.targetMarker !== null,
     hasPin: state.pin !== null,
     hasReveal: state.revealGroup !== null,
+    arrows: state.arrowGroup ? state.arrowGroup.children.filter((o) => o.geometry?.type === 'ConeGeometry').length : 0,
   };
 }
 
@@ -344,7 +425,7 @@ function zoomBy(factor) {
 
 window.bodyView = {
   loadModel, setMode, resetCamera, setZoneColors, focusTarget, clearTarget, clearPin, showReveal, clearReveal,
-  getDebugState, zoomBy, setPixelRatio, setViewInsets, setStatsVisible,
+  setArrows, clearArrows, getDebugState, zoomBy, setPixelRatio, setViewInsets, setStatsVisible,
   startBenchmark: () => { startBenchmark(); return true; },
 };
 
@@ -702,7 +783,7 @@ function handleTap(clientX, clientY) {
 
   if (state.mode === 'Guess') setGuessPin(hit.point, hit.surface, true);
   else if (state.mode === 'Draw' && state.allowTargetPin) setTargetPin(hit.point, hit.surface);
-  else if (state.mode === 'Editor') {
+  else if (state.mode === 'Editor' || state.mode === 'Heatmap') {
     const labels = state.zones.triangleZones[state.editorLevel];
     if (labels) send('onZoneTapped', { zoneId: state.zones.zones[labels[hit.surface.triangleIndex]].id, level: state.editorLevel });
   }

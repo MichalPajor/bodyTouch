@@ -54,6 +54,12 @@ public sealed class BodyViewBridge
     public Task ShowRevealAsync(RevealPayload payload) =>
         Invoke("bodyView.showReveal", [payload], [BridgeJsonContext.Default.RevealPayload]);
 
+    /// <summary>Heat map: arrows target zone -> most often guessed zone (spec 10).</summary>
+    public Task SetArrowsAsync(List<ArrowDto> arrows) =>
+        Invoke("bodyView.setArrows", [arrows], [BridgeJsonContext.Default.ListArrowDto]);
+
+    public Task ClearArrowsAsync() => Invoke("bodyView.clearArrows", null, null);
+
     public Task<ViewDebugState?> GetDebugStateAsync() =>
         _webView.InvokeJavaScriptAsync("bodyView.getDebugState", BridgeJsonContext.Default.ViewDebugState);
 

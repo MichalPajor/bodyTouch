@@ -29,7 +29,10 @@ public sealed record StatsMessage(double FpsAvg, double FpsMin, double FrameMsP9
 public sealed record ModelLoadedResult(int Triangles, double LoadMs, double PageMs);
 
 /// <summary>Result of getDebugState: what the view currently holds (target-secrecy check, spec 5).</summary>
-public sealed record ViewDebugState(string Mode, bool HasTarget, bool HasPin, bool HasReveal);
+public sealed record ViewDebugState(string Mode, bool HasTarget, bool HasPin, bool HasReveal, int Arrows = 0);
+
+/// <summary>C# -> JS: heat map arrow from a target zone to the zone most often guessed instead of it.</summary>
+public sealed record ArrowDto(string FromZoneId, string ToZoneId, int Count);
 
 /// <summary>C# -> JS: result. Path = flat [x, y, z, ...] in model coordinates (cm).</summary>
 public sealed record RevealPayload(SurfacePointDto? Pin, TargetDto Target, float[] Path, float? DistanceCm);
@@ -45,6 +48,7 @@ public sealed record RevealPayload(SurfacePointDto? Pin, TargetDto Target, float
 [JsonSerializable(typeof(RevealPayload))]
 [JsonSerializable(typeof(TargetDto))]
 [JsonSerializable(typeof(ViewModeOptions))]
+[JsonSerializable(typeof(List<ArrowDto>))]
 [JsonSerializable(typeof(Dictionary<string, string>))]
 [JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(double))]

@@ -63,6 +63,8 @@ public static class MauiProgram
         services.AddSingleton<GameSetupService>();
         services.AddSingleton(AudioManager.Current);
         services.AddSingleton<FeedbackService>();
+        services.AddSingleton<HistoryService>();
+        services.AddSingleton<PlayerEditor>();
 
         // Screens
         services.AddTransient<StartPage>();
@@ -79,6 +81,14 @@ public static class MauiProgram
         services.AddTransient<ZoneSetViewModel>();
         services.AddTransient<GamePage>();
         services.AddTransient<GameViewModel>();
+        services.AddTransient<PlayersPage>();
+        services.AddTransient<PlayersViewModel>();
+        services.AddTransient<PlayerProfilePage>();
+        services.AddTransient<PlayerProfileViewModel>();
+        services.AddTransient<RankingsPage>();
+        services.AddTransient<RankingsViewModel>();
+        services.AddTransient<HeatmapPage>();
+        services.AddTransient<HeatmapViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

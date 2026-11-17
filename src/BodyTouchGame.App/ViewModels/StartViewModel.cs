@@ -54,15 +54,13 @@ public sealed partial class StartViewModel(ISessionRepository sessions, IPlayerR
     [RelayCommand]
     private Task PlayAsync() => navigation.GoToAsync(Routes.PlayersSelect);
 
-    // Screens of later stages: visible but disabled until they exist (plan, stage 5).
-    [RelayCommand(CanExecute = nameof(IsAvailableLater))]
-    private Task PlayersAsync() => Task.CompletedTask;
+    [RelayCommand]
+    private Task PlayersAsync() => navigation.GoToAsync(Routes.Players);
 
-    [RelayCommand(CanExecute = nameof(IsAvailableLater))]
-    private Task RankingsAsync() => Task.CompletedTask;
+    [RelayCommand]
+    private Task RankingsAsync() => navigation.GoToAsync(Routes.Rankings);
 
     [RelayCommand]
     private Task SettingsAsync() => navigation.GoToAsync(Routes.Settings);
 
-    private static bool IsAvailableLater() => false;
 }

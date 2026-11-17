@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Rankings (own design D7): a tab per preset, average points per round, min. 5 rounds. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.RankingsPage"
+             x:DataType="vm:RankingsViewModel">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="RowTemplate" x:DataType="vm:RankingRow">
+            <Border Padding="0" HeightRequest="68">
+                <Grid ColumnDefinitions="4,52,Auto,*,Auto" ColumnSpacing="0">
+                    <BoxView Color="{Binding Accent}" />
+                    <Label Grid.Column="1" Text="{Binding Place}" FontFamily="{StaticResource FontTitle}" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <controls:Avatar Grid.Column="2" Name="{Binding Name}" Color="{Binding Color}" Emoji="{Binding Emoji}" Size="40" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="3" Spacing="2" VerticalOptions="Center" Margin="12,0,8,0">
+                        <Label Text="{Binding Name}" FontFamily="{StaticResource FontBold}" FontSize="16" LineBreakMode="TailTruncation" />
+                        <Label Text="{Binding Detail}" FontSize="12" TextColor="{StaticResource Muted}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="4" Spacing="0" VerticalOptions="Center" Margin="0,0,14,0">
+                        <Label Text="{Binding Points}" FontFamily="{StaticResource FontTitle}" FontSize="20" TextColor="{StaticResource Primary}" HorizontalOptions="End" />
+                        <Label Text="{x:Static res:AppResources.PointsPerRound}" FontSize="11" TextColor="{StaticResource Muted}" HorizontalOptions="End" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="Auto,Auto,*" RowSpacing="14" Padding="20,12,20,16">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="{x:Static res:AppResources.Rankings}" Style="{StaticResource ScreenTitle}" />
+                <Label Text="{Binding Hint}" Style="{StaticResource Caption}" />
+            </VerticalStackLayout>
+
+            <ScrollView Grid.Row="1" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Tabs}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ChoiceItem">
+                            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" ButtonHeight="40"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:RankingsViewModel}}, Path=SelectCommand, x:DataType=vm:RankingsViewModel}"
+                                                   CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+            </ScrollView>
+
+            <ScrollView Grid.Row="2">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static res:AppResources.RankingEmpty}" FontSize="15" TextColor="{StaticResource Muted}" IsVisible="{Binding IsEmpty}" />
+                    <Label Text="{Binding NoQualifiedText}" FontSize="14" TextColor="{StaticResource Muted}" IsVisible="{Binding HasNoQualified}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Qualified}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}" Spacing="8" />
+                    <Label Text="{Binding BelowTitle}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource Muted}" Margin="0,12,0,0"
+                           IsVisible="{Binding HasBelow}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Below}" BindableLayout.ItemTemplate="{StaticResource RowTemplate}" Spacing="8"
+                                         Opacity="0.6" />
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+</ContentPage>

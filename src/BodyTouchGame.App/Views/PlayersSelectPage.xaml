@@ -32,7 +32,7 @@
                                                               CommandParameter="{Binding .}" />
                                     </Border.GestureRecognizers>
                                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
-                                        <controls:Avatar Name="{Binding Name}" Color="{Binding Color}" Size="42" VerticalOptions="Center" />
+                                        <controls:Avatar Name="{Binding Name}" Color="{Binding Color}" Emoji="{Binding Emoji}" Size="42" VerticalOptions="Center" />
                                         <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                                             <Label Text="{Binding Name}" FontFamily="{StaticResource FontBold}" FontSize="16" />
                                             <Label Text="{Binding Stats}" FontSize="12" TextColor="{StaticResource Muted}" />

@@ -140,7 +140,7 @@
                     <Border Padding="0">
                         <Grid ColumnDefinitions="3,Auto,*" ColumnSpacing="0">
                             <BoxView Color="{StaticResource PartyCyan}" />
-                            <controls:Avatar Grid.Column="1" Name="{Binding GuesserName}" Color="{Binding GuesserColor}" Size="64" Margin="16" />
+                            <controls:Avatar Grid.Column="1" Name="{Binding GuesserName}" Color="{Binding GuesserColor}" Emoji="{Binding GuesserEmoji}" Size="64" Margin="16" />
                             <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
                                 <Label Text="{x:Static res:AppResources.WhoGuesses}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1.5" TextColor="{StaticResource PartyCyan}" />
                                 <Label Text="{Binding GuesserName}" FontFamily="{StaticResource FontTitle}" FontSize="26" />
@@ -150,7 +150,7 @@
                     <Border Padding="0">
                         <Grid ColumnDefinitions="3,Auto,*" ColumnSpacing="0">
                             <BoxView Color="{StaticResource PartyPink}" />
-                            <controls:Avatar Grid.Column="1" Name="{Binding ModelName}" Color="{Binding ModelColor}" Size="64" Margin="16" />
+                            <controls:Avatar Grid.Column="1" Name="{Binding ModelName}" Color="{Binding ModelColor}" Emoji="{Binding ModelEmoji}" Size="64" Margin="16" />
                             <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
                                 <Label Text="{x:Static res:AppResources.WhoTouches}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1.5" TextColor="{StaticResource PartyPink}" />
                                 <Label Text="{Binding ModelName}" FontFamily="{StaticResource FontTitle}" FontSize="26" />
@@ -218,7 +218,7 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:PodiumItem">
                             <VerticalStackLayout FlexLayout.Basis="33%" Spacing="6" Margin="4,0">
-                                <controls:Avatar Name="{Binding Name}" Color="{Binding Color}" Size="48" HorizontalOptions="Center" />
+                                <controls:Avatar Name="{Binding Name}" Color="{Binding Color}" Emoji="{Binding Emoji}" Size="48" HorizontalOptions="Center" />
                                 <Label Text="{Binding Name}" FontFamily="{StaticResource FontBold}" FontSize="15" HorizontalTextAlignment="Center" LineBreakMode="TailTruncation" />
                                 <Label Text="{Binding Points}" FontSize="13" TextColor="{StaticResource Muted}" HorizontalTextAlignment="Center" />
                                 <Grid HeightRequest="{Binding BarHeight}" BackgroundColor="{Binding Color}">
