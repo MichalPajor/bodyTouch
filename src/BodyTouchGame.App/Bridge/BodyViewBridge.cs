@@ -44,8 +44,14 @@ public sealed class BodyViewBridge
     public Task SetZoneColorsAsync(Dictionary<string, string> colors) =>
         Invoke("bodyView.setZoneColors", [colors], [BridgeJsonContext.Default.DictionaryStringString]);
 
-    public Task FocusTargetAsync(TargetDto target, bool animate = true) =>
-        Invoke("bodyView.focusTarget", [target, animate], [BridgeJsonContext.Default.TargetDto, BridgeJsonContext.Default.Boolean]);
+    /// <summary>Highlights the target; <paramref name="turnCamera"/> = false keeps the camera (editor preview).</summary>
+    public Task FocusTargetAsync(TargetDto target, bool animate = true, bool turnCamera = true) =>
+        Invoke("bodyView.focusTarget", [target, animate, turnCamera],
+            [BridgeJsonContext.Default.TargetDto, BridgeJsonContext.Default.Boolean, BridgeJsonContext.Default.Boolean]);
+
+    /// <summary>Custom point markers (empty list = none).</summary>
+    public Task SetCustomPointsAsync(List<CustomPointDto> points) =>
+        Invoke("bodyView.setCustomPoints", [points], [BridgeJsonContext.Default.ListCustomPointDto]);
 
     public Task ClearTargetAsync() => Invoke("bodyView.clearTarget", null, null);
 

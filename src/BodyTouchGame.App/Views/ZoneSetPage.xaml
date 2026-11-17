@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- Zone set of the game: levels + model preview (orange = can be drawn, grey = excluded by the players). -->
+<!-- Zone set of the game: any mix of levels, zones picked on the model and custom points (spec 6). -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
@@ -10,30 +10,60 @@
     <Grid>
         <controls:ConfettiBackground />
 
-        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto" RowSpacing="12" Padding="20,12,20,16">
+        <Grid RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="10" Padding="20,12,20,16">
             <VerticalStackLayout Spacing="4">
                 <Label Text="{x:Static res:AppResources.NewGameStep2}" Style="{StaticResource Caption}" />
                 <Label Text="{x:Static res:AppResources.Zones}" Style="{StaticResource ScreenTitle}" />
             </VerticalStackLayout>
 
-            <Label Grid.Row="1" Text="{x:Static res:AppResources.ZoneSetHint}" FontSize="13" TextColor="{StaticResource Muted}" />
+            <VerticalStackLayout Grid.Row="1" Spacing="8">
+                <Label Text="{x:Static res:AppResources.ZoneSetHint}" FontSize="13" TextColor="{StaticResource Muted}" />
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Levels}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:LevelItem">
+                            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsEnabled="{Binding IsAvailable}" ButtonHeight="40"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneSetViewModel}}, Path=ToggleCommand, x:DataType=vm:ZoneSetViewModel}"
+                                                   CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <Label Text="{x:Static res:AppResources.ManualZonesHint}" FontSize="12" TextColor="{StaticResource Muted}" />
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding TapLevels}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:LevelItem">
+                            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsEnabled="{Binding IsAvailable}" IsOption="True" ButtonHeight="34"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneSetViewModel}}, Path=SelectTapLevelCommand, x:DataType=vm:ZoneSetViewModel}"
+                                                   CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
 
-            <FlexLayout Grid.Row="2" BindableLayout.ItemsSource="{Binding Levels}" Wrap="Wrap">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="vm:LevelItem">
-                        <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsEnabled="{Binding IsAvailable}"
-                                               ButtonHeight="40" Margin="0,0,6,6"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneSetViewModel}}, Path=ToggleCommand, x:DataType=vm:ZoneSetViewModel}"
-                                               CommandParameter="{Binding .}" />
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </FlexLayout>
+            <controls:BodyView x:Name="Body" Grid.Row="2" />
 
-            <controls:BodyView x:Name="Body" Grid.Row="3" />
+            <VerticalStackLayout Grid.Row="3" Spacing="8">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding HasManual}">
+                    <Label Text="{Binding ManualText}" FontSize="13" TextColor="{StaticResource PartyCyan}" MaxLines="2" LineBreakMode="TailTruncation" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="{x:Static res:AppResources.ClearManual}" HeightRequest="40" MinimumHeightRequest="40" Command="{Binding ClearManualCommand}" />
+                </Grid>
+                <VerticalStackLayout Spacing="6" IsVisible="{Binding HasPoints}">
+                    <Label Text="{x:Static res:AppResources.CustomPointsLabel}" Style="{StaticResource Caption}" />
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Points}" Spacing="6">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="vm:ChoiceItem">
+                                    <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsOption="True" ButtonHeight="34"
+                                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneSetViewModel}}, Path=TogglePointCommand, x:DataType=vm:ZoneSetViewModel}"
+                                                           CommandParameter="{Binding .}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
+                <Label Text="{Binding CountText}" FontFamily="{StaticResource FontBold}" FontSize="14" />
+            </VerticalStackLayout>
 
-            <Label Grid.Row="4" Text="{Binding CountText}" FontFamily="{StaticResource FontBold}" FontSize="14" />
-
-            <controls:PartyButton Grid.Row="5" Text="{x:Static res:AppResources.Done}" Command="{Binding DoneCommand}" Margin="0,0,-5,-5" />
+            <controls:PartyButton Grid.Row="4" Text="{x:Static res:AppResources.Done}" Command="{Binding DoneCommand}" Margin="0,0,-5,-5" />
         </Grid>
     </Grid>
 </ContentPage>

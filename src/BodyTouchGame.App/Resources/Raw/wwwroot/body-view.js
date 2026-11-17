@@ -15,6 +15,7 @@ const COLORS = {
   target: '#FF9A3C',
   path: '#FFFFFF',
   arrow: '#22D3EE',
+  customPoint: '#8B5CF6',
 };
 const MAX_ZOOM = 8;            // spec 12: zoom up to about 8x
 const PIN_RADIUS_CM = 1.1;
@@ -28,6 +29,7 @@ const DOUBLE_TAP_MS = 320;
 const PIN_GRAB_PX = 44;        // touching the pin closer than this drags it
 const CAMERA_TWEEN_MS = 700;
 const REVEAL_PATH_MS = 1300;
+const SMALL_TARGET_CM = 12;  // focusTarget zooms in on targets smaller than this (half-extent)
 
 const state = {
   mode: 'View',
@@ -46,6 +48,7 @@ const state = {
   revealGroup: null,
   revealAnim: null,
   arrowGroup: null,            // heat map: arrows target zone -> most often guessed zone
+  customPointGroup: null,      // editor / zone set: markers of custom points
   cameraTween: null,
   vertexGrid: null,
   home: { target: new THREE.Vector3(), distance: 300 },
@@ -113,6 +116,7 @@ material.onBeforeCompile = (shader) => {
 const eyeMaterial = new THREE.MeshStandardMaterial({ color: COLORS.mannequin, roughness: 0.6, metalness: 0 });
 const pinMaterial = new THREE.MeshStandardMaterial({ color: COLORS.pin, roughness: 0.35 });
 const targetMaterial = new THREE.MeshStandardMaterial({ color: COLORS.target, roughness: 0.35, emissive: COLORS.target, emissiveIntensity: 0.25 });
+const customPointMaterial = new THREE.MeshStandardMaterial({ color: COLORS.customPoint, roughness: 0.35, emissive: COLORS.customPoint, emissiveIntensity: 0.2 });
 
 function resize() {
   const w = container.clientWidth || 1;
@@ -220,12 +224,21 @@ function setZoneColors(colors = {}) {
  * Rotates to the target and highlights it (pulsing).
  * target: { kind: 'Zone', zoneId } | { kind: 'Point', triangleIndex, baryU, baryV, radiusCm }.
  */
-function focusTarget(target, animate = true) {
+function focusTarget(target, animate = true, turnCamera = true) {
   clearTarget();
   state.target = target;
   const info = describeTarget(target, true);
   applyColors(1);
-  if (info.direction) rotateTowards(info.direction, animate);
+  if (turnCamera && info.direction) {
+    if (info.extent !== undefined && info.extent < SMALL_TARGET_CM) {
+      // Small targets (fingers, Hard / Hardcore zones, points): fly closer so the highlight is clearly visible.
+      const dir = new THREE.Vector3(info.direction.x, info.direction.y * 0.3, info.direction.z).normalize();
+      const distance = THREE.MathUtils.clamp(info.extent * 6, 55, state.home.distance);
+      moveCamera(info.centre.clone().addScaledVector(dir, distance), info.centre.clone(), animate);
+    } else {
+      rotateTowards(info.direction, animate);
+    }
+  }
   return true;
 }
 
@@ -305,6 +318,32 @@ function clearReveal() {
     state.revealGroup = null;
   }
   state.revealAnim = null;
+  return true;
+}
+
+/**
+ * Custom points (spec 7): a violet ball and a ring with the point's radius, flat on the skin.
+ * points: [{ id, triangleIndex, baryU, baryV, radiusCm, highlighted }]; highlighted points are drawn in orange.
+ */
+function setCustomPoints(points = []) {
+  if (state.customPointGroup) {
+    scene.remove(state.customPointGroup);
+    state.customPointGroup.traverse((o) => o.geometry?.dispose());
+  }
+  const group = new THREE.Group();
+  for (const p of points) {
+    const point = pointFromSurface(p);
+    const normal = surfaceNormal(p);
+    const mat = p.highlighted ? targetMaterial : customPointMaterial;
+    const ball = new THREE.Mesh(new THREE.SphereGeometry(PIN_RADIUS_CM * 0.8, 16, 12), mat);
+    ball.position.copy(point);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(Math.max(0.8, p.radiusCm || 0), 0.18, 6, 40), mat);
+    ring.position.copy(point).addScaledVector(normal, 0.3);
+    ring.lookAt(point.clone().add(normal));
+    group.add(ball, ring);
+  }
+  scene.add(group);
+  state.customPointGroup = group;
   return true;
 }
 
@@ -425,7 +464,7 @@ function zoomBy(factor) {
 
 window.bodyView = {
   loadModel, setMode, resetCamera, setZoneColors, focusTarget, clearTarget, clearPin, showReveal, clearReveal,
-  setArrows, clearArrows, getDebugState, zoomBy, setPixelRatio, setViewInsets, setStatsVisible,
+  setArrows, clearArrows, setCustomPoints, getDebugState, zoomBy, setPixelRatio, setViewInsets, setStatsVisible,
   startBenchmark: () => { startBenchmark(); return true; },
 };
 
@@ -446,11 +485,14 @@ function describeTarget(target, pulse) {
     const tri = new THREE.Triangle();
     const tmp = new THREE.Vector3();
     let n = 0;
+    const mids = [];
     for (let t = 0; t < labels.length; t++) {
       if (labels[t] !== zone.index) continue;
       for (let k = 0; k < 3; k++) counts.set(index[t * 3 + k], (counts.get(index[t * 3 + k]) || 0) + 1);
       tri.setFromAttributeAndIndices(pos, index[t * 3], index[t * 3 + 1], index[t * 3 + 2]);
-      centre.add(tri.getMidpoint(tmp));
+      const mid = tri.getMidpoint(new THREE.Vector3());
+      mids.push(mid);
+      centre.add(mid);
       normal.add(tri.getNormal(tmp).multiplyScalar(tri.getArea()));
       n++;
     }
@@ -458,8 +500,9 @@ function describeTarget(target, pulse) {
     for (const [v, c] of counts) weights.set(v, c / state.vertexTriangleCount[v]);
     state.highlight = { weights, pulse };
     centre.divideScalar(Math.max(1, n));
+    const extent = mids.reduce((m, p) => Math.max(m, p.distanceTo(centre)), 0);
     state.body.localToWorld(centre);
-    return { centre, direction: normal.lengthSq() > 0 ? normal.normalize() : centre.clone().sub(state.home.target) };
+    return { centre, extent, direction: normal.lengthSq() > 0 ? normal.normalize() : centre.clone().sub(state.home.target) };
   }
 
   // Point target: marker on the surface, highlight within the radius.
@@ -477,7 +520,7 @@ function describeTarget(target, pulse) {
     }
     state.highlight = { weights, pulse };
   }
-  return { centre: point, direction: normal };
+  return { centre: point, extent: Math.max(radius, 3), direction: normal };
 }
 
 function setGuessPin(point, surface, notify) {

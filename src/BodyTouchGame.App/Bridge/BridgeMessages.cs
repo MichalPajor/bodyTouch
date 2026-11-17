@@ -31,6 +31,9 @@ public sealed record ModelLoadedResult(int Triangles, double LoadMs, double Page
 /// <summary>Result of getDebugState: what the view currently holds (target-secrecy check, spec 5).</summary>
 public sealed record ViewDebugState(string Mode, bool HasTarget, bool HasPin, bool HasReveal, int Arrows = 0);
 
+/// <summary>C# -> JS: a custom point marker (editor, zone set preview).</summary>
+public sealed record CustomPointDto(long Id, int TriangleIndex, float BaryU, float BaryV, float RadiusCm, bool Highlighted);
+
 /// <summary>C# -> JS: heat map arrow from a target zone to the zone most often guessed instead of it.</summary>
 public sealed record ArrowDto(string FromZoneId, string ToZoneId, int Count);
 
@@ -49,6 +52,7 @@ public sealed record RevealPayload(SurfacePointDto? Pin, TargetDto Target, float
 [JsonSerializable(typeof(TargetDto))]
 [JsonSerializable(typeof(ViewModeOptions))]
 [JsonSerializable(typeof(List<ArrowDto>))]
+[JsonSerializable(typeof(List<CustomPointDto>))]
 [JsonSerializable(typeof(Dictionary<string, string>))]
 [JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(double))]

@@ -36,17 +36,11 @@ public sealed partial class SettingsViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(IsAvailableLater))]
     private void DefaultConfig() { }
 
-    [RelayCommand(CanExecute = nameof(IsAvailableLater))]
-    private void ZoneEditor() { }
+    [RelayCommand]
+    private Task ZoneEditorAsync() => _navigation.GoToAsync(Routes.ZoneEditor);
 
     [RelayCommand]
     private Task ExcludedZonesAsync() => _navigation.GoToAsync(Routes.Exclusions);
-
-    [RelayCommand(CanExecute = nameof(IsAvailableLater))]
-    private void ExportData() { }
-
-    [RelayCommand(CanExecute = nameof(IsAvailableLater))]
-    private void ImportData() { }
 
     private static bool IsAvailableLater() => false;
 }

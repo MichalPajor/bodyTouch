@@ -87,26 +87,30 @@ public sealed class GameSetupService(IPreferences preferences, IExclusionReposit
         return pools;
     }
 
-    /// <summary>Zone set preview: zones still drawable with the selected players' exclusions, and the zones of the
-    /// set that those exclusions remove.</summary>
-    public async Task<(List<string> Drawable, List<string> Excluded)> PreviewZonesAsync(ZoneCatalog catalog, ZoneSetSelection selection)
-    {
-        var builder = new TargetPoolBuilder(catalog);
-        var levelOverrides = await overrides.GetAllAsync();
-        var all = builder.Build(selection, [], levelOverrides, []).OfType<ZoneTarget>().Select(t => t.ZoneId).ToList();
-        var remaining = builder.Build(selection, await ExcludedZonesOfPlayersAsync(), levelOverrides, []).OfType<ZoneTarget>()
-            .Select(t => t.ZoneId).ToHashSet(StringComparer.Ordinal);
-        return (all.Where(remaining.Contains).ToList(), all.Where(id => !remaining.Contains(id)).ToList());
-    }
-
-    /// <summary>Number of drawable targets without exclusions and how many of them the selected players exclude.</summary>
-    public async Task<(int Total, int Excluded)> CountTargetsAsync(ZoneCatalog catalog, ZoneSetSelection selection)
+    /// <summary>Zone set preview: zones and custom points still drawable with the selected players' exclusions, and the
+    /// ones of the set that those exclusions remove.</summary>
+    public async Task<ZoneSetPreview> PreviewAsync(ZoneCatalog catalog, ZoneSetSelection selection)
     {
         var builder = new TargetPoolBuilder(catalog);
         var levelOverrides = await overrides.GetAllAsync();
         var points = await customPoints.GetAllAsync();
-        var total = builder.Build(selection, [], levelOverrides, points).Count;
-        var remaining = builder.Build(selection, await ExcludedZonesOfPlayersAsync(), levelOverrides, points).Count;
-        return (total, total - remaining);
+        var all = builder.Build(selection, [], levelOverrides, points);
+        var remaining = builder.Build(selection, await ExcludedZonesOfPlayersAsync(), levelOverrides, points).ToHashSet();
+        return new ZoneSetPreview(
+            all.Where(remaining.Contains).OfType<ZoneTarget>().Select(t => t.ZoneId).ToList(),
+            all.Where(t => !remaining.Contains(t)).OfType<ZoneTarget>().Select(t => t.ZoneId).ToList(),
+            all.Where(remaining.Contains).OfType<CustomPointTarget>().Select(t => t.PointId).ToHashSet(),
+            all.Count(remaining.Contains),
+            all.Count - remaining.Count,
+            points);
     }
 }
+
+/// <summary>What a zone set draws for the selected players (counts include custom points).</summary>
+public sealed record ZoneSetPreview(
+    IReadOnlyList<string> DrawableZones,
+    IReadOnlyList<string> ExcludedZones,
+    IReadOnlySet<long> DrawablePoints,
+    int DrawableCount,
+    int ExcludedCount,
+    IReadOnlyList<CustomPoint> AllPoints);

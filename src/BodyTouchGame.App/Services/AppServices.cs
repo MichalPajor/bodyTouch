@@ -45,6 +45,7 @@ public static class Routes
     public const string Player = "player";
     public const string Rankings = "rankings";
     public const string Heatmap = "heatmap";
+    public const string ZoneEditor = "zone-editor";
 }
 
 public interface INavigationService
@@ -150,6 +151,8 @@ public static class PolishPlural
     public static string Zones(int n) => Format(n, AppResources.ZonesOne, AppResources.ZonesFew, AppResources.ZonesMany);
 
     public static string Excluded(int n) => Format(n, AppResources.ExcludedOne, AppResources.ExcludedFew, AppResources.ExcludedMany);
+
+    public static string Points(int n) => Format(n, AppResources.PointsOne, AppResources.PointsFew, AppResources.PointsMany);
 }
 
 /// <summary>Display texts for configuration values (from resources).</summary>

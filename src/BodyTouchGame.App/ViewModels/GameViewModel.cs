@@ -84,7 +84,10 @@ public sealed partial class GameViewModel(
     // ---- draw
     [ObservableProperty] public partial bool IsChosenByModel { get; set; }
     [ObservableProperty] public partial string TargetTitle { get; set; } = string.Empty;
-    [ObservableProperty] public partial string TargetName { get; set; } = string.Empty;
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(TargetNameSize))] public partial string TargetName { get; set; } = string.Empty;
+
+    /// <summary>Long names of fine zones ("Prawy nadgarstek – od wewnątrz") get a smaller title.</summary>
+    public double TargetNameSize => TargetName.Length > 26 ? 21 : TargetName.Length > 16 ? 25 : 30;
 
     /// <summary>ChosenByModel before the model has tapped: a hint instead of the target name.</summary>
     [ObservableProperty] public partial bool ShowTargetHint { get; set; }
@@ -541,13 +544,21 @@ public sealed partial class GameViewModel(
     private string? ZoneName(SurfacePoint point, ZoneLevel level) => _catalog!.ZoneAt(point.TriangleIndex, level)?.NamePl;
 
     /// <summary>Zone name under the pin only when the zone set is Easy/Medium (spec 12).</summary>
-    private bool ShowZoneUnderPin() =>
-        IsChosenByModel || _session!.Config.ZoneSet.Levels.All(l => l is ZoneLevel.Easy or ZoneLevel.Medium);
+    private bool ShowZoneUnderPin() => IsChosenByModel || SelectedLevels().All(l => l is ZoneLevel.Easy or ZoneLevel.Medium);
 
+    /// <summary>Finest level of the zone set; a set of custom points only names the pin's zone on the Medium level.</summary>
     private ZoneLevel FinestSelectedLevel()
     {
-        var levels = _session!.Config.ZoneSet.Levels.Where(_catalog!.HasLevel).ToList();
-        return levels.Count > 0 ? levels.Max() : _catalog!.Levels.Last();
+        var levels = SelectedLevels().Where(_catalog!.HasLevel).ToList();
+        if (levels.Count > 0) return levels.Max();
+        return IsChosenByModel ? _catalog!.Levels.Last() : ZoneLevel.Medium;
+    }
+
+    /// <summary>Levels of the zone set, including the levels of zones picked by hand.</summary>
+    private IEnumerable<ZoneLevel> SelectedLevels()
+    {
+        var set = _session!.Config.ZoneSet;
+        return set.Levels.Concat(set.ZoneIds.Where(id => _catalog!.TryGet(id, out _)).Select(id => _catalog!.Get(id).Level)).Distinct();
     }
 
     private string Comment(RevealCommentKind kind, string target, string guessed)

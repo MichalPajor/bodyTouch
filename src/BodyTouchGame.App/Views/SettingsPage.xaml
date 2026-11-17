@@ -33,14 +33,6 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Label Grid.Row="5" Text="{x:Static res:AppResources.SectionData}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource PartyViolet}" />
-            <Border Grid.Row="6" Padding="0">
-                <VerticalStackLayout>
-                    <controls:SettingsRow Text="{x:Static res:AppResources.ExportData}" Command="{Binding ExportDataCommand}" />
-                    <controls:SettingsRow Text="{x:Static res:AppResources.ImportData}" Command="{Binding ImportDataCommand}" ShowDivider="False" />
-                </VerticalStackLayout>
-            </Border>
-
             <Label Grid.Row="8" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
         </Grid>
         </ScrollView>

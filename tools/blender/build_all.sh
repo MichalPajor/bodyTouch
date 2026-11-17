@@ -10,6 +10,7 @@ RENDERS_DIR="${RENDERS_DIR:-screens/etap-02}"
 
 if [[ " $* " != *" --export-only "* ]]; then
   "$BLENDER" -b --python tools/blender/build_model.py -- --out tools/blender/body.blend
+  "$BLENDER" -b tools/blender/body.blend --python tools/blender/build_fine_zones.py
 fi
 "$BLENDER" -b tools/blender/body.blend --python tools/blender/export_assets.py
 dotnet run --project tools/BodyDataTool -v:q -- build

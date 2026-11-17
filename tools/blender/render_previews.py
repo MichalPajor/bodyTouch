@@ -2,7 +2,8 @@
 
   blender -b tools/blender/body.blend --python tools/blender/render_previews.py -- --out screens/etap-02
 
-Writes model_*.png (plain mannequin), zones_easy_*.png, zones_medium_*.png and zone_colors.json
+Writes model_*.png (plain mannequin), zones_<level>_*.png for every level in the model (close-ups for Hard and
+Hardcore) and zone_colors.json
 (zone id -> preview colour, used for the legend).
 """
 import argparse
@@ -97,7 +98,9 @@ def zone_colors(zones):
             continue
         hue = (hue + golden) % 1.0
         sat = 0.55 if zone["level"] == "Easy" else 0.65
-        colors[zone["id"]] = colorsys.hsv_to_rgb(hue, sat, 0.95)
+        # Many small zones on the fine levels: vary the brightness as well, so neighbours differ.
+        value = 0.95 if zone["level"] in ("Easy", "Medium") or len(colors) % 2 == 0 else 0.72
+        colors[zone["id"]] = colorsys.hsv_to_rgb(hue, sat, value)
     return colors
 
 
@@ -164,11 +167,17 @@ def main():
         render(scene, os.path.join(args.out, f"model_{name}.png"), 800, 800)
 
     colors = zone_colors(zones)
-    for level, attribute in (("easy", "zone_easy"), ("medium", "zone_medium")):
+    levels = [(level, f"zone_{level}") for level in ("easy", "medium", "hard", "hardcore") if f"zone_{level}" in mesh.attributes]
+    for level, attribute in levels:
         mesh.materials[0] = zone_material(paint(mesh, attribute, zones, colors))
         for name, (direction, target, scale, (w, h)) in views.items():
             aim(camera, target, direction, scale)
             render(scene, os.path.join(args.out, f"zones_{level}_{name}.png"), w, h)
+        if level in ("hard", "hardcore"):
+            # Fine zones are small: close-ups of the face, hands and feet.
+            for name, (direction, target, scale) in closeups.items():
+                aim(camera, target, direction, scale)
+                render(scene, os.path.join(args.out, f"zones_{level}_{name}.png"), 800, 800)
     mesh.materials[0] = base_material
 
     with open(os.path.join(args.out, "zone_colors.json"), "w", encoding="utf-8") as f:

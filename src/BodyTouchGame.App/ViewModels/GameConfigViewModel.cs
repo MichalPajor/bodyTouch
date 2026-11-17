@@ -230,15 +230,15 @@ public sealed partial class GameConfigViewModel(
         }
 
         var catalog = bodyData.Zones!;
-        var levels = string.Join(" + ", config.ZoneSet.Levels.Select(ConfigTexts.Level));
-        if (!config.ZoneSet.Levels.All(catalog.HasLevel))
-        {
-            ZonesText = levels;
-            return;
-        }
-
-        var (total, excluded) = await setup.CountTargetsAsync(catalog, config.ZoneSet);
-        var count = PolishPlural.Zones(total);
-        ZonesText = excluded > 0 ? $"{levels} · {count}, {PolishPlural.Excluded(excluded)}" : $"{levels} · {count}";
+        var set = config.ZoneSet;
+        var parts = set.Levels.Select(ConfigTexts.Level).ToList();
+        if (set.ZoneIds.Count > 0) parts.Add(PolishPlural.Zones(set.ZoneIds.Count));
+        if (set.CustomPointIds.Count > 0) parts.Add(PolishPlural.Points(set.CustomPointIds.Count));
+        var what = string.Join(" + ", parts);
+        var preview = await setup.PreviewAsync(catalog, set);
+        var count = ZoneSetViewModel.Targets(preview);
+        // Without levels the parts already say what is drawn ("2 strefy + 1 punkt"): only the count follows.
+        var head = set.Levels.Count > 0 ? $"{what} · {count}" : count;
+        ZonesText = preview.ExcludedCount > 0 ? $"{head}, {PolishPlural.Excluded(preview.ExcludedCount)}" : head;
     }
 }

@@ -28,14 +28,11 @@
   <!-- Stage 5: Settings screen (mockup 10) -->
   <data name="SectionGame" xml:space="preserve"><value>GRA</value></data>
   <data name="SectionEffects" xml:space="preserve"><value>EFEKTY</value></data>
-  <data name="SectionData" xml:space="preserve"><value>DANE</value></data>
   <data name="DefaultConfig" xml:space="preserve"><value>Domyślna konfiguracja gry</value></data>
   <data name="ZoneEditor" xml:space="preserve"><value>Edytor stref i własnych punktów</value></data>
   <data name="ExcludedZones" xml:space="preserve"><value>Strefy wykluczone</value></data>
   <data name="Sounds" xml:space="preserve"><value>Dźwięki</value></data>
   <data name="ConfettiOnHit" xml:space="preserve"><value>Konfetti przy trafieniu</value></data>
-  <data name="ExportData" xml:space="preserve"><value>Eksport kopii danych</value></data>
-  <data name="ImportData" xml:space="preserve"><value>Import kopii danych</value></data>
   <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · wersja {0}</value></data>
 
   <!-- 3D view panel -->
@@ -116,7 +113,7 @@
   <data name="ZonesNotAvailable" xml:space="preserve"><value>Ten poziom nie ma jeszcze stref (pojawią się w kolejnej wersji).</value></data>
 
   <!-- Stage 6: zone set and exclusions -->
-  <data name="ZoneSetHint" xml:space="preserve"><value>Wybierz poziomy. Pomarańczowe strefy mogą zostać wylosowane, szare wykluczają wybrani gracze.</value></data>
+  <data name="ZoneSetHint" xml:space="preserve"><value>Wybierz dowolne poziomy. Pomarańczowe strefy mogą zostać wylosowane, niebieskie dodano ręcznie, szare wykluczają wybrani gracze.</value></data>
   <data name="ZoneSetCountFormat" xml:space="preserve"><value>Do losowania: {0} · {1}</value></data>
   <data name="ExclusionsHint" xml:space="preserve"><value>Stuknij strefę na modelu, aby ją wykluczyć lub przywrócić. Wykluczonej strefy nie wylosuje się, gdy ten gracz jest modelem.</value></data>
   <data name="NoPlayersYet" xml:space="preserve"><value>Najpierw dodaj graczy: GRAJ → Dodaj gracza.</value></data>
@@ -227,4 +224,36 @@
   <data name="LegendHits" xml:space="preserve"><value>trafia</value></data>
   <data name="ArrowsHint" xml:space="preserve"><value>Strzałka: cel → strefa wskazywana zamiast niego (min. 3 razy).</value></data>
   <data name="GameMode" xml:space="preserve"><value>Tryb gry</value></data>
+  <data name="ZoneEditorTitle" xml:space="preserve"><value>Edytor stref</value></data>
+  <data name="TabCustomPoints" xml:space="preserve"><value>Własne punkty</value></data>
+  <data name="TabZoneLevels" xml:space="preserve"><value>Poziomy stref</value></data>
+  <data name="AddPoint" xml:space="preserve"><value>Dodaj punkt</value></data>
+  <data name="PointNamePlaceholder" xml:space="preserve"><value>Nazwa, np. Pieprzyk na ramieniu</value></data>
+  <data name="PointRadius" xml:space="preserve"><value>Promień</value></data>
+  <data name="PointLevels" xml:space="preserve"><value>Należy do poziomów</value></data>
+  <data name="PointTapHint" xml:space="preserve"><value>Stuknij model w miejscu punktu (przybliż, aby trafić dokładnie).</value></data>
+  <data name="PointMoveHint" xml:space="preserve"><value>Stuknij inne miejsce lub przeciągnij pinezkę, aby przesunąć punkt.</value></data>
+  <data name="NoCustomPoints" xml:space="preserve"><value>Nie ma jeszcze własnych punktów.</value></data>
+  <data name="PointDetailFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="PointNoLevels" xml:space="preserve"><value>tylko wybór ręczny</value></data>
+  <data name="DeletePointTitle" xml:space="preserve"><value>Usunąć punkt?</value></data>
+  <data name="DeletePointMessageFormat" xml:space="preserve"><value>„{0}” zniknie z poziomów i zestawów stref. Rozegrane rundy zostają w historii.</value></data>
+  <data name="PointNeedsName" xml:space="preserve"><value>Podaj nazwę punktu.</value></data>
+  <data name="PointNeedsPin" xml:space="preserve"><value>Stuknij model, aby wskazać miejsce punktu.</value></data>
+  <data name="LevelTargetLabel" xml:space="preserve"><value>Poziom gry</value></data>
+  <data name="LevelTapLabel" xml:space="preserve"><value>Stukaj w strefy poziomu</value></data>
+  <data name="LevelEditorHint" xml:space="preserve"><value>Stuknij strefę, aby dodać ją do poziomu gry albo z niego usunąć. Pomarańczowe są w poziomie, szare usunięte.</value></data>
+  <data name="LevelSummaryFormat" xml:space="preserve"><value>{0}: {1}</value></data>
+  <data name="LevelChangesFormat" xml:space="preserve"><value> · dodane {0}, usunięte {1}</value></data>
+  <data name="RestoreDefaults" xml:space="preserve"><value>Przywróć domyślne</value></data>
+  <data name="RestoreDefaultsTitle" xml:space="preserve"><value>Przywrócić domyślne poziomy?</value></data>
+  <data name="RestoreDefaultsMessage" xml:space="preserve"><value>Wszystkie zmiany przypisania stref do poziomów zostaną usunięte. Własne punkty zostają.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Przywróć</value></data>
+  <data name="PointsOne" xml:space="preserve"><value>{0} punkt</value></data>
+  <data name="PointsFew" xml:space="preserve"><value>{0} punkty</value></data>
+  <data name="PointsMany" xml:space="preserve"><value>{0} punktów</value></data>
+  <data name="ManualZonesHint" xml:space="preserve"><value>Stuknij strefę na modelu, aby dodać ją ręcznie lub usunąć. Strefy poziomu:</value></data>
+  <data name="ManualZonesFormat" xml:space="preserve"><value>Dodane ręcznie: {0}</value></data>
+  <data name="ClearManual" xml:space="preserve"><value>Wyczyść</value></data>
+  <data name="CustomPointsLabel" xml:space="preserve"><value>Własne punkty</value></data>
 </root>

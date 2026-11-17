@@ -89,6 +89,8 @@ public static class MauiProgram
         services.AddTransient<RankingsViewModel>();
         services.AddTransient<HeatmapPage>();
         services.AddTransient<HeatmapViewModel>();
+        services.AddTransient<ZoneEditorPage>();
+        services.AddTransient<ZoneEditorViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

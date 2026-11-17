@@ -20,7 +20,7 @@ import bpy
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, "..", ".."))
-LEVELS = (("Easy", "zone_easy"), ("Medium", "zone_medium"))
+ALL_LEVELS = (("Easy", "zone_easy"), ("Medium", "zone_medium"), ("Hard", "zone_hard"), ("Hardcore", "zone_hardcore"))
 HELPER_DECIMATE_VERTICES = 3300   # after splitting long edges the helper ends up at ~5k vertices
 HELPER_MAX_EDGE_CM = 4.0
 
@@ -64,7 +64,9 @@ def export_faces(path, zones):
     mesh = bpy.data.objects["Body"].data
     count = len(mesh.polygons)
     labels = {}
-    for level, attribute in LEVELS:
+    for level, attribute in ALL_LEVELS:
+        if attribute not in mesh.attributes:
+            continue
         values = [0] * count
         mesh.attributes[attribute].data.foreach_get("value", values)
         labels[level] = values

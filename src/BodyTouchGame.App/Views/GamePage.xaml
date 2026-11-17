@@ -57,7 +57,7 @@
                     <VerticalStackLayout Spacing="4" Padding="16,18,16,0" IsVisible="{Binding IsDraw}">
                         <Label Text="{Binding TargetTitle}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1.5"
                                TextColor="{StaticResource Muted}" HorizontalTextAlignment="Center" />
-                        <Label Text="{Binding TargetName}" Style="{StaticResource BigTitle}" TextColor="{StaticResource Primary}" IsVisible="{Binding ShowTargetHint, Converter={StaticResource Not}}" />
+                        <Label Text="{Binding TargetName}" Style="{StaticResource BigTitle}" FontSize="{Binding TargetNameSize}" TextColor="{StaticResource Primary}" IsVisible="{Binding ShowTargetHint, Converter={StaticResource Not}}" />
                         <Label Text="{x:Static res:AppResources.ChooseTargetHint}" FontFamily="{StaticResource FontBold}" FontSize="18" TextColor="{StaticResource Primary}"
                                HorizontalTextAlignment="Center" IsVisible="{Binding ShowTargetHint}" />
                     </VerticalStackLayout>

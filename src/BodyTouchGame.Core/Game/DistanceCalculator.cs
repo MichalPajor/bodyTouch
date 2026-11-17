@@ -53,6 +53,13 @@ public sealed class GeodesicDistanceCalculator : IDistanceCalculator
         }
     }
 
+    /// <summary>Graph vertices within <paramref name="radiusCm"/> of the point along the surface (custom point zone,
+    /// spec 7: computed once when the point is saved).</summary>
+    public IReadOnlyList<int> VerticesWithin(SurfacePoint point, float radiusCm)
+    {
+        lock (_lock) return _solver.VerticesWithin(point, radiusCm);
+    }
+
     /// <summary>Builds (and caches) the region of a zone ahead of time, e.g. when the target is drawn.</summary>
     public void Prepare(string zoneId)
     {

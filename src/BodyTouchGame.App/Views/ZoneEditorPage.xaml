@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Zone editor (spec 7, own design D7): custom points and the level overlay of built-in zones. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.ZoneEditorPage"
+             x:DataType="vm:ZoneEditorViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="10" Padding="20,12,20,16">
+            <Label Text="{x:Static res:AppResources.ZoneEditorTitle}" Style="{StaticResource ScreenTitle}" />
+
+            <!-- Tabs -->
+            <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="6">
+                <controls:ChoiceButton Text="{x:Static res:AppResources.TabCustomPoints}" IsSelected="{Binding IsPointsTab}" ButtonHeight="40" Command="{Binding ShowPointsCommand}" />
+                <controls:ChoiceButton Grid.Column="1" Text="{x:Static res:AppResources.TabZoneLevels}" IsSelected="{Binding IsLevelsTab}" ButtonHeight="40" Command="{Binding ShowLevelsCommand}" />
+            </Grid>
+
+            <controls:BodyView x:Name="Body" Grid.Row="2" />
+
+            <!-- ============ Custom points: list ============ -->
+            <VerticalStackLayout Grid.Row="3" Spacing="8" IsVisible="{Binding ShowPointList}">
+                <Label Text="{x:Static res:AppResources.NoCustomPoints}" FontSize="14" TextColor="{StaticResource Muted}" IsVisible="{Binding HasNoPoints}" />
+                <ScrollView MaximumHeightRequest="170">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Points}" Spacing="6">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:CustomPointItem">
+                                <Border Padding="0" HeightRequest="52">
+                                    <Grid ColumnDefinitions="3,*,Auto">
+                                        <BoxView Color="{StaticResource PartyViolet}" />
+                                        <VerticalStackLayout Grid.Column="1" Padding="12,0" Spacing="0" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" FontFamily="{StaticResource FontBold}" FontSize="15" LineBreakMode="TailTruncation" />
+                                            <Label Text="{Binding Detail}" FontSize="12" TextColor="{StaticResource Muted}" />
+                                        </VerticalStackLayout>
+                                        <controls:LineIcon Grid.Column="2" Data="M9 5 L16 12 L9 19" StrokeColor="{StaticResource Muted}" StrokeWidth="2.2" IconSize="18"
+                                                           VerticalOptions="Center" Margin="0,0,12,0" />
+                                    </Grid>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneEditorViewModel}}, Path=EditPointCommand, x:DataType=vm:ZoneEditorViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </ScrollView>
+                <controls:PartyButton Text="{x:Static res:AppResources.AddPoint}" Command="{Binding AddPointCommand}" Margin="0,0,-5,-5" />
+            </VerticalStackLayout>
+
+            <!-- ============ Custom points: editing ============ -->
+            <VerticalStackLayout Grid.Row="3" Spacing="10" IsVisible="{Binding IsEditing}">
+                <Label Text="{Binding PinHint}" FontSize="13" TextColor="{StaticResource PartyCyan}" />
+                <Border Padding="12,0" BackgroundColor="{StaticResource Background}">
+                    <Entry Text="{Binding EditName}" Placeholder="{x:Static res:AppResources.PointNamePlaceholder}" MaxLength="40" FontSize="16" />
+                </Border>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Label Text="{x:Static res:AppResources.PointRadius}" FontFamily="{StaticResource FontBold}" FontSize="14" VerticalOptions="Center" />
+                    <controls:SquareSlider Grid.Column="1" Minimum="1" Maximum="10" Value="{Binding EditRadius}" VerticalOptions="Center" />
+                    <Label Grid.Column="2" Text="{Binding RadiusText}" FontFamily="{StaticResource FontExtraBold}" FontSize="14" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                </Grid>
+                <Label Text="{x:Static res:AppResources.PointLevels}" Style="{StaticResource Caption}" />
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding PointLevels}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:LevelItem">
+                            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsOption="True" ButtonHeight="38"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneEditorViewModel}}, Path=TogglePointLevelCommand, x:DataType=vm:ZoneEditorViewModel}"
+                                                   CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="8">
+                    <Button Text="{x:Static res:AppResources.Delete}" TextColor="{StaticResource PartyPink}" HeightRequest="50" Command="{Binding DeletePointCommand}"
+                            IsVisible="{Binding CanDelete}" VerticalOptions="Start" />
+                    <Button Grid.Column="1" Text="{x:Static res:AppResources.Cancel}" HeightRequest="50" Command="{Binding CancelEditCommand}" VerticalOptions="Start" />
+                    <controls:PartyButton Grid.Column="2" Text="{x:Static res:AppResources.Save}" ButtonHeight="50" Command="{Binding SavePointCommand}" Margin="0,0,-5,-5" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- ============ Level overlay ============ -->
+            <VerticalStackLayout Grid.Row="3" Spacing="8" IsVisible="{Binding IsLevelsTab}">
+                <Label Text="{x:Static res:AppResources.LevelEditorHint}" FontSize="13" TextColor="{StaticResource Muted}" />
+                <Label Text="{x:Static res:AppResources.LevelTargetLabel}" Style="{StaticResource Caption}" />
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding TargetLevels}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:LevelItem">
+                            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsEnabled="{Binding IsAvailable}" ButtonHeight="38"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneEditorViewModel}}, Path=SelectTargetLevelCommand, x:DataType=vm:ZoneEditorViewModel}"
+                                                   CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <Label Text="{x:Static res:AppResources.LevelTapLabel}" Style="{StaticResource Caption}" />
+                <HorizontalStackLayout BindableLayout.ItemsSource="{Binding TapLevels}" Spacing="6">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:LevelItem">
+                            <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsEnabled="{Binding IsAvailable}" IsOption="True" ButtonHeight="38"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneEditorViewModel}}, Path=SelectTapLevelCommand, x:DataType=vm:ZoneEditorViewModel}"
+                                                   CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </HorizontalStackLayout>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <Label Text="{Binding LevelSummary}" FontFamily="{StaticResource FontBold}" FontSize="13" VerticalOptions="Center" />
+                    <Button Grid.Column="1" Text="{x:Static res:AppResources.RestoreDefaults}" HeightRequest="44" Command="{Binding RestoreDefaultsCommand}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>
