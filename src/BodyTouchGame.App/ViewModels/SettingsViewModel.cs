@@ -17,7 +17,6 @@ public sealed partial class SettingsViewModel : ObservableObject
         _settings = settings;
         _navigation = navigation;
         SoundEnabled = settings.SoundEnabled;
-        VibrationEnabled = settings.VibrationEnabled;
         ConfettiEnabled = settings.ConfettiEnabled;
         VersionText = string.Format(CultureInfo.CurrentCulture, AppResources.VersionFormat, appInfo.VersionString);
     }
@@ -26,15 +25,11 @@ public sealed partial class SettingsViewModel : ObservableObject
     public partial bool SoundEnabled { get; set; }
 
     [ObservableProperty]
-    public partial bool VibrationEnabled { get; set; }
-
-    [ObservableProperty]
     public partial bool ConfettiEnabled { get; set; }
 
     public string VersionText { get; }
 
     partial void OnSoundEnabledChanged(bool value) => _settings.SoundEnabled = value;
-    partial void OnVibrationEnabledChanged(bool value) => _settings.VibrationEnabled = value;
     partial void OnConfettiEnabledChanged(bool value) => _settings.ConfettiEnabled = value;
 
     // Screens of later stages: visible but disabled.

@@ -29,7 +29,6 @@
             <Border Grid.Row="4" Padding="0">
                 <VerticalStackLayout>
                     <controls:SettingsToggleRow Text="{x:Static res:AppResources.Sounds}" IsToggled="{Binding SoundEnabled}" />
-                    <controls:SettingsToggleRow Text="{x:Static res:AppResources.Vibrations}" IsToggled="{Binding VibrationEnabled}" />
                     <controls:SettingsToggleRow Text="{x:Static res:AppResources.ConfettiOnHit}" IsToggled="{Binding ConfettiEnabled}" ShowDivider="False" />
                 </VerticalStackLayout>
             </Border>

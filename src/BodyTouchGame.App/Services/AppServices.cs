@@ -10,26 +10,18 @@ namespace BodyTouchGame.App.Services;
 public interface ISettingsService
 {
     bool SoundEnabled { get; set; }
-    bool VibrationEnabled { get; set; }
     bool ConfettiEnabled { get; set; }
 }
 
 public sealed class SettingsService(IPreferences preferences) : ISettingsService
 {
     private const string SoundKey = "settings.sound";
-    private const string VibrationKey = "settings.vibration";
     private const string ConfettiKey = "settings.confetti";
 
     public bool SoundEnabled
     {
         get => preferences.Get(SoundKey, true);
         set => preferences.Set(SoundKey, value);
-    }
-
-    public bool VibrationEnabled
-    {
-        get => preferences.Get(VibrationKey, true);
-        set => preferences.Set(VibrationKey, value);
     }
 
     public bool ConfettiEnabled
@@ -100,21 +92,19 @@ public sealed class DialogService : IDialogService
     }
 }
 
-/// <summary>Sounds and vibration at the start and end of touching (spec 13, basic version), respecting the settings.</summary>
-public sealed class FeedbackService(IAudioManager audio, ISettingsService settings, IVibration vibration)
+/// <summary>Sounds at the start and end of touching (spec 13, basic version), respecting the settings. No vibration (owner's decision after stage 6).</summary>
+public sealed class FeedbackService(IAudioManager audio, ISettingsService settings)
 {
     private IAudioPlayer? _start;
     private IAudioPlayer? _end;
 
     public async Task TouchStartAsync()
     {
-        Vibrate(TimeSpan.FromMilliseconds(120));
         await PlayAsync(_start ??= await LoadAsync("sounds/touch_start.wav"));
     }
 
     public async Task TouchEndAsync()
     {
-        Vibrate(TimeSpan.FromMilliseconds(400));
         await PlayAsync(_end ??= await LoadAsync("sounds/touch_end.wav"));
     }
 
@@ -137,19 +127,6 @@ public sealed class FeedbackService(IAudioManager audio, ISettingsService settin
         player.Stop();
         player.Play();
         return Task.CompletedTask;
-    }
-
-    private void Vibrate(TimeSpan duration)
-    {
-        if (!settings.VibrationEnabled || !vibration.IsSupported) return;
-        try
-        {
-            vibration.Vibrate(duration);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"[BTG] vibration: {e.Message}");
-        }
     }
 }
 

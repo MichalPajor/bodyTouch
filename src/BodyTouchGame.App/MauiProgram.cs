@@ -62,7 +62,6 @@ public static class MauiProgram
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<GameSetupService>();
         services.AddSingleton(AudioManager.Current);
-        services.AddSingleton(Vibration.Default);
         services.AddSingleton<FeedbackService>();
 
         // Screens
