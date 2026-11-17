@@ -45,7 +45,8 @@
                         <Label Text="{x:Static res:AppResources.GameSettings}" Style="{StaticResource ScreenTitle}" />
                     </VerticalStackLayout>
 
-                    <!-- Presets: built-in first; levels without zones are greyed (Trudny, Hardcore) -->
+                    <!-- Presets ("tryby gry" in the UI): built-in first; levels without zones are greyed (Trudny, Hardcore) -->
+                    <Label Text="{x:Static res:AppResources.GameMode}" Style="{StaticResource Caption}" Margin="0,0,0,-8" />
                     <FlexLayout BindableLayout.ItemsSource="{Binding Presets}" Wrap="Wrap" AlignItems="Start" AlignContent="Start">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="vm:PresetItem">

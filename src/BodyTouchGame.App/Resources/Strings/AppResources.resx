@@ -107,8 +107,8 @@
   <data name="SpeedBonus" xml:space="preserve"><value>Bonus za szybkość</value></data>
   <data name="Less" xml:space="preserve"><value>Mniej</value></data>
   <data name="More" xml:space="preserve"><value>Więcej</value></data>
-  <data name="SavePreset" xml:space="preserve"><value>Zapisz preset</value></data>
-  <data name="SavePresetMessage" xml:space="preserve"><value>Nazwa presetu</value></data>
+  <data name="SavePreset" xml:space="preserve"><value>Zapisz tryb</value></data>
+  <data name="SavePresetMessage" xml:space="preserve"><value>Nazwa trybu (np. „Impreza 3 s”)</value></data>
   <data name="Save" xml:space="preserve"><value>Zapisz</value></data>
   <data name="StartGame" xml:space="preserve"><value>Start gry</value></data>
   <data name="CannotStartTitle" xml:space="preserve"><value>Nie można rozpocząć</value></data>
@@ -213,8 +213,8 @@
   <data name="Delete" xml:space="preserve"><value>Usuń</value></data>
   <data name="RankingHintFormat" xml:space="preserve"><value>Średnia punktów na rundę · min. {0} rund</value></data>
   <data name="RankingBelowFormat" xml:space="preserve"><value>Poniżej progu (min. {0} rund)</value></data>
-  <data name="RankingEmpty" xml:space="preserve"><value>Ranking pojawi się po rozegraniu sesji z presetem.</value></data>
-  <data name="RankingNoQualifiedFormat" xml:space="preserve"><value>Nikt nie ma jeszcze {0} rund w tym presecie.</value></data>
+  <data name="RankingEmpty" xml:space="preserve"><value>Ranking pojawi się po rozegraniu gry w jednym z trybów.</value></data>
+  <data name="RankingNoQualifiedFormat" xml:space="preserve"><value>Nikt nie ma jeszcze {0} rund w tym trybie.</value></data>
   <data name="RankingDetailFormat" xml:space="preserve"><value>{0} · śr. {1}</value></data>
   <data name="PointsPerRound" xml:space="preserve"><value>pkt / rundę</value></data>
   <data name="AllPresets" xml:space="preserve"><value>Wszystkie</value></data>
@@ -226,4 +226,5 @@
   <data name="LegendMisses" xml:space="preserve"><value>myli się</value></data>
   <data name="LegendHits" xml:space="preserve"><value>trafia</value></data>
   <data name="ArrowsHint" xml:space="preserve"><value>Strzałka: cel → strefa wskazywana zamiast niego (min. 3 razy).</value></data>
+  <data name="GameMode" xml:space="preserve"><value>Tryb gry</value></data>
 </root>
