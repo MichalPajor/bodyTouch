@@ -37,25 +37,21 @@ public sealed partial class SettingsViewModel : ObservableObject
     partial void OnVibrationEnabledChanged(bool value) => _settings.VibrationEnabled = value;
     partial void OnConfettiEnabledChanged(bool value) => _settings.ConfettiEnabled = value;
 
-    // Screens of later stages (6, 8, 9): visible but disabled.
+    // Screens of later stages: visible but disabled.
     [RelayCommand(CanExecute = nameof(IsAvailableLater))]
     private void DefaultConfig() { }
 
     [RelayCommand(CanExecute = nameof(IsAvailableLater))]
     private void ZoneEditor() { }
 
-    [RelayCommand(CanExecute = nameof(IsAvailableLater))]
-    private void ExcludedZones() { }
+    [RelayCommand]
+    private Task ExcludedZonesAsync() => _navigation.GoToAsync(Routes.Exclusions);
 
     [RelayCommand(CanExecute = nameof(IsAvailableLater))]
     private void ExportData() { }
 
     [RelayCommand(CanExecute = nameof(IsAvailableLater))]
     private void ImportData() { }
-
-    /// <summary>Developer entry to the stage 3 prototype (tap on the version label; temporary until stage 6).</summary>
-    [RelayCommand]
-    private Task OpenPrototypeAsync() => _navigation.GoToAsync(Routes.Prototype);
 
     private static bool IsAvailableLater() => false;
 }

@@ -1,4 +1,7 @@
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
+using BodyTouchGame.Core.Game;
+using BodyTouchGame.Core.Targets;
 
 namespace BodyTouchGame.App.Bridge;
 
@@ -6,8 +9,7 @@ namespace BodyTouchGame.App.Bridge;
 /// C# side of the 3D view bridge (spec section 12).
 /// C# -> JS: <see cref="HybridWebView.InvokeJavaScriptAsync{TReturnType}"/> on functions of <c>window.bodyView</c>.
 /// JS -> C#: body-view.js calls <c>window.HybridWebView.InvokeDotNet("Receive", [eventName, json])</c>;
-/// payloads are deserialized with <see cref="BridgeJsonContext"/>.
-/// Events are raised on the UI thread.
+/// payloads are deserialized with <see cref="BridgeJsonContext"/>. Events are raised on the UI thread.
 /// </summary>
 public sealed class BodyViewBridge
 {
@@ -22,6 +24,7 @@ public sealed class BodyViewBridge
 
     public event EventHandler? Ready;
     public event EventHandler<PinPlacedMessage>? PinPlaced;
+    public event EventHandler<ZoneTappedMessage>? ZoneTapped;
     public event EventHandler<ErrorMessage>? Error;
     public event EventHandler<StatsMessage>? StatsReceived;
 
@@ -29,49 +32,78 @@ public sealed class BodyViewBridge
     public Task WhenReady => _ready.Task;
 
     public Task<ModelLoadedResult?> LoadModelAsync(string url) =>
-        _webView.InvokeJavaScriptAsync("bodyView.loadModel", BridgeJsonContext.Default.ModelLoadedResult,
-            [url], [BridgeJsonContext.Default.String]);
+        _webView.InvokeJavaScriptAsync("bodyView.loadModel", BridgeJsonContext.Default.ModelLoadedResult, [url], [BridgeJsonContext.Default.String]);
 
-    public Task SetModeAsync(string mode) => InvokeAsync("bodyView.setMode", mode);
+    /// <summary>Mode: View, Draw, Guess, Reveal, Editor.</summary>
+    public Task SetModeAsync(string mode, ViewModeOptions? options = null) =>
+        Invoke("bodyView.setMode", [mode, options ?? new ViewModeOptions()], [BridgeJsonContext.Default.String, BridgeJsonContext.Default.ViewModeOptions]);
 
     /// <summary>View = Front, Back, Left or Right.</summary>
-    public Task ResetCameraAsync(string view) => InvokeAsync("bodyView.resetCamera", view);
+    public Task ResetCameraAsync(string view) => Invoke("bodyView.resetCamera", [view], [BridgeJsonContext.Default.String]);
 
     public Task SetZoneColorsAsync(Dictionary<string, string> colors) =>
-        _webView.InvokeJavaScriptAsync("bodyView.setZoneColors", BridgeJsonContext.Default.Boolean,
-            [colors], [BridgeJsonContext.Default.DictionaryStringString]);
+        Invoke("bodyView.setZoneColors", [colors], [BridgeJsonContext.Default.DictionaryStringString]);
+
+    public Task FocusTargetAsync(TargetDto target, bool animate = true) =>
+        Invoke("bodyView.focusTarget", [target, animate], [BridgeJsonContext.Default.TargetDto, BridgeJsonContext.Default.Boolean]);
+
+    public Task ClearTargetAsync() => Invoke("bodyView.clearTarget", null, null);
+
+    public Task ClearPinAsync() => Invoke("bodyView.clearPin", null, null);
 
     public Task ShowRevealAsync(RevealPayload payload) =>
-        _webView.InvokeJavaScriptAsync("bodyView.showReveal", BridgeJsonContext.Default.Boolean,
-            [payload], [BridgeJsonContext.Default.RevealPayload]);
+        Invoke("bodyView.showReveal", [payload], [BridgeJsonContext.Default.RevealPayload]);
 
-    public Task ClearRevealAsync() =>
-        _webView.InvokeJavaScriptAsync("bodyView.clearReveal", BridgeJsonContext.Default.Boolean);
+    public Task<ViewDebugState?> GetDebugStateAsync() =>
+        _webView.InvokeJavaScriptAsync("bodyView.getDebugState", BridgeJsonContext.Default.ViewDebugState);
 
-    public Task ZoomByAsync(double factor) =>
-        _webView.InvokeJavaScriptAsync("bodyView.zoomBy", BridgeJsonContext.Default.Boolean,
-            [factor], [BridgeJsonContext.Default.Double]);
-
-    /// <summary>Render resolution relative to CSS pixels; returns the ratio actually applied.</summary>
-    public Task<double> SetPixelRatioAsync(double ratio) =>
-        _webView.InvokeJavaScriptAsync("bodyView.setPixelRatio", BridgeJsonContext.Default.Double,
-            [ratio], [BridgeJsonContext.Default.Double]);
+    public Task ZoomByAsync(double factor) => Invoke("bodyView.zoomBy", [factor], [BridgeJsonContext.Default.Double]);
 
     /// <summary>CSS pixels covered by native overlays at the top / bottom; the model is framed between them.</summary>
     public Task SetViewInsetsAsync(double top, double bottom) =>
-        _webView.InvokeJavaScriptAsync("bodyView.setViewInsets", BridgeJsonContext.Default.Boolean,
-            [top, bottom], [BridgeJsonContext.Default.Double, BridgeJsonContext.Default.Double]);
+        Invoke("bodyView.setViewInsets", [top, bottom], [BridgeJsonContext.Default.Double, BridgeJsonContext.Default.Double]);
 
     /// <summary>Diagnostic FPS counter in the page (hidden by default).</summary>
-    public Task SetStatsVisibleAsync(bool visible) =>
-        _webView.InvokeJavaScriptAsync("bodyView.setStatsVisible", BridgeJsonContext.Default.Boolean,
-            [visible], [BridgeJsonContext.Default.Boolean]);
+    public Task SetStatsVisibleAsync(bool visible) => Invoke("bodyView.setStatsVisible", [visible], [BridgeJsonContext.Default.Boolean]);
 
-    public Task StartBenchmarkAsync() =>
-        _webView.InvokeJavaScriptAsync("bodyView.startBenchmark", BridgeJsonContext.Default.Boolean);
+    /// <summary>Executes the view commands of <see cref="ViewDirector"/> in order.</summary>
+    public async Task ExecuteAsync(IEnumerable<ViewCommand> commands)
+    {
+        foreach (var command in commands)
+        {
+            switch (command)
+            {
+                case ClearTarget: await ClearTargetAsync(); break;
+                case ClearPin: await ClearPinAsync(); break;
+                case ResetCamera reset: await ResetCameraAsync(reset.View); break;
+                case SetViewMode mode: await SetModeAsync(mode.Mode.ToString(), new ViewModeOptions(mode.AllowTargetPin)); break;
+                case FocusTarget focus: await FocusTargetAsync(ToDto(focus.Target)); break;
+                case ShowReveal reveal:
+                    var path = new float[reveal.Path.Count * 3];
+                    for (var i = 0; i < reveal.Path.Count; i++)
+                    {
+                        path[i * 3] = reveal.Path[i].X;
+                        path[i * 3 + 1] = reveal.Path[i].Y;
+                        path[i * 3 + 2] = reveal.Path[i].Z;
+                    }
 
-    private Task InvokeAsync(string function, string argument) =>
-        _webView.InvokeJavaScriptAsync(function, BridgeJsonContext.Default.Boolean, [argument], [BridgeJsonContext.Default.String]);
+                    var pin = reveal.Pin is { } p ? new SurfacePointDto(p.TriangleIndex, p.BaryU, p.BaryV) : null;
+                    await ShowRevealAsync(new RevealPayload(pin, ToDto(reveal.Target), path, reveal.DistanceCm));
+                    break;
+            }
+        }
+    }
+
+    public static TargetDto ToDto(Target target) => target switch
+    {
+        ZoneTarget zone => new TargetDto("Zone", ZoneId: zone.ZoneId),
+        CustomPointTarget point => new TargetDto("Point", null, point.Point.TriangleIndex, point.Point.BaryU, point.Point.BaryV, point.RadiusCm),
+        ManualPointTarget manual => new TargetDto("Point", null, manual.Point.TriangleIndex, manual.Point.BaryU, manual.Point.BaryV, 0),
+        _ => throw new ArgumentException($"Unsupported target {target.GetType().Name}.", nameof(target)),
+    };
+
+    private Task Invoke(string function, object?[]? args, JsonTypeInfo?[]? types) =>
+        _webView.InvokeJavaScriptAsync(function, BridgeJsonContext.Default.Boolean, args, types);
 
     private void Dispatch(string eventName, string json)
     {
@@ -83,6 +115,9 @@ public sealed class BodyViewBridge
                 break;
             case "onPinPlaced" when Deserialize(json, BridgeJsonContext.Default.PinPlacedMessage) is { } pin:
                 Raise(() => PinPlaced?.Invoke(this, pin));
+                break;
+            case "onZoneTapped" when Deserialize(json, BridgeJsonContext.Default.ZoneTappedMessage) is { } zone:
+                Raise(() => ZoneTapped?.Invoke(this, zone));
                 break;
             case "onStats" when Deserialize(json, BridgeJsonContext.Default.StatsMessage) is { } stats:
                 Raise(() => StatsReceived?.Invoke(this, stats));
@@ -96,7 +131,7 @@ public sealed class BodyViewBridge
         }
     }
 
-    private T? Deserialize<T>(string json, System.Text.Json.Serialization.Metadata.JsonTypeInfo<T> typeInfo)
+    private T? Deserialize<T>(string json, JsonTypeInfo<T> typeInfo)
     {
         try
         {

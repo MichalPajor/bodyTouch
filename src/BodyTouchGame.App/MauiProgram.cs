@@ -1,10 +1,11 @@
-﻿using BodyTouchGame.App.Services;
+using BodyTouchGame.App.Services;
 using BodyTouchGame.App.ViewModels;
 using BodyTouchGame.App.Views;
 using BodyTouchGame.Core.Persistence;
 using BodyTouchGame.Data;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Audio;
 
 namespace BodyTouchGame.App;
 
@@ -12,6 +13,13 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        // The interface is Polish only: Polish number formats (4,8 cm) and sorting regardless of the phone language.
+        var polish = new System.Globalization.CultureInfo("pl-PL");
+        System.Globalization.CultureInfo.DefaultThreadCurrentCulture = polish;
+        System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = polish;
+        System.Globalization.CultureInfo.CurrentCulture = polish;
+        System.Globalization.CultureInfo.CurrentUICulture = polish;
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -25,6 +33,12 @@ public static class MauiProgram
                 fonts.AddFont("PlusJakartaSans-Bold.ttf", "JakartaBold");
                 fonts.AddFont("PlusJakartaSans-ExtraBold.ttf", "JakartaExtraBold");
             });
+
+#if ANDROID
+        // Square style (spec 13): no Material underline under text fields; the frame comes from the surrounding Border.
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (handler, _) =>
+            handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent));
+#endif
 
         var services = builder.Services;
 
@@ -45,13 +59,27 @@ public static class MauiProgram
         services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<INavigationService, ShellNavigationService>();
         services.AddSingleton<BodyDataService>();
+        services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<GameSetupService>();
+        services.AddSingleton(AudioManager.Current);
+        services.AddSingleton(Vibration.Default);
+        services.AddSingleton<FeedbackService>();
 
         // Screens
         services.AddTransient<StartPage>();
         services.AddTransient<StartViewModel>();
         services.AddTransient<SettingsPage>();
         services.AddTransient<SettingsViewModel>();
-        services.AddTransient<PrototypePage>();
+        services.AddTransient<ExclusionsPage>();
+        services.AddTransient<ExclusionsViewModel>();
+        services.AddTransient<PlayersSelectPage>();
+        services.AddTransient<PlayersSelectViewModel>();
+        services.AddTransient<GameConfigPage>();
+        services.AddTransient<GameConfigViewModel>();
+        services.AddTransient<ZoneSetPage>();
+        services.AddTransient<ZoneSetViewModel>();
+        services.AddTransient<GamePage>();
+        services.AddTransient<GameViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

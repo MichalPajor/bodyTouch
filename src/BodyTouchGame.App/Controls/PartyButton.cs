@@ -46,7 +46,10 @@ public sealed class PartyButton : ContentView
         };
         _button.PropertyChanged += (_, e) =>
         {
-            if (e.PropertyName == nameof(IsEnabled)) Opacity = _button.IsEnabled ? 1 : 0.45;
+            if (e.PropertyName != nameof(IsEnabled)) return;
+            // Disabled: dimmed button without the pink shadow (it would show through the translucent button).
+            _button.Opacity = _button.IsEnabled ? 1 : 0.45;
+            _shadow.IsVisible = _button.IsEnabled;
         };
         Content = new Grid { Children = { _shadow, _button } };
         UpdateLayout();

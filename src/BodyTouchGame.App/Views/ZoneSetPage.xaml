@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Zone set of the game: levels + model preview (orange = can be drawn, grey = excluded by the players). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.ZoneSetPage"
+             x:DataType="vm:ZoneSetViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto" RowSpacing="12" Padding="20,12,20,16">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="{x:Static res:AppResources.NewGameStep2}" Style="{StaticResource Caption}" />
+                <Label Text="{x:Static res:AppResources.Zones}" Style="{StaticResource ScreenTitle}" />
+            </VerticalStackLayout>
+
+            <Label Grid.Row="1" Text="{x:Static res:AppResources.ZoneSetHint}" FontSize="13" TextColor="{StaticResource Muted}" />
+
+            <FlexLayout Grid.Row="2" BindableLayout.ItemsSource="{Binding Levels}" Wrap="Wrap">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:LevelItem">
+                        <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsEnabled="{Binding IsAvailable}"
+                                               ButtonHeight="40" Margin="0,0,6,6"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ZoneSetViewModel}}, Path=ToggleCommand, x:DataType=vm:ZoneSetViewModel}"
+                                               CommandParameter="{Binding .}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+
+            <controls:BodyView x:Name="Body" Grid.Row="3" />
+
+            <Label Grid.Row="4" Text="{Binding CountText}" FontFamily="{StaticResource FontBold}" FontSize="14" />
+
+            <controls:PartyButton Grid.Row="5" Text="{x:Static res:AppResources.Done}" Command="{Binding DoneCommand}" Margin="0,0,-5,-5" />
+        </Grid>
+    </Grid>
+</ContentPage>

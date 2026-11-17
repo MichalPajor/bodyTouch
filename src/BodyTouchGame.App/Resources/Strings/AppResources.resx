@@ -6,18 +6,6 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
 
   <!-- Stage 3: 3D view prototype screen -->
-  <data name="PrototypeTitle" xml:space="preserve"><value>Prototyp widoku 3D</value></data>
-  <data name="PrototypeTarget" xml:space="preserve"><value>Strefa docelowa</value></data>
-  <data name="PrototypeHint" xml:space="preserve"><value>Stuknij model, aby postawić pinezkę</value></data>
-  <data name="PrototypeLoading" xml:space="preserve"><value>Ładowanie modelu…</value></data>
-  <data name="PrototypeLoaded" xml:space="preserve"><value>Model: {0:F0} ms · graf: {1:F0} ms</value></data>
-  <data name="PrototypeResult" xml:space="preserve"><value>{0}: {1:F1} cm · obliczenie {2:F2} ms</value></data>
-  <data name="PrototypeInside" xml:space="preserve"><value>{0}: trafienie w strefę · obliczenie {1:F2} ms</value></data>
-  <data name="PrototypeBenchmark" xml:space="preserve"><value>Test FPS</value></data>
-  <data name="PrototypeBenchmarkRunning" xml:space="preserve"><value>Test FPS trwa (6 s)…</value></data>
-  <data name="PrototypeBenchmarkResult" xml:space="preserve"><value>FPS śr. {0:F0} · min {1:F0} · klatka p95 {2:F1} ms ({3}×{4} px)</value></data>
-  <data name="PrototypeResolution" xml:space="preserve"><value>Rozdzielczość {0:0.#}×</value></data>
-  <data name="PrototypeError" xml:space="preserve"><value>Błąd: {0}</value></data>
   <data name="ViewFront" xml:space="preserve"><value>Przód</value></data>
   <data name="ViewSide" xml:space="preserve"><value>Bok</value></data>
   <data name="ViewBack" xml:space="preserve"><value>Tył</value></data>
@@ -55,4 +43,150 @@
   <data name="RotateHint" xml:space="preserve"><value>Obróć palcem</value></data>
   <data name="ZoomInDescription" xml:space="preserve"><value>Przybliż</value></data>
   <data name="ZoomOutDescription" xml:space="preserve"><value>Oddal</value></data>
+
+  <!-- Stage 6: common -->
+  <data name="Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Anuluj</value></data>
+  <data name="RoundsOne" xml:space="preserve"><value>{0} runda</value></data>
+  <data name="RoundsFew" xml:space="preserve"><value>{0} rundy</value></data>
+  <data name="RoundsMany" xml:space="preserve"><value>{0} rund</value></data>
+  <data name="ZonesOne" xml:space="preserve"><value>{0} strefa</value></data>
+  <data name="ZonesFew" xml:space="preserve"><value>{0} strefy</value></data>
+  <data name="ZonesMany" xml:space="preserve"><value>{0} stref</value></data>
+  <data name="ExcludedOne" xml:space="preserve"><value>{0} wykluczona</value></data>
+  <data name="ExcludedFew" xml:space="preserve"><value>{0} wykluczone</value></data>
+  <data name="ExcludedMany" xml:space="preserve"><value>{0} wykluczonych</value></data>
+  <data name="PresetEasy" xml:space="preserve"><value>Łatwy</value></data>
+  <data name="PresetMedium" xml:space="preserve"><value>Średni</value></data>
+  <data name="PresetHard" xml:space="preserve"><value>Trudny</value></data>
+  <data name="PresetHardcore" xml:space="preserve"><value>Hardcore</value></data>
+  <data name="PresetCustomConfig" xml:space="preserve"><value>Własne ustawienia</value></data>
+  <data name="TouchWholeHand" xml:space="preserve"><value>Cała dłoń</value></data>
+  <data name="TouchTwoFingers" xml:space="preserve"><value>Dwa palce</value></data>
+  <data name="TouchOneFinger" xml:space="preserve"><value>Jeden palec</value></data>
+  <data name="TouchTap" xml:space="preserve"><value>Dotknięcie</value></data>
+  <data name="MovementGentle" xml:space="preserve"><value>Delikatny</value></data>
+  <data name="MovementNone" xml:space="preserve"><value>Bez ruchu</value></data>
+  <data name="MovementGentleLower" xml:space="preserve"><value>delikatny ruch</value></data>
+  <data name="MovementNoneLower" xml:space="preserve"><value>bez ruchu</value></data>
+  <data name="SecondsFormat" xml:space="preserve"><value>{0} s</value></data>
+  <data name="CmFormat" xml:space="preserve"><value>{0:0.#} cm</value></data>
+
+  <!-- Stage 6: players selection (mockup 2) -->
+  <data name="NewGameStep1" xml:space="preserve"><value>Nowa gra · krok 1 z 2</value></data>
+  <data name="WhoPlays" xml:space="preserve"><value>Kto gra?</value></data>
+  <data name="AddPlayer" xml:space="preserve"><value>Dodaj gracza</value></data>
+  <data name="AddPlayerTitle" xml:space="preserve"><value>Nowy gracz</value></data>
+  <data name="AddPlayerMessage" xml:space="preserve"><value>Imię lub ksywka</value></data>
+  <data name="Add" xml:space="preserve"><value>Dodaj</value></data>
+  <data name="NameTaken" xml:space="preserve"><value>Ta nazwa jest już zajęta.</value></data>
+  <data name="NameEmpty" xml:space="preserve"><value>Podaj nazwę.</value></data>
+  <data name="SelectedPlayersFormat" xml:space="preserve"><value>Wybrano graczy: {0}</value></data>
+  <data name="OrderAllPairs" xml:space="preserve"><value>Kolejność: każdy z każdym</value></data>
+  <data name="OrderCircle" xml:space="preserve"><value>Kolejność: po kolei w kółku</value></data>
+  <data name="Next" xml:space="preserve"><value>Dalej</value></data>
+  <data name="PlayerStatsFormat" xml:space="preserve"><value>{0} · śr. {1:0.0} cm</value></data>
+  <data name="PlayerNoRounds" xml:space="preserve"><value>Bez rozegranych rund</value></data>
+  <data name="SelectPlayersHint" xml:space="preserve"><value>Wybierz od 2 do 8 graczy.</value></data>
+
+  <!-- Stage 6: game configuration (mockup 3) -->
+  <data name="NewGameStep2" xml:space="preserve"><value>Nowa gra · krok 2 z 2</value></data>
+  <data name="GameSettings" xml:space="preserve"><value>Ustawienia gry</value></data>
+  <data name="Zones" xml:space="preserve"><value>Strefy</value></data>
+  <data name="TouchMethodLabel" xml:space="preserve"><value>Sposób dotyku</value></data>
+  <data name="GentleMovement" xml:space="preserve"><value>Delikatny ruch</value></data>
+  <data name="TouchTime" xml:space="preserve"><value>Czas dotyku</value></data>
+  <data name="RoundsPerPlayer" xml:space="preserve"><value>Rundy na gracza</value></data>
+  <data name="FewerRounds" xml:space="preserve"><value>Mniej rund</value></data>
+  <data name="MoreRounds" xml:space="preserve"><value>Więcej rund</value></data>
+  <data name="Advanced" xml:space="preserve"><value>Zaawansowane</value></data>
+  <data name="TargetChosenByModel" xml:space="preserve"><value>Cel wybiera model</value></data>
+  <data name="GuessTimeLimit" xml:space="preserve"><value>Limit czasu na odpowiedź</value></data>
+  <data name="GuessTime" xml:space="preserve"><value>Czas na odpowiedź</value></data>
+  <data name="FullPointsRadius" xml:space="preserve"><value>Promień pełnych punktów (r)</value></data>
+  <data name="ZeroPointsDistance" xml:space="preserve"><value>Odległość bez punktów (z)</value></data>
+  <data name="SpeedBonus" xml:space="preserve"><value>Bonus za szybkość</value></data>
+  <data name="Less" xml:space="preserve"><value>Mniej</value></data>
+  <data name="More" xml:space="preserve"><value>Więcej</value></data>
+  <data name="SavePreset" xml:space="preserve"><value>Zapisz preset</value></data>
+  <data name="SavePresetMessage" xml:space="preserve"><value>Nazwa presetu</value></data>
+  <data name="Save" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="StartGame" xml:space="preserve"><value>Start gry</value></data>
+  <data name="CannotStartTitle" xml:space="preserve"><value>Nie można rozpocząć</value></data>
+  <data name="NothingToDrawFormat" xml:space="preserve"><value>{0}: nie ma stref do wylosowania (wykluczenia). Zmień strefy lub wykluczenia.</value></data>
+  <data name="ZonesNotAvailable" xml:space="preserve"><value>Ten poziom nie ma jeszcze stref (pojawią się w kolejnej wersji).</value></data>
+
+  <!-- Stage 6: zone set and exclusions -->
+  <data name="ZoneSetHint" xml:space="preserve"><value>Wybierz poziomy. Pomarańczowe strefy mogą zostać wylosowane, szare wykluczają wybrani gracze.</value></data>
+  <data name="ZoneSetCountFormat" xml:space="preserve"><value>Do losowania: {0} · {1}</value></data>
+  <data name="ExclusionsHint" xml:space="preserve"><value>Stuknij strefę na modelu, aby ją wykluczyć lub przywrócić. Wykluczonej strefy nie wylosuje się, gdy ten gracz jest modelem.</value></data>
+  <data name="NoPlayersYet" xml:space="preserve"><value>Najpierw dodaj graczy: GRAJ → Dodaj gracza.</value></data>
+  <data name="ExcludedListFormat" xml:space="preserve"><value>Wykluczone: {0}</value></data>
+  <data name="ExcludedNone" xml:space="preserve"><value>Brak wykluczonych stref</value></data>
+  <data name="ClearExclusions" xml:space="preserve"><value>Wyczyść</value></data>
+
+  <!-- Stage 6: round screens (mockups 4-8, WhoIsNext own design) -->
+  <data name="RoundHeaderFormat" xml:space="preserve"><value>Runda {0} z {1} · {2}</value></data>
+  <data name="PairFormat" xml:space="preserve"><value>{0} dotyka · {1} zgaduje</value></data>
+  <data name="WhoGuesses" xml:space="preserve"><value>ZGADUJE</value></data>
+  <data name="WhoTouches" xml:space="preserve"><value>DOTYKA</value></data>
+  <data name="WhoIsNextHintFormat" xml:space="preserve"><value>{0} zasłania oczy. {1} bierze telefon.</value></data>
+  <data name="YourTarget" xml:space="preserve"><value>TWÓJ CEL</value></data>
+  <data name="ChooseTarget" xml:space="preserve"><value>WYBIERZ CEL</value></data>
+  <data name="ChooseTargetHint" xml:space="preserve"><value>Stuknij model w miejscu dotyku</value></data>
+  <data name="TileTouch" xml:space="preserve"><value>Dotyk</value></data>
+  <data name="TileMovement" xml:space="preserve"><value>Ruch</value></data>
+  <data name="TileTime" xml:space="preserve"><value>Czas</value></data>
+  <data name="StartTouch" xml:space="preserve"><value>Start dotyku</value></data>
+  <data name="RoundTouchingFormat" xml:space="preserve"><value>Runda {0} z {1} · {2} dotyka</value></data>
+  <data name="TouchNow" xml:space="preserve"><value>DOTYKAJ!</value></data>
+  <data name="AbortRound" xml:space="preserve"><value>Przerwij rundę</value></data>
+  <data name="AbortRoundTitle" xml:space="preserve"><value>Przerwać rundę?</value></data>
+  <data name="AbortRoundMessage" xml:space="preserve"><value>Runda nie zostanie zapisana. Ta sama para zagra ją od nowa.</value></data>
+  <data name="Abort" xml:space="preserve"><value>Przerwij</value></data>
+  <data name="HandPhone" xml:space="preserve"><value>Oddaj telefon</value></data>
+  <data name="CurtainHintFormat" xml:space="preserve"><value>Cel jest ukryty. {0} może już odsłonić oczy.</value></data>
+  <data name="Ready" xml:space="preserve"><value>Gotowe!</value></data>
+  <data name="RoundGuessingFormat" xml:space="preserve"><value>Runda {0} z {1} · {2} zgaduje</value></data>
+  <data name="WhereTouched" xml:space="preserve"><value>Czego dotknięto?</value></data>
+  <data name="YourPin" xml:space="preserve"><value>Twoja pinezka</value></data>
+  <data name="PinNotPlaced" xml:space="preserve"><value>Stuknij model</value></data>
+  <data name="HoldToMove" xml:space="preserve"><value>Przytrzymaj, by przesunąć</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Zatwierdź</value></data>
+  <data name="ResultForFormat" xml:space="preserve"><value>Wynik: {0}</value></data>
+  <data name="PointsFormat" xml:space="preserve"><value>+{0} pkt</value></data>
+  <data name="DistanceFormat" xml:space="preserve"><value>{0:0.0} cm</value></data>
+  <data name="TimeUp" xml:space="preserve"><value>Czas minął</value></data>
+  <data name="Unreachable" xml:space="preserve"><value>—</value></data>
+  <data name="LegendPinFormat" xml:space="preserve"><value>Wskazanie: {0}</value></data>
+  <data name="LegendTargetFormat" xml:space="preserve"><value>Cel: {0}</value></data>
+  <data name="ManualPointName" xml:space="preserve"><value>wybrane miejsce</value></data>
+  <data name="NoPin" xml:space="preserve"><value>brak pinezki</value></data>
+  <data name="TotalFormat" xml:space="preserve"><value>Suma: {0} pkt · {1}. miejsce</value></data>
+  <data name="NextRound" xml:space="preserve"><value>Następna runda</value></data>
+  <data name="ShowSummary" xml:space="preserve"><value>Podsumowanie</value></data>
+  <data name="CommentPerfect" xml:space="preserve"><value>Idealnie!|W samo sedno!|Mistrzowskie wyczucie!</value></data>
+  <data name="CommentClose" xml:space="preserve"><value>Blisko!|Prawie idealnie!|Świetne wyczucie!|Tuż obok!</value></data>
+  <data name="CommentWarm" xml:space="preserve"><value>Ciepło, ciepło…|Niezły kierunek!|Niewiele brakowało.</value></data>
+  <data name="CommentFar" xml:space="preserve"><value>Daleko, ale punkty są.|Kierunek mniej więcej się zgadza.</value></data>
+  <data name="CommentMiss" xml:space="preserve"><value>Cel: {0}. Pinezka: {1}. Ups!|Zupełnie inna okolica!|Ciało pomyliło adresy.</value></data>
+  <data name="CommentTimeUp" xml:space="preserve"><value>Pinezka nie zdążyła wylądować.</value></data>
+  <data name="EndGameTitle" xml:space="preserve"><value>Zakończyć grę?</value></data>
+  <data name="EndGameMessage" xml:space="preserve"><value>Rozegrane rundy zostaną zapisane.</value></data>
+  <data name="End" xml:space="preserve"><value>Zakończ</value></data>
+
+  <!-- Stage 6: session summary (mockup 9) -->
+  <data name="GameOver" xml:space="preserve"><value>Koniec gry!</value></data>
+  <data name="SummaryHeaderFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="BestHit" xml:space="preserve"><value>Najlepsze trafienie</value></data>
+  <data name="AverageMiss" xml:space="preserve"><value>Średnia pomyłka</value></data>
+  <data name="HardestZone" xml:space="preserve"><value>Najtrudniejsza strefa</value></data>
+  <data name="BiggestMiss" xml:space="preserve"><value>Największa wpadka</value></data>
+  <data name="BestHitFormat" xml:space="preserve"><value>{0} · {1:0.#} cm · {2}</value></data>
+  <data name="BiggestMissFormat" xml:space="preserve"><value>{0} · {1:0.#} cm</value></data>
+  <data name="PointsShortFormat" xml:space="preserve"><value>{0} pkt</value></data>
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="NewGame" xml:space="preserve"><value>Nowa gra</value></data>
+  <data name="Done" xml:space="preserve"><value>Gotowe</value></data>
+  <data name="ZoneSetCountOnlyFormat" xml:space="preserve"><value>Do losowania: {0}</value></data>
 </root>

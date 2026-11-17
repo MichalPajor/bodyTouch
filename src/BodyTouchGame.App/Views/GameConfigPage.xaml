@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- New game, step 2: game settings (mockup 3). Fields not in the mockup are in "Zaawansowane" (D6). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.GameConfigPage"
+             x:DataType="vm:GameConfigViewModel">
+    <ContentPage.Resources>
+        <Style x:Key="RowLabel" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource FontBold}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <Style x:Key="RowValue" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource FontExtraBold}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="TextColor" Value="{StaticResource Primary}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="End" />
+        </Style>
+        <Style x:Key="Divider" TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="Color" Value="{StaticResource Border}" />
+        </Style>
+        <Style x:Key="StepButton" TargetType="Button">
+            <Setter Property="WidthRequest" Value="40" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="MinimumHeightRequest" Value="40" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="*,Auto">
+            <ScrollView>
+                <VerticalStackLayout Spacing="16" Padding="20,12,20,16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{x:Static res:AppResources.NewGameStep2}" Style="{StaticResource Caption}" />
+                        <Label Text="{x:Static res:AppResources.GameSettings}" Style="{StaticResource ScreenTitle}" />
+                    </VerticalStackLayout>
+
+                    <!-- Presets: built-in first; levels without zones are greyed (Trudny, Hardcore) -->
+                    <FlexLayout BindableLayout.ItemsSource="{Binding Presets}" Wrap="Wrap" AlignItems="Start" AlignContent="Start">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:PresetItem">
+                                <controls:ChoiceButton Text="{Binding Name}" IsSelected="{Binding IsSelected}" IsEnabled="{Binding IsAvailable}"
+                                                       ButtonHeight="40" Margin="0,0,6,6"
+                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:GameConfigViewModel}}, Path=SelectPresetCommand, x:DataType=vm:GameConfigViewModel}"
+                                                       CommandParameter="{Binding .}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+
+                    <Border Padding="0">
+                        <VerticalStackLayout>
+                            <!-- Zones -->
+                            <Grid ColumnDefinitions="*,Auto" Padding="14,14" Opacity="{Binding ZonesRowOpacity}">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="{x:Static res:AppResources.Zones}" Style="{StaticResource Caption}" />
+                                    <Label Text="{Binding ZonesText}" Style="{StaticResource RowLabel}" />
+                                </VerticalStackLayout>
+                                <controls:LineIcon Grid.Column="1" Data="M9 5 L16 12 L9 19" StrokeColor="{StaticResource Text}" StrokeWidth="2.2" IconSize="18" VerticalOptions="Center"
+                                                   IsVisible="{Binding IsRandom}" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenZonesCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <BoxView Style="{StaticResource Divider}" />
+
+                            <!-- Touch method -->
+                            <VerticalStackLayout Padding="14,12,14,14" Spacing="10">
+                                <Label Text="{x:Static res:AppResources.TouchMethodLabel}" Style="{StaticResource Caption}" />
+                                <Grid x:Name="TouchMethodGrid" ColumnDefinitions="*,*" RowDefinitions="48,48" ColumnSpacing="6" RowSpacing="6" />
+                            </VerticalStackLayout>
+                            <BoxView Style="{StaticResource Divider}" />
+
+                            <!-- Gentle movement -->
+                            <Grid ColumnDefinitions="*,Auto" Padding="14,12">
+                                <Label Text="{x:Static res:AppResources.GentleMovement}" Style="{StaticResource RowLabel}" />
+                                <controls:SquareSwitch Grid.Column="1" IsToggled="{Binding MovementAllowed}" />
+                            </Grid>
+                            <BoxView Style="{StaticResource Divider}" />
+
+                            <!-- Touch time -->
+                            <VerticalStackLayout Padding="14,12" Spacing="6">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{x:Static res:AppResources.TouchTime}" Style="{StaticResource RowLabel}" />
+                                    <Label Grid.Column="1" Text="{Binding TouchSecondsText}" Style="{StaticResource RowValue}" />
+                                </Grid>
+                                <controls:SquareSlider Minimum="1" Maximum="10" Value="{Binding TouchSeconds}" />
+                            </VerticalStackLayout>
+                            <BoxView Style="{StaticResource Divider}" />
+
+                            <!-- Rounds per player -->
+                            <Grid ColumnDefinitions="*,Auto,48,Auto" Padding="14,10">
+                                <Label Text="{x:Static res:AppResources.RoundsPerPlayer}" Style="{StaticResource RowLabel}" />
+                                <Button Grid.Column="1" Text="−" Style="{StaticResource StepButton}" Command="{Binding ChangeRoundsCommand}" CommandParameter="-1"
+                                        SemanticProperties.Description="{x:Static res:AppResources.FewerRounds}" />
+                                <Label Grid.Column="2" Text="{Binding RoundsPerPlayer}" FontFamily="{StaticResource FontExtraBold}" FontSize="17"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                                <Button Grid.Column="3" Text="+" Style="{StaticResource StepButton}" Command="{Binding ChangeRoundsCommand}" CommandParameter="1"
+                                        SemanticProperties.Description="{x:Static res:AppResources.MoreRounds}" />
+                            </Grid>
+                            <BoxView Style="{StaticResource Divider}" />
+
+                            <!-- Advanced (D6) -->
+                            <Grid ColumnDefinitions="*,Auto" Padding="14,14">
+                                <Label Text="{x:Static res:AppResources.Advanced}" Style="{StaticResource RowLabel}" TextColor="{StaticResource Muted}" />
+                                <Label Grid.Column="1" Text="{Binding AdvancedGlyph}" FontFamily="{StaticResource FontBold}"
+                                       TextColor="{StaticResource Muted}" VerticalOptions="Center" />
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ToggleAdvancedCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <VerticalStackLayout IsVisible="{Binding ShowAdvanced}">
+                                <BoxView Style="{StaticResource Divider}" />
+                                <Grid ColumnDefinitions="*,Auto" Padding="14,12">
+                                    <Label Text="{x:Static res:AppResources.TargetChosenByModel}" Style="{StaticResource RowLabel}" />
+                                    <controls:SquareSwitch Grid.Column="1" IsToggled="{Binding ChosenByModel}" />
+                                </Grid>
+                                <BoxView Style="{StaticResource Divider}" />
+                                <Grid ColumnDefinitions="*,Auto" Padding="14,12">
+                                    <Label Text="{x:Static res:AppResources.GuessTimeLimit}" Style="{StaticResource RowLabel}" />
+                                    <controls:SquareSwitch Grid.Column="1" IsToggled="{Binding HasGuessLimit}" />
+                                </Grid>
+                                <VerticalStackLayout Padding="14,0,14,12" Spacing="6" IsVisible="{Binding HasGuessLimit}">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{x:Static res:AppResources.GuessTime}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding GuessSecondsText}" Style="{StaticResource RowValue}" />
+                                    </Grid>
+                                    <controls:SquareSlider Minimum="3" Maximum="30" Value="{Binding GuessSeconds}" />
+                                </VerticalStackLayout>
+                                <BoxView Style="{StaticResource Divider}" />
+                                <Grid ColumnDefinitions="*,Auto,72,Auto" Padding="14,10">
+                                    <Label Text="{x:Static res:AppResources.FullPointsRadius}" Style="{StaticResource RowLabel}" FontSize="14" />
+                                    <Button Grid.Column="1" Text="−" Style="{StaticResource StepButton}" Command="{Binding ChangeFullRadiusCommand}" CommandParameter="-0.5"
+                                            SemanticProperties.Description="{x:Static res:AppResources.Less}" />
+                                    <Label Grid.Column="2" Text="{Binding FullRadiusText}" FontFamily="{StaticResource FontExtraBold}" FontSize="14"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <Button Grid.Column="3" Text="+" Style="{StaticResource StepButton}" Command="{Binding ChangeFullRadiusCommand}" CommandParameter="0.5"
+                                            SemanticProperties.Description="{x:Static res:AppResources.More}" />
+                                </Grid>
+                                <BoxView Style="{StaticResource Divider}" />
+                                <Grid ColumnDefinitions="*,Auto,72,Auto" Padding="14,10">
+                                    <Label Text="{x:Static res:AppResources.ZeroPointsDistance}" Style="{StaticResource RowLabel}" FontSize="14" />
+                                    <Button Grid.Column="1" Text="−" Style="{StaticResource StepButton}" Command="{Binding ChangeZeroDistanceCommand}" CommandParameter="-5"
+                                            SemanticProperties.Description="{x:Static res:AppResources.Less}" />
+                                    <Label Grid.Column="2" Text="{Binding ZeroDistanceText}" FontFamily="{StaticResource FontExtraBold}" FontSize="14"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                    <Button Grid.Column="3" Text="+" Style="{StaticResource StepButton}" Command="{Binding ChangeZeroDistanceCommand}" CommandParameter="5"
+                                            SemanticProperties.Description="{x:Static res:AppResources.More}" />
+                                </Grid>
+                                <BoxView Style="{StaticResource Divider}" />
+                                <Grid ColumnDefinitions="*,Auto" Padding="14,12">
+                                    <Label Text="{x:Static res:AppResources.SpeedBonus}" Style="{StaticResource RowLabel}" />
+                                    <controls:SquareSwitch Grid.Column="1" IsToggled="{Binding SpeedBonus}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <Grid Grid.Row="1" ColumnDefinitions="Auto,*" ColumnSpacing="10" Padding="20,0,20,16">
+                <Button Text="{x:Static res:AppResources.SavePreset}" Style="{StaticResource SecondaryButton}" Command="{Binding SavePresetCommand}" VerticalOptions="Start" />
+                <controls:PartyButton Grid.Column="1" Text="{x:Static res:AppResources.StartGame}" Command="{Binding StartGameCommand}" Margin="0,0,-5,-5" />
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

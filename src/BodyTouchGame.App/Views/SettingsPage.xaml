@@ -42,12 +42,7 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Label Grid.Row="8" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center">
-                <Label.GestureRecognizers>
-                    <!-- Developer entry: a tap on the version opens the stage 3 3D prototype (temporary, until stage 6). -->
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding OpenPrototypeCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
+            <Label Grid.Row="8" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
         </Grid>
         </ScrollView>
     </Grid>

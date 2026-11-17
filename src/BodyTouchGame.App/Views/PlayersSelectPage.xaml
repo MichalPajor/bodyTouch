@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- New game, step 1: players (mockup 2). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.PlayersSelectPage"
+             x:DataType="vm:PlayersSelectViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="16" Padding="20,12,20,16">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="{x:Static res:AppResources.NewGameStep1}" Style="{StaticResource Caption}" />
+                <Label Text="{x:Static res:AppResources.WhoPlays}" Style="{StaticResource ScreenTitle}" />
+            </VerticalStackLayout>
+
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Spacing="8">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Players}" Spacing="8">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:PlayerItem">
+                                <Border HeightRequest="68" Padding="14,0">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlayersSelectViewModel}}, Path=ToggleCommand, x:DataType=vm:PlayersSelectViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                        <controls:Avatar Name="{Binding Name}" Color="{Binding Color}" Size="42" VerticalOptions="Center" />
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                            <Label Text="{Binding Name}" FontFamily="{StaticResource FontBold}" FontSize="16" />
+                                            <Label Text="{Binding Stats}" FontSize="12" TextColor="{StaticResource Muted}" />
+                                        </VerticalStackLayout>
+                                        <!-- Checkbox: orange square with a tick when selected, outline otherwise -->
+                                        <Grid Grid.Column="2" WidthRequest="26" HeightRequest="26" VerticalOptions="Center">
+                                            <Border StrokeThickness="2" Stroke="#4A4170" BackgroundColor="Transparent" />
+                                            <Grid IsVisible="{Binding IsSelected}" BackgroundColor="{StaticResource Primary}">
+                                                <controls:LineIcon Data="M5 12 L10 17 L19 7" StrokeColor="{StaticResource OnPrimary}" StrokeWidth="3" IconSize="16"
+                                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <!-- Add player: dashed outline -->
+                    <Grid HeightRequest="56">
+                        <Rectangle Stroke="#4A4170" StrokeThickness="2" StrokeDashArray="4,3" Fill="Transparent" />
+                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Center" VerticalOptions="Center">
+                            <controls:LineIcon Data="M12 5 V19 M5 12 H19" StrokeColor="{StaticResource Text}" StrokeWidth="2.5" IconSize="18" VerticalOptions="Center" />
+                            <Label Text="{x:Static res:AppResources.AddPlayer}" FontFamily="{StaticResource FontBold}" FontSize="15" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AddPlayerCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+                <Label Text="{Binding SelectedText}" FontSize="14" TextColor="{StaticResource Muted}" />
+                <Label Grid.Column="1" Text="{Binding OrderText}" FontSize="14" TextColor="{StaticResource Muted}" TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleOrderCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <controls:PartyButton Grid.Row="3" Text="{x:Static res:AppResources.Next}" Command="{Binding NextCommand}" Margin="0,0,-5,-5" />
+        </Grid>
+    </Grid>
+</ContentPage>

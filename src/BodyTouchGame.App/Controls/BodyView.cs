@@ -17,6 +17,11 @@ public sealed class BodyView : ContentView
         BindableProperty.Create(nameof(ShowCameraControls), typeof(bool), typeof(BodyView), true,
             propertyChanged: (b, _, n) => ((BodyView)b).SetControlsVisible((bool)n));
 
+    public static readonly BindableProperty IsFramedProperty =
+        BindableProperty.Create(nameof(IsFramed), typeof(bool), typeof(BodyView), true,
+            propertyChanged: (b, _, n) => ((BodyView)b)._frame.StrokeThickness = (bool)n ? 1 : 0);
+
+    private readonly Border _frame;
     private readonly HybridWebView _webView;
     private readonly View[] _overlays;
     private readonly Dictionary<string, Button> _viewButtons = [];
@@ -78,12 +83,13 @@ public sealed class BodyView : ContentView
         SelectView("Front");
 
         _overlays = [hint, zoom, views];
-        Content = new Border
+        _frame = new Border
         {
             Padding = 0,
             BackgroundColor = (Color)resources["SurfaceSolid"],
             Content = new Grid { Children = { _webView, hint, zoom, views } },
         };
+        Content = _frame;
     }
 
     public BodyViewBridge Bridge { get; }
@@ -92,6 +98,9 @@ public sealed class BodyView : ContentView
     public Task<ModelLoadedResult?> WhenModelLoaded => _modelLoaded.Task;
 
     public bool ShowCameraControls { get => (bool)GetValue(ShowCameraControlsProperty); set => SetValue(ShowCameraControlsProperty, value); }
+
+    /// <summary>Draws the 1 px panel border (off when the view sits inside another panel).</summary>
+    public bool IsFramed { get => (bool)GetValue(IsFramedProperty); set => SetValue(IsFramedProperty, value); }
 
     /// <summary>Height of the bottom overlay (view buttons + margins), kept free when framing the model.</summary>
     private const double BottomOverlayHeight = 44 + 14 + 8;
