@@ -32,11 +32,22 @@ public sealed partial class GameConfigViewModel(
     BodyDataService bodyData,
     IPresetRepository presets,
     INavigationService navigation,
-    IDialogService dialogs) : ObservableObject
+    IDialogService dialogs) : ObservableObject, IQueryAttributable
 {
     private bool _loading;
 
     public ObservableCollection<PresetItem> Presets { get; } = [];
+
+    /// <summary>Settings → "Domyślna konfiguracja gry": the same screen edits the values offered for a new game
+    /// (the configuration is kept between games), with "Zapisz" instead of "Start gry".</summary>
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsNewGame), nameof(Caption), nameof(Title))] public partial bool IsDefaultMode { get; set; }
+
+    public bool IsNewGame => !IsDefaultMode;
+    public string Caption => IsDefaultMode ? AppResources.DefaultConfigCaption : AppResources.NewGameStep2;
+    public string Title => IsDefaultMode ? AppResources.DefaultConfigTitle : AppResources.GameSettings;
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query) =>
+        IsDefaultMode = query.TryGetValue("mode", out var mode) && mode?.ToString() == "default";
 
     public IReadOnlyList<TouchMethodItem> TouchMethods { get; } =
         Enum.GetValues<TouchMethod>().Select(m => new TouchMethodItem(m, ConfigTexts.TouchMethod(m))).ToList();
@@ -145,6 +156,9 @@ public sealed partial class GameConfigViewModel(
             await dialogs.AlertAsync(AppResources.SavePreset, AppResources.NameTaken);
         }
     }
+
+    [RelayCommand]
+    private Task SaveDefaultAsync() => navigation.GoBackAsync();
 
     [RelayCommand]
     private async Task StartGameAsync()

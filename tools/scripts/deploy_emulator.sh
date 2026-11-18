@@ -5,7 +5,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 ADB="${ANDROID_HOME:-$HOME/Android/Sdk}/platform-tools/adb"
-PACKAGE="com.example.bodytouchgame"
+PACKAGE="place.yourmoment.bodytouchgame"
 
 dotnet build src/BodyTouchGame.App -f net10.0-android -t:Install -nologo -v:q
 "$ADB" shell am force-stop "$PACKAGE"

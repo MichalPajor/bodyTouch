@@ -4,7 +4,7 @@
 set -euo pipefail
 DB="${1:?Podaj plik bazy (.db3)}"
 ADB="${ANDROID_HOME:-$HOME/Android/Sdk}/platform-tools/adb"
-PACKAGE="com.example.bodytouchgame"
+PACKAGE="place.yourmoment.bodytouchgame"
 
 "$ADB" shell am force-stop "$PACKAGE"
 "$ADB" push "$DB" /data/local/tmp/seed.db3 >/dev/null

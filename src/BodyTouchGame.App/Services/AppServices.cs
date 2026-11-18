@@ -97,41 +97,57 @@ public sealed class DialogService : IDialogService
     }
 }
 
-/// <summary>Sounds at the start and end of touching (spec 13, basic version), respecting the settings. No vibration (owner's decision after stage 6).</summary>
+public enum SoundEffect
+{
+    TouchStart,
+    TouchEnd,
+    Tick,
+    RevealPerfect,
+    RevealPoints,
+    RevealMiss,
+    GameOver,
+}
+
+/// <summary>Game sounds (spec 13, Efekty), respecting the "Dźwięki" setting. No vibration (owner's decision after stage 6).</summary>
 public sealed class FeedbackService(IAudioManager audio, ISettingsService settings)
 {
-    private IAudioPlayer? _start;
-    private IAudioPlayer? _end;
+    private readonly Dictionary<SoundEffect, IAudioPlayer?> _players = [];
 
-    public async Task TouchStartAsync()
+    public Task TouchStartAsync() => PlayAsync(SoundEffect.TouchStart);
+
+    public Task TouchEndAsync() => PlayAsync(SoundEffect.TouchEnd);
+
+    public async Task PlayAsync(SoundEffect effect)
     {
-        await PlayAsync(_start ??= await LoadAsync("sounds/touch_start.wav"));
+        if (!settings.SoundEnabled) return;
+        if (!_players.TryGetValue(effect, out var player))
+            _players[effect] = player = await LoadAsync(effect);
+        if (player is null) return;
+        player.Stop();
+        player.Play();
     }
 
-    public async Task TouchEndAsync()
+    private async Task<IAudioPlayer?> LoadAsync(SoundEffect effect)
     {
-        await PlayAsync(_end ??= await LoadAsync("sounds/touch_end.wav"));
-    }
-
-    private async Task<IAudioPlayer?> LoadAsync(string file)
-    {
+        var file = effect switch
+        {
+            SoundEffect.TouchStart => "touch_start",
+            SoundEffect.TouchEnd => "touch_end",
+            SoundEffect.Tick => "tick",
+            SoundEffect.RevealPerfect => "reveal_perfect",
+            SoundEffect.RevealPoints => "reveal_points",
+            SoundEffect.RevealMiss => "reveal_miss",
+            _ => "game_over",
+        };
         try
         {
-            return audio.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(file));
+            return audio.CreatePlayer(await FileSystem.OpenAppPackageFileAsync($"sounds/{file}.wav"));
         }
         catch (Exception e)
         {
             Console.WriteLine($"[BTG] sound {file}: {e.Message}");
             return null;
         }
-    }
-
-    private Task PlayAsync(IAudioPlayer? player)
-    {
-        if (!settings.SoundEnabled || player is null) return Task.CompletedTask;
-        player.Stop();
-        player.Play();
-        return Task.CompletedTask;
     }
 }
 

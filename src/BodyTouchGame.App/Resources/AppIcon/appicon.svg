@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- App icon background (adaptive icon layer): dark Background with confetti crumbs near the edges (spec 13). -->
 <svg width="456" height="456" viewBox="0 0 456 456" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="456" height="456" fill="#512BD4" />
+    <rect x="0" y="0" width="456" height="456" fill="#0D0A1A" />
+    <polygon points="40,70 78,52 66,96" fill="#FF3D9A" />
+    <polygon points="372,46 412,64 384,92" fill="#22D3EE" />
+    <polygon points="396,330 430,372 386,376" fill="#8B5CF6" />
+    <polygon points="52,360 92,392 46,410" fill="#FF9A3C" />
+    <polygon points="210,22 236,30 222,50" fill="#8B5CF6" />
+    <polygon points="20,220 44,206 42,240" fill="#22D3EE" />
+    <polygon points="414,200 440,212 418,232" fill="#FF3D9A" />
+    <polygon points="230,418 262,410 252,440" fill="#22D3EE" />
 </svg>

@@ -27,6 +27,7 @@ public sealed partial class GameViewModel(
     BodyDataService bodyData,
     ISessionRepository sessions,
     FeedbackService feedback,
+    ISettingsService settings,
     INavigationService navigation,
     IDialogService dialogs) : ObservableObject
 {
@@ -45,6 +46,14 @@ public sealed partial class GameViewModel(
     private long _sessionId;
     private IDispatcherTimer? _timer;
     private DateTime _timerStart;
+    private int _lastTickSecond;
+
+    /// <summary>Raised when the result is a perfect hit and confetti is enabled (the page plays the burst).</summary>
+    public event EventHandler? ConfettiRequested;
+
+    /// <summary>Path animation of the result in the 3D view (body-view.js REVEAL_PATH_MS): sound and confetti
+    /// come when the path reaches the target.</summary>
+    private static readonly TimeSpan RevealPathDuration = TimeSpan.FromMilliseconds(1300);
     private bool _ended;
 
     // ---- state flags (which panel is visible)
@@ -417,6 +426,20 @@ public sealed partial class GameViewModel(
         TotalText = string.Format(Culture, AppResources.TotalFormat, standing.TotalPoints, standing.Rank);
         NextButtonText = s.RoundIndex + 1 >= s.RoundCount ? AppResources.ShowSummary : AppResources.NextRound;
 
+        var kind = RevealComments.KindOf(result);
+        Dispatcher.StartTimer(result.Pin is null ? TimeSpan.FromMilliseconds(200) : RevealPathDuration, () =>
+        {
+            if (_session?.State != GameState.Reveal) return false;
+            _ = feedback.PlayAsync(kind switch
+            {
+                RevealCommentKind.Perfect => SoundEffect.RevealPerfect,
+                RevealCommentKind.Close or RevealCommentKind.Warm or RevealCommentKind.Far => SoundEffect.RevealPoints,
+                _ => SoundEffect.RevealMiss,
+            });
+            if (kind == RevealCommentKind.Perfect && settings.ConfettiEnabled) ConfettiRequested?.Invoke(this, EventArgs.Empty);
+            return false;
+        });
+
         // The result stays on screen for at least 3 s (spec 13).
         CanLeaveReveal = false;
         Dispatcher.StartTimer(TimeSpan.FromSeconds(3), () =>
@@ -428,6 +451,7 @@ public sealed partial class GameViewModel(
 
     private void ShowSummary()
     {
+        _ = feedback.PlayAsync(SoundEffect.GameOver);
         var s = _session!;
         var summary = s.Summary;
         var names = s.Players.ToDictionary(p => p.Id, p => p.Name);
@@ -462,6 +486,7 @@ public sealed partial class GameViewModel(
     {
         StopTimer();
         _timerStart = DateTime.UtcNow;
+        _lastTickSecond = seconds;
         _timer = Dispatcher.CreateTimer();
         _timer.Interval = TimeSpan.FromMilliseconds(100);
         _timer.Tick += async (_, _) =>
@@ -475,7 +500,15 @@ public sealed partial class GameViewModel(
             }
 
             tick(remaining / seconds);
-            if (_session?.State == GameState.Touching) CountdownText = Math.Ceiling(remaining).ToString(Culture);
+            var second = (int)Math.Ceiling(remaining);
+            if (_session?.State == GameState.Touching)
+            {
+                CountdownText = second.ToString(Culture);
+                // Ticks in the last 3 seconds of touching.
+                if (second <= 3 && second != _lastTickSecond) _ = feedback.PlayAsync(SoundEffect.Tick);
+            }
+
+            _lastTickSecond = second;
             if (_session?.State == GameState.Guessing) GuessTimerText = FormatClock(remaining);
         };
         _timer.Start();

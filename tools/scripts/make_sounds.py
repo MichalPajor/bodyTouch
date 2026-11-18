@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Generates the short UI sounds (start / end of touching) as 16-bit mono WAV files.
+"""Generates the short UI sounds as 16-bit mono WAV files: start / end of touching, countdown ticks, result sounds
+(perfect hit, points, miss) and the end-of-game fanfare.
 
 Usage: python3 -I tools/scripts/make_sounds.py   -> src/BodyTouchGame.App/Resources/Raw/sounds/*.wav
 Sounds are synthesised (no third-party audio), so there are no licence questions.
@@ -41,3 +42,8 @@ def write(name, *parts):
 os.makedirs(OUT, exist_ok=True)
 write("touch_start.wav", tone(880, 0.12), silence(0.05), tone(1320, 0.18))      # rising "go!"
 write("touch_end.wav", tone(1320, 0.12), silence(0.05), tone(660, 0.35))        # falling "stop"
+write("tick.wav", tone(1760, 0.045, 0.35))                                         # countdown, last 3 s
+write("reveal_perfect.wav", tone(784, 0.09), tone(988, 0.09), tone(1175, 0.09), tone(1568, 0.32))  # arpeggio up
+write("reveal_points.wav", tone(659, 0.1), silence(0.03), tone(988, 0.22))         # pleasant two-note
+write("reveal_miss.wav", tone(392, 0.16), silence(0.03), tone(294, 0.38, 0.45))    # "womp womp"
+write("game_over.wav", tone(523, 0.14), tone(659, 0.14), tone(784, 0.14), silence(0.04), tone(1047, 0.5))  # fanfare

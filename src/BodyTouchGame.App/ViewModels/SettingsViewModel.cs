@@ -32,15 +32,12 @@ public sealed partial class SettingsViewModel : ObservableObject
     partial void OnSoundEnabledChanged(bool value) => _settings.SoundEnabled = value;
     partial void OnConfettiEnabledChanged(bool value) => _settings.ConfettiEnabled = value;
 
-    // Screens of later stages: visible but disabled.
-    [RelayCommand(CanExecute = nameof(IsAvailableLater))]
-    private void DefaultConfig() { }
+    [RelayCommand]
+    private Task DefaultConfigAsync() => _navigation.GoToAsync($"{Routes.GameConfig}?mode=default");
 
     [RelayCommand]
     private Task ZoneEditorAsync() => _navigation.GoToAsync(Routes.ZoneEditor);
 
     [RelayCommand]
     private Task ExcludedZonesAsync() => _navigation.GoToAsync(Routes.Exclusions);
-
-    private static bool IsAvailableLater() => false;
 }

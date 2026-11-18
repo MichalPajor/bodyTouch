@@ -11,6 +11,7 @@ public partial class GamePage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+        viewModel.ConfettiRequested += (_, _) => Confetti.Play();
     }
 
     protected override async void OnAppearing()

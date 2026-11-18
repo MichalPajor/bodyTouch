@@ -161,12 +161,12 @@
   <data name="TotalFormat" xml:space="preserve"><value>Suma: {0} pkt · {1}. miejsce</value></data>
   <data name="NextRound" xml:space="preserve"><value>Następna runda</value></data>
   <data name="ShowSummary" xml:space="preserve"><value>Podsumowanie</value></data>
-  <data name="CommentPerfect" xml:space="preserve"><value>Idealnie!|W samo sedno!|Mistrzowskie wyczucie!</value></data>
-  <data name="CommentClose" xml:space="preserve"><value>Blisko!|Prawie idealnie!|Świetne wyczucie!|Tuż obok!</value></data>
-  <data name="CommentWarm" xml:space="preserve"><value>Ciepło, ciepło…|Niezły kierunek!|Niewiele brakowało.</value></data>
-  <data name="CommentFar" xml:space="preserve"><value>Daleko, ale punkty są.|Kierunek mniej więcej się zgadza.</value></data>
-  <data name="CommentMiss" xml:space="preserve"><value>Cel: {0}. Pinezka: {1}. Ups!|Zupełnie inna okolica!|Ciało pomyliło adresy.</value></data>
-  <data name="CommentTimeUp" xml:space="preserve"><value>Pinezka nie zdążyła wylądować.</value></data>
+  <data name="CommentPerfect" xml:space="preserve"><value>Idealnie!|W samo sedno!|Mistrzowskie wyczucie!|Snajperska precyzja!|Czytasz w myślach?|Dokładnie tam!</value></data>
+  <data name="CommentClose" xml:space="preserve"><value>Blisko!|Prawie idealnie!|Świetne wyczucie!|Tuż obok!|Milimetry od celu!|Ciało nie ma przed Tobą tajemnic.</value></data>
+  <data name="CommentWarm" xml:space="preserve"><value>Ciepło, ciepło…|Niezły kierunek!|Niewiele brakowało.|Dobra okolica!|Prawie, prawie.</value></data>
+  <data name="CommentFar" xml:space="preserve"><value>Daleko, ale punkty są.|Kierunek mniej więcej się zgadza.|Coś tam było czuć!|Ta sama dzielnica, inna ulica.</value></data>
+  <data name="CommentMiss" xml:space="preserve"><value>Cel: {0}. Pinezka: {1}. Ups!|Zupełnie inna okolica!|Ciało pomyliło adresy.|Cel: {0}. Pinezka: {1}. Kto by pomyślał?|GPS się zgubił.|Ciepło? Raczej zimno.</value></data>
+  <data name="CommentTimeUp" xml:space="preserve"><value>Pinezka nie zdążyła wylądować.|Czas minął – pinezka została w kieszeni.|Zegar był szybszy.</value></data>
   <data name="EndGameTitle" xml:space="preserve"><value>Zakończyć grę?</value></data>
   <data name="EndGameMessage" xml:space="preserve"><value>Rozegrane rundy zostaną zapisane.</value></data>
   <data name="End" xml:space="preserve"><value>Zakończ</value></data>
@@ -256,4 +256,6 @@
   <data name="ManualZonesFormat" xml:space="preserve"><value>Dodane ręcznie: {0}</value></data>
   <data name="ClearManual" xml:space="preserve"><value>Wyczyść</value></data>
   <data name="CustomPointsLabel" xml:space="preserve"><value>Własne punkty</value></data>
+  <data name="DefaultConfigTitle" xml:space="preserve"><value>Domyślna konfiguracja</value></data>
+  <data name="DefaultConfigCaption" xml:space="preserve"><value>Ustawienia · wartości proponowane przy nowej grze</value></data>
 </root>

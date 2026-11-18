@@ -26,7 +26,7 @@
 		<ApplicationTitle>Body Touch Game</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.example.bodytouchgame</ApplicationId>
+		<ApplicationId>place.yourmoment.bodytouchgame</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -37,10 +37,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#0D0A1A" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" ForegroundScale="0.8" Color="#0D0A1A" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#0D0A1A" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#0D0A1A" BaseSize="160,160" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

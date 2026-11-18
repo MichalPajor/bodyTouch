@@ -8,6 +8,6 @@ BUILD_ROOT="${BTG_BUILD_ROOT:-$HOME/build/BodyTouchGame}"
 
 dotnet publish src/BodyTouchGame.App -f net10.0-android -c Release -nologo -v:q
 mkdir -p dist
-cp "$BUILD_ROOT/bin/BodyTouchGame.App/Release/net10.0-android/publish/com.example.bodytouchgame-Signed.apk" \
+cp "$BUILD_ROOT/bin/BodyTouchGame.App/Release/net10.0-android/publish/place.yourmoment.bodytouchgame-Signed.apk" \
    "dist/BodyTouchGame-$NAME.apk"
 ls -la "dist/BodyTouchGame-$NAME.apk"

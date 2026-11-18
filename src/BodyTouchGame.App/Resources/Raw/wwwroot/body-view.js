@@ -29,6 +29,7 @@ const DOUBLE_TAP_MS = 320;
 const PIN_GRAB_PX = 44;        // touching the pin closer than this drags it
 const CAMERA_TWEEN_MS = 700;
 const REVEAL_PATH_MS = 1300;
+const REVEAL_TARGET_MS = 350;   // target fade-in after the path
 const SMALL_TARGET_CM = 12;  // focusTarget zooms in on targets smaller than this (half-extent)
 
 const state = {
@@ -271,7 +272,9 @@ function showReveal(payload) {
   clearTarget();
   state.target = payload.target;
   const info = describeTarget(payload.target, false);
-  applyColors(1);
+  // Order of the result (spec 13): pin -> path along the body -> target. The target appears when the path arrives.
+  applyColors(0);
+  if (state.targetMarker) state.targetMarker.visible = false;
   if (payload.pin) setGuessPin(pointFromSurface(payload.pin), payload.pin, false);
 
   const group = new THREE.Group();
@@ -297,7 +300,7 @@ function showReveal(payload) {
   }
   scene.add(group);
   state.revealGroup = group;
-  state.revealAnim = { start: performance.now(), dashes };
+  state.revealAnim = { start: performance.now(), dashes, pathMs: dashes.length > 0 ? REVEAL_PATH_MS : 0 };
 
   // Turn to a side from which both the target and the pin can be seen: the mean of their horizontal directions
   // (when they are on opposite sides, the target's side wins).
@@ -857,9 +860,14 @@ function frame(now) {
   stepCamera(now);
   if (state.highlight?.pulse) applyColors(0.55 + 0.45 * (0.5 + 0.5 * Math.sin(now / 1000 * Math.PI * 1.6)));
   if (state.revealAnim) {
-    const progress = Math.min(1, (now - state.revealAnim.start) / REVEAL_PATH_MS);
-    for (const d of state.revealAnim.dashes) d.mesh.visible = d.start <= progress;
-    if (progress >= 1) state.revealAnim = null;
+    const a = state.revealAnim;
+    const progress = a.pathMs > 0 ? Math.min(1, (now - a.start) / a.pathMs) : 1;
+    for (const d of a.dashes) d.mesh.visible = d.start <= progress;
+    // Then the target fades in.
+    const fade = Math.min(1, Math.max(0, (now - a.start - a.pathMs) / REVEAL_TARGET_MS));
+    if (state.highlight) applyColors(fade);
+    if (state.targetMarker) state.targetMarker.visible = fade > 0;
+    if (fade >= 1) state.revealAnim = null;
   }
   if (!state.cameraTween) controls.update();
   renderer.render(scene, camera);
