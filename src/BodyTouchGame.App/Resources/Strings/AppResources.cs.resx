@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Jazyk telefonu ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Jazyk aplikace</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Změna platí hned. „Jazyk telefonu“ použije jazyk nastavený v Androidu (když není podporovaný – angličtinu).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Jak hrát?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Jak hrát (návod)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Přeskočit</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Jdeme na to!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Jak hrát · {0} z {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Jeden telefon, celá parta</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Hra pro 2–8 lidí. V každém kole je jedna osoba model a druhá hádá. Pak se role vymění.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Model vidí cíl</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Model se dívá do telefonu a vidí vylosované místo na těle. Hádající si mezitím zakrývá oči – žádné koukání!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>Dotek</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Model vede ruku hádajícího a dotýká se jí vylosovaného místa – tak a tak dlouho, jak ukazuje telefon. Oči hádajícího zůstávají zakryté.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Předej telefon</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Čas vypršel. Model předá telefon. Cíl je skrytý, takže hádající už může otevřít oči.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Ukaž místo</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Hádající umístí špendlík na 3D model tam, kde byl dotek. Model lze otáčet a přibližovat a špendlík posouvat.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Výsledek</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>Aplikace měří vzdálenost po povrchu těla. Čím blíž k cíli, tím víc bodů. Přesný zásah znamená 100 bodů a konfety!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Výměna rolí</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>V dalších kolech se dvojice mění, dokud si každý nezahraje s každým. Vyhrává osoba s nejvíce body.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>BEZ REKLAM</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Odstranit reklamy · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Odstranit reklamy</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Reklamy odstraněny – děkujeme!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Obnovit nákup</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Soukromí reklam</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Ohodnotit aplikaci</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Obchod Google Play teď není dostupný. Zkus to později.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Nákup obnoven – reklamy vypnuty.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Na tomto účtu Google nebyl nalezen žádný nákup.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Děkujeme! Reklamy byly vypnuty.</value></data>
 </root>

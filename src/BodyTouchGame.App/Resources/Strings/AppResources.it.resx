@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Lingua del telefono ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Lingua dell'app</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>La modifica è immediata. «Lingua del telefono» usa la lingua impostata in Android (se non è supportata, l'inglese).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Come si gioca?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Come si gioca (tutorial)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Salta</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Iniziamo!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Come si gioca · {0} di {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Un telefono, tutta la compagnia</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Un gioco per 2–8 persone. A ogni turno una persona fa da modello e un'altra indovina. Poi i ruoli si scambiano.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Il modello vede il bersaglio</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Il modello guarda il telefono e vede un punto del corpo estratto a caso. Intanto chi indovina si copre gli occhi – niente sbirciate!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>Il tocco</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Il modello guida la mano di chi indovina e con essa tocca il punto estratto – come e per quanto indica il telefono. Gli occhi restano coperti.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Passa il telefono</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Tempo scaduto. Il modello passa il telefono. Il bersaglio è nascosto, quindi chi indovina può aprire gli occhi.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Indica il punto</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Chi indovina mette una puntina sul modello 3D dove è avvenuto il tocco. Il modello si può ruotare e ingrandire, la puntina spostare.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Risultato</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>L'app misura la distanza sulla superficie del corpo. Più la puntina è vicina al bersaglio, più punti. Un centro perfetto vale 100 punti e coriandoli!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Cambio ruoli</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>Nei turni successivi le coppie cambiano, finché ogni persona ha giocato con tutte le altre. Vince chi ha più punti.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>SENZA PUBBLICITÀ</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Rimuovi pubblicità · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Rimuovi pubblicità</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Pubblicità rimossa – grazie!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Ripristina acquisto</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Privacy pubblicità</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Valuta l'app</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Google Play Store non è disponibile ora. Riprova più tardi.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Acquisto ripristinato – pubblicità disattivata.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Nessun acquisto trovato su questo account Google.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Grazie! La pubblicità è stata disattivata.</value></data>
 </root>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Animated tutorial (stage 11): scene animation (Resources/Raw/tutorial/tutorial.html), title, description,
+     progress dots; swipe or "Dalej" to move on. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.TutorialPage"
+             x:DataType="vm:TutorialViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto" RowSpacing="14" Padding="20,12,20,16">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="{Binding StepText}" Style="{StaticResource Caption}" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="{x:Static res:AppResources.TutorialSkip}" FontFamily="{StaticResource FontBold}" FontSize="14"
+                       TextColor="{StaticResource Muted}" TextDecorations="Underline" Padding="8,10" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FinishCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <!-- Animation: 360 × 300 scene, scaled to the width -->
+            <Border Grid.Row="1" Padding="0" x:Name="SceneFrame">
+                <WebView x:Name="Scene" BackgroundColor="#171329" />
+            </Border>
+
+            <Label Grid.Row="2" Text="{Binding Title}" Style="{StaticResource ScreenTitle}" FontSize="26" LineHeight="0.95" Margin="0,6,0,0" />
+            <Label Grid.Row="3" Text="{Binding Text}" FontSize="16" TextColor="{StaticResource Muted}" />
+
+            <HorizontalStackLayout Grid.Row="4" BindableLayout.ItemsSource="{Binding Dots}" Spacing="6" HorizontalOptions="Center">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="x:Boolean">
+                        <BoxView HeightRequest="8" WidthRequest="10" Color="#2E2650">
+                            <BoxView.Triggers>
+                                <DataTrigger TargetType="BoxView" Binding="{Binding .}" Value="True">
+                                    <Setter Property="WidthRequest" Value="26" />
+                                    <Setter Property="Color" Value="{StaticResource Primary}" />
+                                </DataTrigger>
+                            </BoxView.Triggers>
+                        </BoxView>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+
+            <controls:PartyButton Grid.Row="5" Text="{Binding NextText}" Command="{Binding NextCommand}" Margin="0,0,-5,-5" />
+        </Grid>
+    </Grid>
+</ContentPage>

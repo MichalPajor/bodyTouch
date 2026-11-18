@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Idioma do celular ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Idioma do app</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>A mudança vale na hora. “Idioma do celular” usa o idioma definido no Android (se não houver suporte, inglês).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Como jogar?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Como jogar (tutorial)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Pular</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Vamos lá!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Como jogar · {0} de {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Um celular, a galera toda</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Um jogo para 2–8 pessoas. Em cada rodada, uma pessoa é o modelo e outra adivinha. Depois os papéis se invertem.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>O modelo vê o alvo</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>O modelo olha o celular e vê um ponto do corpo sorteado. Enquanto isso, quem adivinha tapa os olhos – nada de espiar!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>O toque</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>O modelo guia a mão de quem adivinha e toca com ela o ponto sorteado – do jeito e pelo tempo que o celular mostrar. Os olhos continuam tapados.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Passe o celular</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Acabou o tempo. O modelo passa o celular. O alvo está escondido, então quem adivinha já pode abrir os olhos.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Marque o ponto</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Quem adivinha coloca um alfinete no modelo 3D onde foi o toque. Dá para girar e aproximar o modelo e mover o alfinete.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Resultado</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>O app mede a distância pela superfície do corpo. Quanto mais perto do alvo, mais pontos. Acertar em cheio vale 100 pontos e confete!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Troca de papéis</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>Nas rodadas seguintes os pares mudam, até cada pessoa jogar com todas as outras. Vence quem tiver mais pontos.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>SEM ANÚNCIOS</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Remover anúncios · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Remover anúncios</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Anúncios removidos – valeu!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Restaurar compra</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Privacidade de anúncios</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Avaliar o app</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>A Google Play Store está indisponível agora. Tente mais tarde.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Compra restaurada – anúncios desativados.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Nenhuma compra encontrada nesta conta do Google.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Valeu! Os anúncios foram desativados.</value></data>
 </root>

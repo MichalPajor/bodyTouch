@@ -63,6 +63,10 @@ public static class MauiProgram
         services.AddSingleton<FeedbackService>();
         services.AddSingleton<HistoryService>();
         services.AddSingleton<PlayerEditor>();
+        services.AddSingleton<PremiumState>();
+        services.AddSingleton<AdService>();
+        services.AddSingleton<PurchaseService>();
+        services.AddSingleton<ReviewService>();
 
         // Screens
         services.AddTransient<StartPage>();
@@ -91,6 +95,8 @@ public static class MauiProgram
         services.AddTransient<ZoneEditorViewModel>();
         services.AddTransient<LanguagePage>();
         services.AddTransient<LanguageViewModel>();
+        services.AddTransient<TutorialPage>();
+        services.AddTransient<TutorialViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

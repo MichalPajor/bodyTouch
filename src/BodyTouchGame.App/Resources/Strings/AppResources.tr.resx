@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Telefon dili ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Uygulama dili</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Değişiklik hemen geçerli olur. “Telefon dili”, Android’de ayarlı dili seçer (desteklenmiyorsa İngilizce).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Nasıl oynanır?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Nasıl oynanır (rehber)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Atla</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Başlayalım!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Nasıl oynanır · {0}/{1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Tek telefon, bütün ekip</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>2–8 kişilik bir oyun. Her turda bir kişi model olur, diğeri tahmin eder. Sonra roller değişir.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Model hedefi görür</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Model telefona bakar ve vücutta rastgele seçilen yeri görür. Bu sırada tahmin eden gözlerini kapatır – gizlice bakmak yok!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>Dokunuş</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Model, tahmin edenin elini tutup seçilen yere dokundurur – telefonun gösterdiği şekilde ve süre boyunca. Tahmin edenin gözleri kapalı kalır.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Telefonu ver</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Süre doldu. Model telefonu verir. Hedef gizlendi, artık tahmin eden gözlerini açabilir.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Yeri göster</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Tahmin eden, 3D modelde dokunulan yere raptiye koyar. Model döndürülüp yakınlaştırılabilir, raptiye de kaydırılabilir.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Sonuç</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>Uygulama, mesafeyi vücut yüzeyi boyunca ölçer. Hedefe ne kadar yakınsa o kadar çok puan. Tam isabet 100 puan ve konfeti demek!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Roller değişir</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>Sonraki turlarda herkes herkesle oynayana kadar eşler değişir. En çok puanı toplayan kazanır.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>REKLAMSIZ</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Reklamları kaldır · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Reklamları kaldır</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Reklamlar kaldırıldı – teşekkürler!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Satın alımı geri yükle</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Reklam gizliliği</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Uygulamayı puanla</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Google Play Store şu anda kullanılamıyor. Daha sonra tekrar dene.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Satın alım geri yüklendi – reklamlar kapatıldı.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Bu Google hesabında satın alım bulunamadı.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Teşekkürler! Reklamlar kapatıldı.</value></data>
 </root>

@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Idioma del teléfono ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Idioma de la app</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>El cambio se aplica al instante. «Idioma del teléfono» usa el idioma configurado en Android (si no es compatible, el inglés).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>¿Cómo se juega?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Cómo se juega (tutorial)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Saltar</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>¡Vamos!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Cómo se juega · {0} de {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Un teléfono, todo el grupo</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Un juego para 2–8 personas. En cada ronda, una persona es el modelo y otra adivina. Luego se cambian los papeles.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>El modelo ve el objetivo</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>El modelo mira el teléfono y ve un punto del cuerpo elegido al azar. Mientras, quien adivina se tapa los ojos: ¡nada de espiar!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>El toque</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>El modelo guía la mano de quien adivina y toca con ella el punto elegido, como y durante el tiempo que indica el teléfono. Los ojos siguen tapados.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Pasa el teléfono</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Se acabó el tiempo. El modelo pasa el teléfono. El objetivo está oculto, así que quien adivina ya puede abrir los ojos.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Marca el punto</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Quien adivina pone una chincheta en el modelo 3D donde fue el toque. Puedes girar y acercar el modelo, y mover la chincheta.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Resultado</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>La app mide la distancia sobre la superficie del cuerpo. Cuanto más cerca del objetivo, más puntos. ¡Un acierto exacto son 100 puntos y confeti!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Cambio de papeles</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>En las siguientes rondas cambian las parejas, hasta que cada persona haya jugado con todas las demás. Gana quien tenga más puntos.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>SIN ANUNCIOS</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Quitar anuncios · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Quitar anuncios</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Anuncios eliminados: ¡gracias!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Restaurar compra</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Privacidad de anuncios</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Valorar la app</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Google Play Store no está disponible ahora. Inténtalo más tarde.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Compra restaurada: anuncios desactivados.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>No se encontró ninguna compra en esta cuenta de Google.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>¡Gracias! Se han desactivado los anuncios.</value></data>
 </root>

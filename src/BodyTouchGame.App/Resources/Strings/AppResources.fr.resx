@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Langue du téléphone ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Langue de l'appli</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Le changement est immédiat. « Langue du téléphone » utilise la langue réglée dans Android (si elle n'est pas prise en charge : l'anglais).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Comment jouer ?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Comment jouer (tutoriel)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Passer</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>C'est parti !</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Comment jouer · {0} sur {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Un téléphone, toute la bande</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Un jeu pour 2 à 8 personnes. À chaque manche, une personne est le modèle et une autre devine. Puis on échange les rôles.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Le modèle voit la cible</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Le modèle regarde le téléphone et voit un endroit du corps tiré au sort. Pendant ce temps, la personne qui devine se cache les yeux – sans tricher !</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>Le contact</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Le modèle guide la main de la personne qui devine et touche avec elle l'endroit tiré au sort – comme et aussi longtemps que l'indique le téléphone. Les yeux restent cachés.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Passe le téléphone</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Temps écoulé. Le modèle passe le téléphone. La cible est cachée : la personne qui devine peut ouvrir les yeux.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Indique l'endroit</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>La personne qui devine place une épingle sur le modèle 3D à l'endroit du contact. On peut tourner et zoomer le modèle, et déplacer l'épingle.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Résultat</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>L'appli mesure la distance à la surface du corps. Plus l'épingle est proche de la cible, plus il y a de points. En plein dans le mille : 100 points et des confettis !</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Changement de rôles</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>Au fil des manches, les paires changent jusqu'à ce que chaque personne ait joué avec toutes les autres. La personne qui a le plus de points gagne.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>SANS PUB</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Supprimer les pubs · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Supprimer les pubs</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Pubs supprimées – merci !</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Restaurer l'achat</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Confidentialité des pubs</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Noter l'appli</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Le Google Play Store est indisponible pour le moment. Réessaie plus tard.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Achat restauré – pubs désactivées.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Aucun achat trouvé sur ce compte Google.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Merci ! Les pubs ont été désactivées.</value></data>
 </root>

@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Phone language ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>App language</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Changes apply immediately. “Phone language” uses the language set in Android (English if it isn’t supported).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>How to play?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>How to play (tutorial)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Skip</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Let’s go!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>How to play · {0} of {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>One phone, the whole crew</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>A game for 2–8 people. Each round, one person is the model and another one guesses. Then the roles switch.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>The model sees the target</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>The model looks at the phone and sees a random spot on the body. Meanwhile, the guesser covers their eyes – no peeking!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>The touch</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>The model guides the guesser’s hand and touches the chosen spot with it – exactly how and for as long as the phone shows. The guesser’s eyes stay covered.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Hand over the phone</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Time’s up. The model hands over the phone. The target is hidden, so the guesser can open their eyes now.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Mark the spot</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>The guesser places a pin on the 3D model where the touch was. You can rotate and zoom the model and move the pin.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>The score</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>The app measures the distance along the body’s surface. The closer to the target, the more points. A bullseye means 100 points and confetti!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Switch roles</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>In the next rounds the pairs change until everyone has played with everyone. The person with the most points wins.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>NO ADS</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Remove ads · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Remove ads</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Ads removed – thank you!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Restore purchase</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Ad privacy</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Rate the app</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Google Play Store is unavailable right now. Try again later.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Purchase restored – ads turned off.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>No purchase found on this Google account.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Thank you! Ads have been turned off.</value></data>
 </root>

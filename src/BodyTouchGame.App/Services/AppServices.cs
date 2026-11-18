@@ -47,6 +47,7 @@ public static class Routes
     public const string Heatmap = "heatmap";
     public const string ZoneEditor = "zone-editor";
     public const string Language = "language";
+    public const string Tutorial = "tutorial";
 }
 
 public interface INavigationService

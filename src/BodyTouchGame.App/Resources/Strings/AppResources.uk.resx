@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Мова телефону ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Мова застосунку</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Зміна діє одразу. «Мова телефону» вибирає мову, встановлену в Android (якщо вона не підтримується – англійську).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Як грати?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Як грати (навчання)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Пропустити</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Почнімо!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Як грати · {0} з {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Один телефон, уся компанія</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Гра для 2–8 осіб. У кожному раунді одна людина – модель, а інша вгадує. Потім ролі змінюються.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Модель бачить ціль</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Модель дивиться в телефон і бачить випадкове місце на тілі. Тим часом той, хто вгадує, закриває очі – не підглядати!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>Дотик</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Модель веде руку того, хто вгадує, і торкається нею вибраного місця – так і стільки, як показує телефон. Очі весь час закриті.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Передай телефон</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Час вийшов. Модель передає телефон. Ціль приховано, тож той, хто вгадує, вже може розплющити очі.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Вкажи місце</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Той, хто вгадує, ставить мітку на 3D-моделі там, де був дотик. Модель можна обертати й наближати, а мітку – переміщувати.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Результат</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>Застосунок вимірює відстань по поверхні тіла. Що ближче до цілі, то більше очок. Точне влучання – це 100 очок і конфеті!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Зміна ролей</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>У наступних раундах пари змінюються, доки кожен не зіграє з кожним. Перемагає людина з найбільшою кількістю очок.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>БЕЗ РЕКЛАМИ</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Прибрати рекламу · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Прибрати рекламу</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Рекламу прибрано – дякуємо!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Відновити покупку</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Конфіденційність реклами</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Оцінити застосунок</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Google Play зараз недоступний. Спробуй пізніше.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Покупку відновлено – рекламу вимкнено.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>На цьому акаунті Google покупку не знайдено.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Дякуємо! Рекламу вимкнено.</value></data>
 </root>

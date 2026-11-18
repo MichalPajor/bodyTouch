@@ -61,6 +61,9 @@ public sealed partial class StartViewModel(ISessionRepository sessions, IPlayerR
     private Task RankingsAsync() => navigation.GoToAsync(Routes.Rankings);
 
     [RelayCommand]
+    private Task HowToPlayAsync() => navigation.GoToAsync(Routes.Tutorial);
+
+    [RelayCommand]
     private Task SettingsAsync() => navigation.GoToAsync(Routes.Settings);
 
 }

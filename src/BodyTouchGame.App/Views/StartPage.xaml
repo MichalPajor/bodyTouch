@@ -12,7 +12,14 @@
 
         <!-- The mockup frame includes the status bar (56 px top padding); on the device it is separate. -->
         <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="16" Padding="20,12,20,16">
-            <!-- Title -->
+            <!-- Title; "?" = how to play (tutorial) -->
+            <Border WidthRequest="44" HeightRequest="44" Padding="0" HorizontalOptions="End" VerticalOptions="Start" ZIndex="1"
+                    SemanticProperties.Description="{x:Static res:AppResources.HowToPlay}">
+                <Label Text="?" FontFamily="{StaticResource FontTitle}" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding HowToPlayCommand}" />
+                </Border.GestureRecognizers>
+            </Border>
             <VerticalStackLayout Spacing="6">
                 <!-- Spans do not inherit the label font on Android: the font is set on each span. -->
                 <Label FontSize="40" LineHeight="0.8" CharacterSpacing="-1">

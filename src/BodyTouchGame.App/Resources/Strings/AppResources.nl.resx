@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Taal van telefoon ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>App-taal</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Wijzigingen gelden direct. “Taal van telefoon” gebruikt de taal die in Android is ingesteld (Engels als die niet wordt ondersteund).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Hoe speel je?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Hoe speel je (uitleg)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Overslaan</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Daar gaan we!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Hoe speel je · {0} van {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Eén telefoon, de hele groep</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Een spel voor 2–8 personen. Elke ronde is één persoon het model en een ander raadt. Daarna wisselen de rollen.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Het model ziet het doel</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Het model kijkt op de telefoon en ziet een willekeurige plek op het lichaam. Ondertussen doet degene die raadt de ogen dicht – niet spieken!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>De aanraking</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Het model leidt de hand van degene die raadt en raakt daarmee de gekozen plek aan – zo en zo lang als de telefoon aangeeft. De ogen blijven dicht.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Geef de telefoon door</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>De tijd is om. Het model geeft de telefoon door. Het doel is verborgen, dus degene die raadt mag de ogen nu openen.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Wijs de plek aan</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Degene die raadt zet een pin op het 3D-model waar de aanraking was. Je kunt het model draaien en inzoomen, en de pin verschuiven.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Resultaat</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>De app meet de afstand over het lichaamsoppervlak. Hoe dichter bij het doel, hoe meer punten. Een voltreffer is 100 punten en confetti!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Rollen wisselen</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>In de volgende rondes wisselen de duo's, tot iedereen met iedereen heeft gespeeld. Wie de meeste punten heeft, wint.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>GEEN ADVERTENTIES</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Advertenties verwijderen · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Advertenties verwijderen</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Advertenties verwijderd – bedankt!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Aankoop herstellen</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Advertentieprivacy</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Beoordeel de app</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Google Play Store is nu niet beschikbaar. Probeer het later opnieuw.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Aankoop hersteld – advertenties uitgeschakeld.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Geen aankoop gevonden op dit Google-account.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Bedankt! Advertenties zijn uitgeschakeld.</value></data>
 </root>

@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Język telefonu ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>Język aplikacji</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Zmiana działa od razu. „Język telefonu” wybiera język ustawiony w Androidzie (gdy nie jest obsługiwany – angielski).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Jak grać?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Jak grać (samouczek)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Pomiń</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Zaczynamy!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Jak grać · {0} z {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Jeden telefon, cała ekipa</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Gra dla 2–8 osób. W każdej rundzie jedna osoba jest modelem, a druga zgaduje. Potem role się zmieniają.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Model widzi cel</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Model patrzy w telefon i widzi wylosowane miejsce na ciele. W tym czasie zgadujący zasłania oczy – bez podglądania!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>Dotyk</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Model prowadzi dłoń zgadującego i dotyka nią wylosowanego miejsca – tak i tak długo, jak pokazuje telefon. Oczy zgadującego zostają zasłonięte.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Oddaj telefon</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Czas minął. Model oddaje telefon. Cel jest ukryty, więc zgadujący może już odsłonić oczy.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Wskaż miejsce</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Zgadujący stawia pinezkę na modelu 3D tam, gdzie był dotyk. Model można obracać i przybliżać, a pinezkę przesuwać.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Wynik</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>Aplikacja mierzy odległość po powierzchni ciała. Im bliżej celu, tym więcej punktów. Trafienie w samo miejsce to 100 punktów i konfetti!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Zmiana ról</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>W kolejnych rundach pary się zmieniają, aż każdy zagra z każdym. Wygrywa osoba z największą liczbą punktów.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>BEZ REKLAM</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Usuń reklamy · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Usuń reklamy</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Reklamy usunięte – dziękujemy!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Przywróć zakup</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Prywatność reklam</value></data>
+  <data name="RateApp" xml:space="preserve"><value>Oceń aplikację</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Sklep Google Play jest teraz niedostępny. Spróbuj później.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Zakup przywrócony – reklamy wyłączone.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Nie znaleziono zakupu na tym koncie Google.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Dziękujemy! Reklamy zostały wyłączone.</value></data>
 </root>

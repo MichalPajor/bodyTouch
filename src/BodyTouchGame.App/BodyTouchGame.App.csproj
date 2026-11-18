@@ -32,7 +32,8 @@
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+		<!-- API 23 (Android 6.0): required by Google Mobile Ads / Play Billing (stage 11). -->
+		<SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -77,6 +78,20 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 		<PackageReference Include="Plugin.Maui.Audio" Version="4.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<!-- Stage 11: AdMob interstitials, Google Play Billing ("remove_ads"), Google Play In-App Review. -->
+		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="124.0.0.9" />
+		<PackageReference Include="Xamarin.Android.Google.BillingClient" Version="9.1.0.2" />
+		<PackageReference Include="Xamarin.Google.Android.Play.Review" Version="2.0.2.10" />
+		<PackageReference Include="Xamarin.Google.UserMessagingPlatform" Version="4.0.0.4" />
+		<!-- The Google libraries bring AndroidX.Fragment 1.9 (Kotlin extensions merged into it); MAUI references
+		     Fragment.Ktx 1.8, whose classes would be duplicated – use the matching 1.9 package. Lifecycle.Process and
+		     Tracing.Ktx are aligned with the newer Lifecycle / Tracing versions the same way. -->
+		<PackageReference Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.9.0" />
+		<PackageReference Include="Xamarin.AndroidX.Lifecycle.Process" Version="2.11.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Tracing.Tracing.Ktx" Version="2.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -12,8 +12,18 @@ public sealed partial class SettingsViewModel : ObservableObject
     private readonly ISettingsService _settings;
     private readonly INavigationService _navigation;
 
-    public SettingsViewModel(ISettingsService settings, INavigationService navigation, IAppInfo appInfo, LocalizationService localization)
+    private readonly PremiumState _premium;
+    private readonly PurchaseService _purchases;
+    private readonly AdService _ads;
+    private readonly IDialogService _dialogs;
+
+    public SettingsViewModel(ISettingsService settings, INavigationService navigation, IAppInfo appInfo, LocalizationService localization,
+        PremiumState premium, PurchaseService purchases, AdService ads, IDialogService dialogs)
     {
+        _premium = premium;
+        _purchases = purchases;
+        _ads = ads;
+        _dialogs = dialogs;
         _settings = settings;
         _navigation = navigation;
         SoundEnabled = settings.SoundEnabled;
@@ -35,11 +45,52 @@ public sealed partial class SettingsViewModel : ObservableObject
 
     public string LanguageText { get; }
 
+    public bool AdsRemoved => _premium.AdsRemoved;
+    public bool CanBuy => !_premium.AdsRemoved;
+
+    /// <summary>"Usuń reklamy · 9,99 zł" (price from Google Play when known).</summary>
+    public string RemoveAdsText => _purchases.Price is { } price ? string.Format(AppCulture.Format, AppResources.RemoveAdsFormat, price) : AppResources.RemoveAds;
+
+    [RelayCommand]
+    private async Task RemoveAdsAsync()
+    {
+        if (await _purchases.BuyAsync()) await _dialogs.AlertAsync(AppResources.RemoveAds, AppResources.PurchaseThanks);
+        else if (_purchases.Price is null) await _dialogs.AlertAsync(AppResources.RemoveAds, AppResources.StoreUnavailable);
+        RefreshShop();
+    }
+
+    [RelayCommand]
+    private async Task RestorePurchaseAsync()
+    {
+        if (!await _purchases.RefreshAsync()) await _dialogs.AlertAsync(AppResources.RestorePurchase, AppResources.StoreUnavailable);
+        else await _dialogs.AlertAsync(AppResources.RestorePurchase, _premium.AdsRemoved ? AppResources.PurchaseRestored : AppResources.PurchaseNotFound);
+        RefreshShop();
+    }
+
+    [RelayCommand]
+    private void AdPrivacy()
+    {
+        if (Platform.CurrentActivity is { } activity) _ads.ShowPrivacyOptions(activity);
+    }
+
+    [RelayCommand]
+    private Task RateAppAsync() => ReviewService.OpenStorePageAsync();
+
+    public void RefreshShop()
+    {
+        OnPropertyChanged(nameof(AdsRemoved));
+        OnPropertyChanged(nameof(CanBuy));
+        OnPropertyChanged(nameof(RemoveAdsText));
+    }
+
     partial void OnSoundEnabledChanged(bool value) => _settings.SoundEnabled = value;
     partial void OnConfettiEnabledChanged(bool value) => _settings.ConfettiEnabled = value;
 
     [RelayCommand]
     private Task DefaultConfigAsync() => _navigation.GoToAsync($"{Routes.GameConfig}?mode=default");
+
+    [RelayCommand]
+    private Task HowToPlayAsync() => _navigation.GoToAsync(Routes.Tutorial);
 
     [RelayCommand]
     private Task LanguageAsync() => _navigation.GoToAsync(Routes.Language);

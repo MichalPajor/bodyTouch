@@ -20,5 +20,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(Routes.Heatmap, typeof(HeatmapPage));
         Routing.RegisterRoute(Routes.ZoneEditor, typeof(ZoneEditorPage));
         Routing.RegisterRoute(Routes.Language, typeof(LanguagePage));
+        Routing.RegisterRoute(Routes.Tutorial, typeof(TutorialPage));
     }
 }

@@ -263,4 +263,34 @@
   <data name="LanguageSystem" xml:space="preserve"><value>Handysprache ({0})</value></data>
   <data name="LanguageTitle" xml:space="preserve"><value>App-Sprache</value></data>
   <data name="LanguageHint" xml:space="preserve"><value>Änderungen gelten sofort. „Handysprache“ nutzt die in Android eingestellte Sprache (Englisch, falls sie nicht unterstützt wird).</value></data>
+  <data name="HowToPlay" xml:space="preserve"><value>Wie spielt man?</value></data>
+  <data name="HowToPlaySettings" xml:space="preserve"><value>Spielanleitung (Tutorial)</value></data>
+  <data name="TutorialSkip" xml:space="preserve"><value>Überspringen</value></data>
+  <data name="TutorialStart" xml:space="preserve"><value>Los geht’s!</value></data>
+  <data name="TutorialStepFormat" xml:space="preserve"><value>Anleitung · {0} von {1}</value></data>
+  <data name="TutorialTitle1" xml:space="preserve"><value>Ein Handy, die ganze Clique</value></data>
+  <data name="TutorialText1" xml:space="preserve"><value>Ein Spiel für 2–8 Personen. In jeder Runde ist eine Person das Model, eine andere rät. Danach werden die Rollen getauscht.</value></data>
+  <data name="TutorialTitle2" xml:space="preserve"><value>Das Model sieht das Ziel</value></data>
+  <data name="TutorialText2" xml:space="preserve"><value>Das Model schaut aufs Handy und sieht eine zufällige Stelle am Körper. Die ratende Person macht derweil die Augen zu – nicht spicken!</value></data>
+  <data name="TutorialTitle3" xml:space="preserve"><value>Die Berührung</value></data>
+  <data name="TutorialText3" xml:space="preserve"><value>Das Model führt die Hand der ratenden Person und berührt damit die Zielstelle – so und so lange, wie das Handy es zeigt. Die Augen bleiben dabei zu.</value></data>
+  <data name="TutorialTitle4" xml:space="preserve"><value>Handy weitergeben</value></data>
+  <data name="TutorialText4" xml:space="preserve"><value>Die Zeit ist um. Das Model gibt das Handy weiter. Das Ziel ist verdeckt, also darf die ratende Person jetzt die Augen öffnen.</value></data>
+  <data name="TutorialTitle5" xml:space="preserve"><value>Stelle markieren</value></data>
+  <data name="TutorialText5" xml:space="preserve"><value>Die ratende Person setzt einen Pin aufs 3D-Modell, wo die Berührung war. Das Modell lässt sich drehen und zoomen, der Pin verschieben.</value></data>
+  <data name="TutorialTitle6" xml:space="preserve"><value>Ergebnis</value></data>
+  <data name="TutorialText6" xml:space="preserve"><value>Die App misst den Abstand über die Körperoberfläche. Je näher am Ziel, desto mehr Punkte. Ein Volltreffer bringt 100 Punkte und Konfetti!</value></data>
+  <data name="TutorialTitle7" xml:space="preserve"><value>Rollentausch</value></data>
+  <data name="TutorialText7" xml:space="preserve"><value>In den nächsten Runden wechseln die Paare, bis alle mit allen gespielt haben. Wer die meisten Punkte hat, gewinnt.</value></data>
+  <data name="SectionShop" xml:space="preserve"><value>OHNE WERBUNG</value></data>
+  <data name="RemoveAdsFormat" xml:space="preserve"><value>Werbung entfernen · {0}</value></data>
+  <data name="RemoveAds" xml:space="preserve"><value>Werbung entfernen</value></data>
+  <data name="AdsRemoved" xml:space="preserve"><value>Werbung entfernt – danke!</value></data>
+  <data name="RestorePurchase" xml:space="preserve"><value>Kauf wiederherstellen</value></data>
+  <data name="AdPrivacy" xml:space="preserve"><value>Werbe-Datenschutz</value></data>
+  <data name="RateApp" xml:space="preserve"><value>App bewerten</value></data>
+  <data name="StoreUnavailable" xml:space="preserve"><value>Der Google Play Store ist gerade nicht erreichbar. Versuch es später noch mal.</value></data>
+  <data name="PurchaseRestored" xml:space="preserve"><value>Kauf wiederhergestellt – Werbung deaktiviert.</value></data>
+  <data name="PurchaseNotFound" xml:space="preserve"><value>Kein Kauf in diesem Google-Konto gefunden.</value></data>
+  <data name="PurchaseThanks" xml:space="preserve"><value>Danke! Die Werbung wurde deaktiviert.</value></data>
 </root>

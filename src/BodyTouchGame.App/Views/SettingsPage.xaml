@@ -13,7 +13,7 @@
         <!-- Scrolls on short screens; otherwise the content fills the screen and the version sits at the bottom
              (MinimumHeightRequest of the grid follows the viewport height, see code-behind). -->
         <ScrollView x:Name="Scroller">
-        <Grid x:Name="ContentGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto" RowSpacing="16" Padding="20,12,20,16">
+        <Grid x:Name="ContentGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto" RowSpacing="16" Padding="20,12,20,16">
             <Label Text="{x:Static res:AppResources.Settings}" Style="{StaticResource ScreenTitle}" />
 
             <Label Grid.Row="1" Text="{x:Static res:AppResources.SectionGame}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource PartyPink}" />
@@ -21,7 +21,8 @@
                 <VerticalStackLayout>
                     <controls:SettingsRow Text="{x:Static res:AppResources.DefaultConfig}" Command="{Binding DefaultConfigCommand}" />
                     <controls:SettingsRow Text="{x:Static res:AppResources.ZoneEditor}" Command="{Binding ZoneEditorCommand}" />
-                    <controls:SettingsRow Text="{x:Static res:AppResources.ExcludedZones}" Command="{Binding ExcludedZonesCommand}" ShowDivider="False" />
+                    <controls:SettingsRow Text="{x:Static res:AppResources.ExcludedZones}" Command="{Binding ExcludedZonesCommand}" />
+                    <controls:SettingsRow Text="{x:Static res:AppResources.HowToPlaySettings}" Command="{Binding HowToPlayCommand}" ShowDivider="False" />
                 </VerticalStackLayout>
             </Border>
 
@@ -38,7 +39,20 @@
                 <controls:SettingsRow Text="{Binding LanguageText}" Command="{Binding LanguageCommand}" ShowDivider="False" />
             </Border>
 
-            <Label Grid.Row="8" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
+            <Label Grid.Row="7" Text="{x:Static res:AppResources.SectionShop}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource Primary}" />
+            <Border Grid.Row="8" Padding="0">
+                <VerticalStackLayout>
+                    <controls:SettingsRow Text="{Binding RemoveAdsText}" Command="{Binding RemoveAdsCommand}" IsVisible="{Binding CanBuy}" />
+                    <Grid Padding="16,0" HeightRequest="60" IsVisible="{Binding AdsRemoved}">
+                        <Label Text="{x:Static res:AppResources.AdsRemoved}" FontFamily="{StaticResource FontBold}" FontSize="16" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    </Grid>
+                    <controls:SettingsRow Text="{x:Static res:AppResources.RestorePurchase}" Command="{Binding RestorePurchaseCommand}" IsVisible="{Binding CanBuy}" />
+                    <controls:SettingsRow Text="{x:Static res:AppResources.AdPrivacy}" Command="{Binding AdPrivacyCommand}" />
+                    <controls:SettingsRow Text="{x:Static res:AppResources.RateApp}" Command="{Binding RateAppCommand}" ShowDivider="False" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Grid.Row="10" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
         </Grid>
         </ScrollView>
     </Grid>

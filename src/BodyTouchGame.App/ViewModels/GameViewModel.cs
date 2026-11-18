@@ -28,6 +28,8 @@ public sealed partial class GameViewModel(
     ISessionRepository sessions,
     FeedbackService feedback,
     ISettingsService settings,
+    AdService ads,
+    ReviewService review,
     INavigationService navigation,
     IDialogService dialogs) : ObservableObject
 {
@@ -202,6 +204,9 @@ public sealed partial class GameViewModel(
     private async Task NextRoundAsync()
     {
         if (_session?.State != GameState.Reveal) return;
+        // A full-screen ad, when due, only here: between rounds (never in Touching, Curtain or Guessing).
+        if (_session.RoundIndex + 1 < _session.RoundCount) await ads.ShowIfDueAsync();
+        if (_session.State != GameState.Reveal) return;
         _session.NextRound();
         if (_session.State == GameState.SessionSummary) await EndSessionAsync();
     }
@@ -543,6 +548,7 @@ public sealed partial class GameViewModel(
 
     private async Task SaveRoundAsync(RoundResult result)
     {
+        ads.RoundFinished();
         try
         {
             await sessions.AddRoundAsync(_sessionId, result);
@@ -558,6 +564,9 @@ public sealed partial class GameViewModel(
         if (_ended) return;
         _ended = true;
         await sessions.EndAsync(_sessionId, _session!.EndedAt ?? DateTimeOffset.UtcNow);
+        // Let the summary and the fanfare play first, then (3rd game, then every 10th) the review request.
+        await Task.Delay(TimeSpan.FromSeconds(2.5));
+        await review.GameCompletedAsync();
     }
 
     // ------------------------------------------------------------------ helpers
