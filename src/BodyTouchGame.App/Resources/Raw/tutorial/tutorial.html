@@ -1,0 +1,292 @@
+<!doctype html>
+<!-- Animated tutorial scenes (stage 11): two 2D characters play a round – the model (pink, holds the phone) and the
+     guesser (cyan, eyes covered). The scenes contain no text, so they work in every language; titles and
+     descriptions are native labels under the view. The app calls showScene(n); scenes loop. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style>
+  html, body { margin: 0; height: 100%; background: #171329; overflow: hidden; }
+  svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<svg id="stage" viewBox="0 0 360 300" preserveAspectRatio="xMidYMid meet"></svg>
+<script>
+'use strict';
+const C = {
+  bg: '#171329', ground: '#2E2650', model: '#FF3D9A', modelDark: '#C2185B', guesser: '#22D3EE', guesserDark: '#0E7490',
+  skin: '#FFD9BF', hair: '#3B2A4F', dark: '#0D0A1A', orange: '#FF9A3C', pin: '#5B8CFF', text: '#F4F2FF', muted: '#B3ACD6',
+  violet: '#8B5CF6', mannequin: '#C8CCD6',
+};
+const SCENE_MS = 4200;
+let scene = 0;
+let sceneStart = performance.now();
+const stage = document.getElementById('stage');
+
+// ------------------------------------------------------------------ helpers
+
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const ease = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+/** 0..1 progress of the window [a, b] of the scene time t (0..1). */
+const win = (t, a, b) => ease(clamp((t - a) / (b - a)));
+const lerp = (a, b, k) => a + (b - a) * k;
+const rad = (d) => d * Math.PI / 180;
+
+/**
+ * A character. x = feet centre, facing = 1 (right) or -1 (left). Arm angles in degrees: 0 = hanging down,
+ * 90 = pointing forward (in the facing direction), 170 = raised up. reach = [x, y] points the front arm at a spot.
+ * lean (degrees) bends the upper body forward around the hips; the legs stay on the ground.
+ * Returns { svg, back: [x, y], front: [x, y] } – the hand positions.
+ */
+function person(o) {
+  const { x, color, dark, facing = 1, lean = 0, armBack = 10, armFront = 10, blind = false, handsOnEyes = false,
+    smile = true, bob = 0, legStep = 0, reach = null } = o;
+  const hipY = 200 + bob, armLen = 62;
+  const a = rad(lean * facing);
+  // upper-body point (local dx in the facing direction, y) rotated around the hips
+  const up = (dx, y) => {
+    const px = dx * facing, py = y - hipY;
+    return [x + px * Math.cos(a) - py * Math.sin(a), hipY + px * Math.sin(a) + py * Math.cos(a)];
+  };
+  const shoulderBack = up(-12, 122 + bob), shoulderFront = up(10, 122 + bob);
+  const dir = (s, deg) => [s[0] + Math.sin(rad(deg)) * armLen * facing, s[1] + Math.cos(rad(deg)) * armLen];
+  let hb = dir(shoulderBack, armBack), hf = dir(shoulderFront, armFront);
+  if (reach) {
+    const dx = reach[0] - shoulderFront[0], dy = reach[1] - shoulderFront[1], d = Math.hypot(dx, dy);
+    hf = [shoulderFront[0] + dx / d * Math.min(d, armLen), shoulderFront[1] + dy / d * Math.min(d, armLen)];
+  }
+  if (handsOnEyes) { hb = up(5, 88 + bob); hf = up(15, 88 + bob); }   // both hands over the eyes
+  const limb = (p, q, w, col) => `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>`;
+  const lx = (dx) => x + dx * facing;
+  let s = '';
+  s += limb(shoulderBack, hb, 13, dark) + `<circle cx="${hb[0]}" cy="${hb[1]}" r="8" fill="${C.skin}"/>`;
+  s += limb([lx(-8), hipY], [lx(-10 - legStep), 262], 15, C.hair) + limb([lx(8), hipY], [lx(10 + legStep), 262], 15, C.hair);
+  s += `<rect x="${lx(-14 - legStep) - 9}" y="258" width="20" height="8" rx="3" fill="${C.dark}"/>`;
+  s += `<rect x="${lx(14 + legStep) - 9}" y="258" width="20" height="8" rx="3" fill="${C.dark}"/>`;
+  // torso and head bend with the lean
+  s += `<g transform="rotate(${lean * facing} ${x} ${hipY})">`;
+  const hy = 86 + bob, sy = 122 + bob;
+  s += `<rect x="${x - 25}" y="${sy - 10}" width="50" height="${hipY - sy + 14}" rx="16" fill="${color}"/>`;
+  s += `<circle cx="${x}" cy="${hy}" r="25" fill="${C.skin}"/>`;
+  s += `<path d="M ${x - 25} ${hy - 2} A 25 25 0 0 1 ${x + 25} ${hy - 2} L ${x + 25} ${hy - 8} Q ${x} ${hy - 20} ${x - 25} ${hy - 8} Z" fill="${C.hair}"/>`;
+  if (blind) {
+    s += `<rect x="${x - 27}" y="${hy - 5}" width="54" height="11" rx="2" fill="${C.dark}"/>`;
+    s += `<path d="M ${lx(-26)} ${hy} l ${-12 * facing} 6 l ${2 * facing} 6 Z" fill="${C.dark}"/>`;
+  } else {
+    s += `<circle cx="${lx(6)}" cy="${hy}" r="3.2" fill="${C.dark}"/><circle cx="${lx(17)}" cy="${hy}" r="3.2" fill="${C.dark}"/>`;
+  }
+  if (smile) s += `<path d="M ${lx(4)} ${hy + 11} Q ${lx(11)} ${hy + 17} ${lx(18)} ${hy + 10}" fill="none" stroke="${C.dark}" stroke-width="2.5" stroke-linecap="round"/>`;
+  s += '</g>';
+  s += limb(shoulderFront, hf, 13, dark) + `<circle cx="${hf[0]}" cy="${hf[1]}" r="8" fill="${C.skin}"/>`;
+  return { svg: s, back: hb, front: hf };
+}
+
+/** Small mannequin (on a phone screen). cx, top, height; highlight = 'knee' | null; pulse 0..1. */
+function mannequin(cx, top, h, opts = {}) {
+  const k = h / 100;
+  const P = (dx, dy) => `${cx + dx * k},${top + dy * k}`;
+  const col = C.mannequin;
+  let s = `<circle cx="${cx}" cy="${top + 9 * k}" r="${8 * k}" fill="${col}"/>`;
+  s += `<polygon points="${P(-11, 19)} ${P(11, 19)} ${P(9, 52)} ${P(-9, 52)}" fill="${col}"/>`;
+  s += `<line x1="${cx - 11 * k}" y1="${top + 21 * k}" x2="${cx - 22 * k}" y2="${top + 52 * k}" stroke="${col}" stroke-width="${6 * k}" stroke-linecap="round"/>`;
+  s += `<line x1="${cx + 11 * k}" y1="${top + 21 * k}" x2="${cx + 22 * k}" y2="${top + 52 * k}" stroke="${col}" stroke-width="${6 * k}" stroke-linecap="round"/>`;
+  s += `<line x1="${cx - 5 * k}" y1="${top + 52 * k}" x2="${cx - 8 * k}" y2="${top + 98 * k}" stroke="${col}" stroke-width="${8 * k}" stroke-linecap="round"/>`;
+  s += `<line x1="${cx + 5 * k}" y1="${top + 52 * k}" x2="${cx + 8 * k}" y2="${top + 98 * k}" stroke="${col}" stroke-width="${8 * k}" stroke-linecap="round"/>`;
+  if (opts.highlight === 'knee') {
+    const r = (6 + 3 * (opts.pulse || 0)) * k;
+    s += `<circle cx="${cx + 6.5 * k}" cy="${top + 76 * k}" r="${r * 1.8}" fill="${C.orange}" opacity="${0.25 * (opts.pulse || 0)}"/>`;
+    s += `<circle cx="${cx + 6.5 * k}" cy="${top + 76 * k}" r="${r}" fill="${C.orange}" opacity="${0.7 + 0.3 * (opts.pulse || 0)}"/>`;
+  }
+  return s;
+}
+const kneeOnScreen = (cx, top, h) => [cx + 6.5 * h / 100, top + 76 * h / 100];
+
+/** Phone with its screen content. (x, y) = centre; scale; content = svg string drawn in screen coordinates. */
+function phone(x, y, scale, contentFn, rotate = 0) {
+  const w = 34 * scale, h = 60 * scale;
+  let s = `<g transform="rotate(${rotate} ${x} ${y})">`;
+  s += `<rect x="${x - w / 2}" y="${y - h / 2}" width="${w}" height="${h}" rx="${5 * scale}" fill="${C.dark}" stroke="${C.muted}" stroke-width="${1.5}"/>`;
+  s += `<rect x="${x - w / 2 + 2.5 * scale}" y="${y - h / 2 + 5 * scale}" width="${w - 5 * scale}" height="${h - 10 * scale}" fill="#211A3D"/>`;
+  if (contentFn) s += contentFn(x, y - h / 2 + 7 * scale, h - 14 * scale);
+  s += '</g>';
+  return s;
+}
+
+function ground() {
+  return `<rect x="0" y="266" width="360" height="34" fill="${C.ground}"/>`;
+}
+
+function confetti(t, n = 26, seed = 1) {
+  const cols = [C.orange, C.model, C.guesser, C.violet, C.text];
+  let s = '';
+  for (let i = 0; i < n; i++) {
+    const r = Math.sin(i * 91.7 + seed) * 0.5 + 0.5, r2 = Math.sin(i * 37.3 + seed * 3) * 0.5 + 0.5;
+    const y = ((t * (0.6 + r2 * 0.6) + r) % 1) * 320 - 20;
+    const x = r * 360 + Math.sin(t * 6 + i) * 8;
+    s += `<rect x="${x}" y="${y}" width="${4 + r2 * 4}" height="${3 + r * 3}" fill="${cols[i % cols.length]}" transform="rotate(${t * 360 * (r - 0.5) * 2 + i * 20} ${x} ${y})"/>`;
+  }
+  return s;
+}
+
+function burst(cx, cy, k) {
+  if (k <= 0 || k >= 1) return '';
+  const cols = [C.orange, C.model, C.guesser, C.violet, C.text];
+  let s = '';
+  for (let i = 0; i < 18; i++) {
+    const a = i / 18 * Math.PI * 2, d = 10 + k * 60;
+    s += `<rect x="${cx + Math.cos(a) * d}" y="${cy + Math.sin(a) * d + k * k * 30}" width="5" height="4" fill="${cols[i % 5]}" opacity="${1 - k}" transform="rotate(${i * 40 + k * 300} ${cx + Math.cos(a) * d} ${cy + Math.sin(a) * d})"/>`;
+  }
+  return s;
+}
+
+const ripple = (x, y, k) => k <= 0 || k >= 1 ? '' :
+  `<circle cx="${x}" cy="${y}" r="${4 + k * 18}" fill="none" stroke="${C.orange}" stroke-width="3" opacity="${1 - k}"/>`;
+
+// ------------------------------------------------------------------ scenes (t = 0..1 of the loop)
+
+const scenes = [
+  // 0 – one phone, a group of friends
+  (t) => {
+    const wave = Math.sin(t * Math.PI * 6) * 25;
+    const m = person({ x: 95, color: C.model, dark: C.modelDark, armFront: 150 + wave, armBack: 15 });
+    const g = person({ x: 265, color: C.guesser, dark: C.guesserDark, facing: -1, armFront: 150 - wave, armBack: 15 });
+    const bobY = 125 + Math.sin(t * Math.PI * 4) * 8;
+    return ground() + confetti(t) + m.svg + g.svg + phone(180, bobY, 1.25, (x, y, h) => mannequin(x, y + 4, h - 8), Math.sin(t * Math.PI * 2) * 8);
+  },
+  // 1 – draw: the model sees the target on the phone, the guesser covers the eyes
+  (t) => {
+    const m = person({ x: 80, color: C.model, dark: C.modelDark, armFront: 70, armBack: 20 });
+    const peek = Math.sin(t * Math.PI * 8) * 1.5;
+    const g = person({ x: 298, color: C.guesser, dark: C.guesserDark, facing: -1, handsOnEyes: true, bob: peek });
+    const pulse = 0.5 + 0.5 * Math.sin(t * Math.PI * 8);
+    const px = m.front[0] + 6, py = m.front[1] - 26;
+    let s = ground() + m.svg + phone(px, py, 1.2, (x, y, h) => mannequin(x, y + 3, h - 6, { highlight: 'knee', pulse })) + g.svg;
+    // zoom bubble of the phone screen
+    const bx = 190, by = 70, r = 58;
+    s += `<polygon points="${px + 8},${py - 20} ${bx - 30},${by + 50} ${bx - 10},${by + 60}" fill="#2B2350"/>`;
+    s += `<circle cx="${bx}" cy="${by}" r="${r}" fill="#2B2350" stroke="${C.orange}" stroke-width="3"/>`;
+    s += mannequin(bx, by - r + 12, 2 * r - 24, { highlight: 'knee', pulse });
+    return s;
+  },
+  // 2 – touch: the model guides the guesser's hand (eyes covered) to the target – the knee; countdown on the phone
+  (t) => {
+    const reach = win(t, 0.05, 0.4);
+    const knee = [118, 232];
+    const gx = lerp(270, 208, reach);
+    const handTo = [lerp(gx - 30, knee[0] + 8, reach), lerp(200, knee[1], reach)];
+    const g = person({ x: gx, color: C.guesser, dark: C.guesserDark, facing: -1, blind: true, lean: lerp(0, 35, reach),
+      bob: lerp(0, 24, reach), reach: reach > 0.02 ? handTo : null, armBack: lerp(10, 40, reach), legStep: 8 * reach });
+    // the model holds the phone up in one hand and leads the guesser's wrist with the other
+    const m = person({ x: 110, color: C.model, dark: C.modelDark, armBack: 155, reach: [g.front[0] + 10, g.front[1] - 10] });
+    const counter = 5 - Math.min(4, Math.floor(t * 5));
+    const p = phone(m.back[0], m.back[1] - 26, 1.3, (x, y, h) =>
+      `<text x="${x}" y="${y + h * 0.68}" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="${h * 0.62}" fill="${C.orange}">${counter}</text>`);
+    const touch = t > 0.42 ? ripple(knee[0] + 6, knee[1], ((t - 0.42) * 3) % 1) : '';
+    return ground() + g.svg + m.svg + p + touch;
+  },
+  // 3 – curtain: the model hands the phone over, the guesser opens the eyes
+  (t) => {
+    const pass = win(t, 0.15, 0.55);
+    const open = t > 0.62;
+    const m = person({ x: 110, color: C.model, dark: C.modelDark, armFront: lerp(70, 88, pass), armBack: 12 });
+    const g = person({ x: 250, color: C.guesser, dark: C.guesserDark, facing: -1, blind: !open, armFront: lerp(20, 80, win(t, 0.25, 0.55)), armBack: 12 });
+    const px = lerp(m.front[0] + 8, g.front[0] - 8, pass), py = lerp(m.front[1] - 10, g.front[1] - 10, pass) - Math.sin(pass * Math.PI) * 30;
+    const eyeOff = (x, y, h) => `<g stroke="${C.orange}" stroke-width="${h * 0.06}" fill="none" stroke-linecap="round">
+      <path d="M ${x - h * 0.28} ${y + h * 0.5} Q ${x} ${y + h * 0.3} ${x + h * 0.28} ${y + h * 0.5} Q ${x} ${y + h * 0.7} ${x - h * 0.28} ${y + h * 0.5}"/>
+      <line x1="${x - h * 0.25}" y1="${y + h * 0.3}" x2="${x + h * 0.25}" y2="${y + h * 0.7}"/></g>`;
+    return ground() + m.svg + g.svg + phone(px, py, 1.25, eyeOff, lerp(0, -10, pass));
+  },
+  // 4 – guess: the guesser places a pin on the 3D body
+  (t) => {
+    const g = person({ x: 70, color: C.guesser, dark: C.guesserDark, armFront: 70, armBack: 15 });
+    const bx = 235, by = 140;
+    const tap = win(t, 0.25, 0.45);
+    const fingerX = lerp(330, bx + 14, tap), fingerY = lerp(290, by + 47, tap);
+    const pinDrop = win(t, 0.45, 0.6);
+    let screen = (x, y, h) => mannequin(x, y + 4, h - 8);
+    let s = ground() + g.svg + phone(g.front[0] + 8, g.front[1] - 14, 0.9, screen);
+    // zoomed phone
+    s += phone(bx, by, 3.6, (x, y, h) => {
+      let c = mannequin(x, y + 6, h - 12);
+      if (t > 0.45) {
+        const [kx, ky] = kneeOnScreen(x, y + 6, h - 12);
+        const px = kx - 2, py = ky - 18 + 18 * pinDrop;
+        c += `<line x1="${px}" y1="${py}" x2="${px}" y2="${py - 18}" stroke="${C.text}" stroke-width="3"/><circle cx="${px}" cy="${py - 21}" r="9" fill="${C.pin}" stroke="${C.text}" stroke-width="1.5"/>`;
+        c += ripple(kx - 2, ky, (t - 0.5) * 2.5);
+      }
+      return c;
+    });
+    if (t < 0.7) s += `<g opacity="${t < 0.6 ? 1 : 1 - (t - 0.6) * 10}"><rect x="${fingerX - 9}" y="${fingerY}" width="18" height="60" rx="9" fill="${C.skin}"/><rect x="${fingerX - 6}" y="${fingerY + 3}" width="12" height="10" rx="4" fill="#F2BFA0"/></g>`;
+    return s;
+  },
+  // 5 – reveal: path along the body to the target, points, confetti
+  (t) => {
+    const bx = 180, by = 136;
+    const path = win(t, 0.1, 0.45);
+    const pop = win(t, 0.45, 0.6);
+    let s = ground() + confetti(t, 14, 7);
+    s += phone(bx, by, 3.6, (x, y, h) => {
+      const top = y + 6, hh = h - 12;
+      let c = mannequin(x, top, hh, { highlight: t > 0.45 ? 'knee' : null, pulse: 0.5 + 0.5 * Math.sin(t * 20) });
+      const [kx, ky] = kneeOnScreen(x, top, hh);
+      const pinX = kx + 4, pinY = ky - 34;
+      const ex = lerp(pinX, kx, path), ey = lerp(pinY, ky, path);
+      c += `<line x1="${pinX}" y1="${pinY}" x2="${ex}" y2="${ey}" stroke="${C.text}" stroke-width="3" stroke-dasharray="5 4"/>`;
+      c += `<line x1="${pinX}" y1="${pinY}" x2="${pinX}" y2="${pinY - 16}" stroke="${C.text}" stroke-width="3"/><circle cx="${pinX}" cy="${pinY - 19}" r="8" fill="${C.pin}" stroke="${C.text}" stroke-width="1.5"/>`;
+      return c;
+    });
+    if (pop > 0) {
+      const sc = 0.6 + 0.4 * pop + Math.sin(t * 30) * 0.03 * (t > 0.6 ? 1 : 0);
+      s += `<g transform="translate(290 58) scale(${sc})"><rect x="-44" y="-20" width="88" height="40" fill="${C.model}" transform="translate(5 5)"/><rect x="-44" y="-20" width="88" height="40" fill="${C.orange}"/>
+        <text x="0" y="9" text-anchor="middle" font-family="sans-serif" font-weight="900" font-size="24" fill="${C.dark}">+100</text></g>`;
+    }
+    s += burst(290, 58, (t - 0.45) * 1.6);
+    return s;
+  },
+  // 6 – roles change every round; the most points wins
+  (t) => {
+    const k = win(t, 0.1, 0.5);
+    const a = person({ x: lerp(95, 265, k), color: C.model, dark: C.modelDark, facing: k < 0.5 ? 1 : -1, armFront: 20, armBack: 20, bob: -Math.sin(k * Math.PI) * 20 });
+    const b = person({ x: lerp(265, 95, k), color: C.guesser, dark: C.guesserDark, facing: k < 0.5 ? -1 : 1, armFront: 20, armBack: 20, bob: -Math.sin(k * Math.PI) * 20 });
+    const arrows = `<g fill="none" stroke="${C.violet}" stroke-width="4" stroke-linecap="round" opacity="${0.4 + 0.6 * Math.sin(k * Math.PI)}">
+      <path d="M 120 40 Q 180 5 240 40"/><path d="M 232 30 L 242 41 L 228 45"/>
+      <path d="M 240 60 Q 180 95 120 60" transform="translate(0 -6)"/><path d="M 128 64 L 118 54 L 132 50" transform="translate(0 -6)"/></g>`;
+    const up = win(t, 0.55, 0.85);
+    const podium = up > 0 ? `<g transform="translate(180 266)">
+      <rect x="-22" y="${-60 * up}" width="44" height="${60 * up}" fill="${C.orange}"/>
+      <rect x="-68" y="${-40 * up}" width="44" height="${40 * up}" fill="${C.guesser}"/>
+      <rect x="24" y="${-28 * up}" width="44" height="${28 * up}" fill="${C.model}"/>
+      ${up > 0.9 ? `<path d="M -14 -84 L -14 -96 L -7 -89 L 0 -100 L 7 -89 L 14 -96 L 14 -84 Z" fill="${C.orange}"/>` : ''}</g>` : '';
+    return ground() + arrows + podium + a.svg + b.svg;
+  },
+];
+
+function frame(now) {
+  const t = ((now - sceneStart) % SCENE_MS) / SCENE_MS;
+  stage.innerHTML = scenes[scene](t);
+  requestAnimationFrame(frame);
+}
+
+/** Called by the app: shows scene n (0-based) from its beginning. */
+window.showScene = (n) => {
+  scene = Math.max(0, Math.min(scenes.length - 1, n | 0));
+  sceneStart = performance.now();
+  return true;
+};
+window.sceneCount = () => scenes.length;
+/** For previews: draws scene n at loop time t (0..1) without animating. */
+window.renderStill = (n, t) => { scene = n; stage.innerHTML = scenes[n](t); };
+
+const params = new URLSearchParams(location.search);
+if (params.has('still')) {
+  const [n, t] = params.get('still').split(',').map(Number);
+  window.renderStill(n, t);
+} else {
+  if (params.has('scene')) window.showScene(Number(params.get('scene')));
+  requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>

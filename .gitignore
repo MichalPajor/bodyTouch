@@ -40,5 +40,6 @@ docs/
 screens/
 *.md
 *.html
-# ...except the 3D view page, which is application code
+# ...except the pages that are application code: the 3D view and the animated tutorial
 !src/BodyTouchGame.App/Resources/Raw/wwwroot/index.html
+!src/BodyTouchGame.App/Resources/Raw/tutorial/tutorial.html
