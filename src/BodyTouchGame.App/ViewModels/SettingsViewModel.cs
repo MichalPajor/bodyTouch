@@ -12,13 +12,17 @@ public sealed partial class SettingsViewModel : ObservableObject
     private readonly ISettingsService _settings;
     private readonly INavigationService _navigation;
 
-    public SettingsViewModel(ISettingsService settings, INavigationService navigation, IAppInfo appInfo)
+    public SettingsViewModel(ISettingsService settings, INavigationService navigation, IAppInfo appInfo, LocalizationService localization)
     {
         _settings = settings;
         _navigation = navigation;
         SoundEnabled = settings.SoundEnabled;
         ConfettiEnabled = settings.ConfettiEnabled;
-        VersionText = string.Format(CultureInfo.CurrentCulture, AppResources.VersionFormat, appInfo.VersionString);
+        VersionText = string.Format(AppCulture.Format, AppResources.VersionFormat, appInfo.VersionString);
+        var language = localization.Choice.Length == 0
+            ? string.Format(AppCulture.Format, AppResources.LanguageSystem, LocalizationService.SystemLanguage.NativeName)
+            : localization.Current.NativeName;
+        LanguageText = $"{AppResources.Language}: {language}";
     }
 
     [ObservableProperty]
@@ -29,11 +33,16 @@ public sealed partial class SettingsViewModel : ObservableObject
 
     public string VersionText { get; }
 
+    public string LanguageText { get; }
+
     partial void OnSoundEnabledChanged(bool value) => _settings.SoundEnabled = value;
     partial void OnConfettiEnabledChanged(bool value) => _settings.ConfettiEnabled = value;
 
     [RelayCommand]
     private Task DefaultConfigAsync() => _navigation.GoToAsync($"{Routes.GameConfig}?mode=default");
+
+    [RelayCommand]
+    private Task LanguageAsync() => _navigation.GoToAsync(Routes.Language);
 
     [RelayCommand]
     private Task ZoneEditorAsync() => _navigation.GoToAsync(Routes.ZoneEditor);

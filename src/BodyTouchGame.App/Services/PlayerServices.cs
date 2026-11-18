@@ -20,7 +20,7 @@ public sealed class HistoryService(ISessionRepository sessions)
         var measured = own.Where(h => h.IsMeasured).Select(h => (double)h.Round.DistanceCm!.Value).ToList();
         return measured.Count == 0
             ? PolishPlural.Rounds(own.Count)
-            : string.Format(CultureInfo.CurrentCulture, AppResources.PlayerStatsFormat, PolishPlural.Rounds(own.Count), measured.Average());
+            : string.Format(AppCulture.Format, AppResources.PlayerStatsFormat, PolishPlural.Rounds(own.Count), measured.Average());
     }
 }
 

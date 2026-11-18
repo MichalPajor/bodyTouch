@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Stage 3: 3D view prototype screen -->
+  <data name="ViewFront" xml:space="preserve"><value>Спереду</value></data>
+  <data name="ViewSide" xml:space="preserve"><value>Збоку</value></data>
+  <data name="ViewBack" xml:space="preserve"><value>Ззаду</value></data>
+  <data name="ZoomIn" xml:space="preserve"><value>+</value></data>
+  <data name="ZoomOut" xml:space="preserve"><value>−</value></data>
+  <!-- Stage 5: Start screen (mockup 1) -->
+  <data name="TitleLine1" xml:space="preserve"><value>BODY</value></data>
+  <data name="TitleLine2" xml:space="preserve"><value>TOUCH</value></data>
+  <data name="TitleLine3" xml:space="preserve"><value>GAME</value></data>
+  <data name="Tagline" xml:space="preserve"><value>Закрий очі. Торкнись. Вгадай.</value></data>
+  <data name="Play" xml:space="preserve"><value>ГРАТИ</value></data>
+  <data name="Players" xml:space="preserve"><value>Гравці</value></data>
+  <data name="Rankings" xml:space="preserve"><value>Рейтинги</value></data>
+  <data name="Settings" xml:space="preserve"><value>Налаштування</value></data>
+  <data name="LastGame" xml:space="preserve"><value>Остання гра</value></data>
+  <data name="LastGameWinner" xml:space="preserve"><value>{0} на 1-му місці · {1} оч.</value></data>
+  <data name="LastGameTie" xml:space="preserve"><value>Нічия: {0} · {1} оч.</value></data>
+  <data name="MannequinDescription" xml:space="preserve"><value>3D-модель манекена</value></data>
+
+  <!-- Stage 5: Settings screen (mockup 10) -->
+  <data name="SectionGame" xml:space="preserve"><value>ГРА</value></data>
+  <data name="SectionEffects" xml:space="preserve"><value>ЕФЕКТИ</value></data>
+  <data name="DefaultConfig" xml:space="preserve"><value>Типові налаштування гри</value></data>
+  <data name="ZoneEditor" xml:space="preserve"><value>Редактор зон і власних точок</value></data>
+  <data name="ExcludedZones" xml:space="preserve"><value>Виключені зони</value></data>
+  <data name="Sounds" xml:space="preserve"><value>Звуки</value></data>
+  <data name="ConfettiOnHit" xml:space="preserve"><value>Конфеті при влучанні</value></data>
+  <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · версія {0}</value></data>
+
+  <!-- 3D view panel -->
+  <data name="RotateHint" xml:space="preserve"><value>Обертай пальцем</value></data>
+  <data name="ZoomInDescription" xml:space="preserve"><value>Наблизити</value></data>
+  <data name="ZoomOutDescription" xml:space="preserve"><value>Віддалити</value></data>
+
+  <!-- Stage 6: common -->
+  <data name="Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Скасувати</value></data>
+  <data name="RoundsOne" xml:space="preserve"><value>{0} раунд</value></data>
+  <data name="RoundsFew" xml:space="preserve"><value>{0} раунди</value></data>
+  <data name="RoundsMany" xml:space="preserve"><value>{0} раундів</value></data>
+  <data name="ZonesOne" xml:space="preserve"><value>{0} зона</value></data>
+  <data name="ZonesFew" xml:space="preserve"><value>{0} зони</value></data>
+  <data name="ZonesMany" xml:space="preserve"><value>{0} зон</value></data>
+  <data name="ExcludedOne" xml:space="preserve"><value>{0} виключена</value></data>
+  <data name="ExcludedFew" xml:space="preserve"><value>{0} виключені</value></data>
+  <data name="ExcludedMany" xml:space="preserve"><value>{0} виключених</value></data>
+  <data name="PresetEasy" xml:space="preserve"><value>Легкий</value></data>
+  <data name="PresetMedium" xml:space="preserve"><value>Середній</value></data>
+  <data name="PresetHard" xml:space="preserve"><value>Складний</value></data>
+  <data name="PresetHardcore" xml:space="preserve"><value>Hardcore</value></data>
+  <data name="PresetCustomConfig" xml:space="preserve"><value>Власні налаштування</value></data>
+  <data name="TouchWholeHand" xml:space="preserve"><value>Уся долоня</value></data>
+  <data name="TouchTwoFingers" xml:space="preserve"><value>Два пальці</value></data>
+  <data name="TouchOneFinger" xml:space="preserve"><value>Один палець</value></data>
+  <data name="TouchTap" xml:space="preserve"><value>Доторк</value></data>
+  <data name="MovementGentle" xml:space="preserve"><value>Плавний</value></data>
+  <data name="MovementNone" xml:space="preserve"><value>Без руху</value></data>
+  <data name="MovementGentleLower" xml:space="preserve"><value>плавний рух</value></data>
+  <data name="MovementNoneLower" xml:space="preserve"><value>без руху</value></data>
+  <data name="SecondsFormat" xml:space="preserve"><value>{0} с</value></data>
+  <data name="CmFormat" xml:space="preserve"><value>{0:0.#} см</value></data>
+
+  <!-- Stage 6: players selection (mockup 2) -->
+  <data name="NewGameStep1" xml:space="preserve"><value>Нова гра · крок 1 з 2</value></data>
+  <data name="WhoPlays" xml:space="preserve"><value>Хто грає?</value></data>
+  <data name="AddPlayer" xml:space="preserve"><value>Додати гравця</value></data>
+  <data name="AddPlayerTitle" xml:space="preserve"><value>Новий гравець</value></data>
+  <data name="AddPlayerMessage" xml:space="preserve"><value>Ім’я або прізвисько</value></data>
+  <data name="Add" xml:space="preserve"><value>Додати</value></data>
+  <data name="NameTaken" xml:space="preserve"><value>Це ім’я вже зайняте.</value></data>
+  <data name="NameEmpty" xml:space="preserve"><value>Введи ім’я.</value></data>
+  <data name="SelectedPlayersFormat" xml:space="preserve"><value>Вибрано гравців: {0}</value></data>
+  <data name="OrderAllPairs" xml:space="preserve"><value>Порядок: кожен з кожним</value></data>
+  <data name="OrderCircle" xml:space="preserve"><value>Порядок: по колу</value></data>
+  <data name="Next" xml:space="preserve"><value>Далі</value></data>
+  <data name="PlayerStatsFormat" xml:space="preserve"><value>{0} · сер. {1:0.0} см</value></data>
+  <data name="PlayerNoRounds" xml:space="preserve"><value>Ще без раундів</value></data>
+  <data name="SelectPlayersHint" xml:space="preserve"><value>Вибери від 2 до 8 гравців.</value></data>
+
+  <!-- Stage 6: game configuration (mockup 3) -->
+  <data name="NewGameStep2" xml:space="preserve"><value>Нова гра · крок 2 з 2</value></data>
+  <data name="GameSettings" xml:space="preserve"><value>Налаштування гри</value></data>
+  <data name="Zones" xml:space="preserve"><value>Зони</value></data>
+  <data name="TouchMethodLabel" xml:space="preserve"><value>Спосіб дотику</value></data>
+  <data name="GentleMovement" xml:space="preserve"><value>Плавний рух</value></data>
+  <data name="TouchTime" xml:space="preserve"><value>Час дотику</value></data>
+  <data name="RoundsPerPlayer" xml:space="preserve"><value>Раунди на гравця</value></data>
+  <data name="FewerRounds" xml:space="preserve"><value>Менше раундів</value></data>
+  <data name="MoreRounds" xml:space="preserve"><value>Більше раундів</value></data>
+  <data name="Advanced" xml:space="preserve"><value>Додатково</value></data>
+  <data name="TargetChosenByModel" xml:space="preserve"><value>Ціль обирає модель</value></data>
+  <data name="GuessTimeLimit" xml:space="preserve"><value>Ліміт часу на відповідь</value></data>
+  <data name="GuessTime" xml:space="preserve"><value>Час на відповідь</value></data>
+  <data name="FullPointsRadius" xml:space="preserve"><value>Радіус повних очок (r)</value></data>
+  <data name="ZeroPointsDistance" xml:space="preserve"><value>Відстань без очок (z)</value></data>
+  <data name="SpeedBonus" xml:space="preserve"><value>Бонус за швидкість</value></data>
+  <data name="Less" xml:space="preserve"><value>Менше</value></data>
+  <data name="More" xml:space="preserve"><value>Більше</value></data>
+  <data name="SavePreset" xml:space="preserve"><value>Зберегти режим</value></data>
+  <data name="SavePresetMessage" xml:space="preserve"><value>Назва режиму (напр. «Вечірка 3 с»)</value></data>
+  <data name="Save" xml:space="preserve"><value>Зберегти</value></data>
+  <data name="StartGame" xml:space="preserve"><value>Старт гри</value></data>
+  <data name="CannotStartTitle" xml:space="preserve"><value>Неможливо почати</value></data>
+  <data name="NothingToDrawFormat" xml:space="preserve"><value>{0}: немає зон для жеребкування (виключення). Зміни зони або виключення.</value></data>
+  <data name="ZonesNotAvailable" xml:space="preserve"><value>Цей рівень ще не має зон (з’являться в наступній версії).</value></data>
+
+  <!-- Stage 6: zone set and exclusions -->
+  <data name="ZoneSetHint" xml:space="preserve"><value>Вибери будь-які рівні. Кольорові зони можуть випасти (сині додано вручну), темно-сірі виключають вибрані гравці.</value></data>
+  <data name="ZoneSetCountFormat" xml:space="preserve"><value>У жеребкуванні: {0} · {1}</value></data>
+  <data name="ExclusionsHint" xml:space="preserve"><value>Торкнись зони на моделі, щоб виключити або повернути її. Виключена зона не випаде, коли цей гравець — модель.</value></data>
+  <data name="NoPlayersYet" xml:space="preserve"><value>Спершу додай гравців: ГРАТИ → Додати гравця.</value></data>
+  <data name="ExcludedListFormat" xml:space="preserve"><value>Виключені: {0}</value></data>
+  <data name="ExcludedNone" xml:space="preserve"><value>Немає виключених зон</value></data>
+  <data name="ClearExclusions" xml:space="preserve"><value>Очистити</value></data>
+
+  <!-- Stage 6: round screens (mockups 4-8, WhoIsNext own design) -->
+  <data name="RoundHeaderFormat" xml:space="preserve"><value>Раунд {0} з {1} · {2}</value></data>
+  <data name="PairFormat" xml:space="preserve"><value>Модель: {0} · вгадує: {1}</value></data>
+  <data name="WhoGuesses" xml:space="preserve"><value>ВГАДУЄ · закриває очі</value></data>
+  <data name="WhoTouches" xml:space="preserve"><value>МОДЕЛЬ · бере телефон</value></data>
+  <data name="WhoIsNextHintFormat" xml:space="preserve"><value>{0} закриває очі. {1} бере телефон.</value></data>
+  <data name="YourTarget" xml:space="preserve"><value>ТВОЯ ЦІЛЬ</value></data>
+  <data name="ChooseTarget" xml:space="preserve"><value>ОБЕРИ ЦІЛЬ</value></data>
+  <data name="ChooseTargetHint" xml:space="preserve"><value>Торкнись моделі в місці дотику</value></data>
+  <data name="TileTouch" xml:space="preserve"><value>Дотик</value></data>
+  <data name="TileMovement" xml:space="preserve"><value>Рух</value></data>
+  <data name="TileTime" xml:space="preserve"><value>Час</value></data>
+  <data name="StartTouch" xml:space="preserve"><value>Старт дотику</value></data>
+  <data name="RoundTouchingFormat" xml:space="preserve"><value>Раунд {0} з {1} · {2} торкається</value></data>
+  <data name="TouchNow" xml:space="preserve"><value>ТОРКАЙСЯ!</value></data>
+  <data name="AbortRound" xml:space="preserve"><value>Перервати раунд</value></data>
+  <data name="AbortRoundTitle" xml:space="preserve"><value>Перервати раунд?</value></data>
+  <data name="AbortRoundMessage" xml:space="preserve"><value>Раунд не буде збережено. Та сама пара зіграє його знову.</value></data>
+  <data name="Abort" xml:space="preserve"><value>Перервати</value></data>
+  <data name="HandPhone" xml:space="preserve"><value>Передай телефон</value></data>
+  <data name="CurtainHintFormat" xml:space="preserve"><value>Ціль приховано. {0} вже може розплющити очі.</value></data>
+  <data name="Ready" xml:space="preserve"><value>Готово!</value></data>
+  <data name="RoundGuessingFormat" xml:space="preserve"><value>Раунд {0} з {1} · {2} вгадує</value></data>
+  <data name="WhereTouched" xml:space="preserve"><value>Де був дотик?</value></data>
+  <data name="YourPin" xml:space="preserve"><value>Твоя мітка</value></data>
+  <data name="PinNotPlaced" xml:space="preserve"><value>Торкнись моделі</value></data>
+  <data name="HoldToMove" xml:space="preserve"><value>Утримуй, щоб посунути</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Підтвердити</value></data>
+  <data name="ResultForFormat" xml:space="preserve"><value>Результат: {0}</value></data>
+  <data name="PointsFormat" xml:space="preserve"><value>+{0} оч.</value></data>
+  <data name="DistanceFormat" xml:space="preserve"><value>{0:0.0} см</value></data>
+  <data name="TimeUp" xml:space="preserve"><value>Час вийшов</value></data>
+  <data name="Unreachable" xml:space="preserve"><value>—</value></data>
+  <data name="LegendPinFormat" xml:space="preserve"><value>Вказано: {0}</value></data>
+  <data name="LegendTargetFormat" xml:space="preserve"><value>Ціль: {0}</value></data>
+  <data name="ManualPointName" xml:space="preserve"><value>вибране місце</value></data>
+  <data name="NoPin" xml:space="preserve"><value>без мітки</value></data>
+  <data name="TotalFormat" xml:space="preserve"><value>Разом: {0} оч. · {1}-е місце</value></data>
+  <data name="NextRound" xml:space="preserve"><value>Наступний раунд</value></data>
+  <data name="ShowSummary" xml:space="preserve"><value>Підсумок</value></data>
+  <data name="CommentPerfect" xml:space="preserve"><value>Ідеально!|Просто в яблучко!|Майстерне чуття!|Снайперська точність!|Читаєш думки?|Саме там!</value></data>
+  <data name="CommentClose" xml:space="preserve"><value>Близько!|Майже ідеально!|Чудове чуття!|Зовсім поруч!|Міліметри від цілі!|Тіло не має від тебе таємниць.</value></data>
+  <data name="CommentWarm" xml:space="preserve"><value>Тепло, тепло…|Непоганий напрямок!|Бракувало небагато.|Гарний район!|Майже, майже.</value></data>
+  <data name="CommentFar" xml:space="preserve"><value>Далеко, але очки є.|Напрямок приблизно правильний.|Щось таки відчувалося!|Той самий район, інша вулиця.</value></data>
+  <data name="CommentMiss" xml:space="preserve"><value>Ціль: {0}. Мітка: {1}. Ой!|Зовсім інший район!|Тіло переплутало адреси.|Ціль: {0}. Мітка: {1}. Хто б міг подумати?|GPS заблукав.|Тепло? Радше холодно.</value></data>
+  <data name="CommentTimeUp" xml:space="preserve"><value>Мітка не встигла приземлитися.|Час вийшов – мітка лишилася в кишені.|Годинник виявився швидшим.</value></data>
+  <data name="EndGameTitle" xml:space="preserve"><value>Завершити гру?</value></data>
+  <data name="EndGameMessage" xml:space="preserve"><value>Зіграні раунди буде збережено.</value></data>
+  <data name="End" xml:space="preserve"><value>Завершити</value></data>
+
+  <!-- Stage 6: session summary (mockup 9) -->
+  <data name="GameOver" xml:space="preserve"><value>Кінець гри!</value></data>
+  <data name="SummaryHeaderFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="BestHit" xml:space="preserve"><value>Найкраще влучання</value></data>
+  <data name="AverageMiss" xml:space="preserve"><value>Середня похибка</value></data>
+  <data name="HardestZone" xml:space="preserve"><value>Найважча зона</value></data>
+  <data name="BiggestMiss" xml:space="preserve"><value>Найбільший промах</value></data>
+  <data name="BestHitFormat" xml:space="preserve"><value>{0} · {1:0.#} см · {2}</value></data>
+  <data name="BiggestMissFormat" xml:space="preserve"><value>{0} · {1:0.#} см</value></data>
+  <data name="PointsShortFormat" xml:space="preserve"><value>{0} оч.</value></data>
+  <data name="Menu" xml:space="preserve"><value>Меню</value></data>
+  <data name="NewGame" xml:space="preserve"><value>Нова гра</value></data>
+  <data name="Done" xml:space="preserve"><value>Готово</value></data>
+  <data name="ZoneSetCountOnlyFormat" xml:space="preserve"><value>У жеребкуванні: {0}</value></data>
+  <data name="NoPlayers" xml:space="preserve"><value>Ще немає гравців. Додай першого!</value></data>
+  <data name="PlayerProfile" xml:space="preserve"><value>Профіль гравця</value></data>
+  <data name="ChangeAvatar" xml:space="preserve"><value>Змінити аватар</value></data>
+  <data name="AvatarColor" xml:space="preserve"><value>Колір</value></data>
+  <data name="AvatarEmoji" xml:space="preserve"><value>Емодзі</value></data>
+  <data name="NoEmoji" xml:space="preserve"><value>Aa</value></data>
+  <data name="RenameTitle" xml:space="preserve"><value>Ім’я гравця</value></data>
+  <data name="RenameDescription" xml:space="preserve"><value>Перейменувати</value></data>
+  <data name="StatRounds" xml:space="preserve"><value>Раунди</value></data>
+  <data name="StatAverageDistance" xml:space="preserve"><value>Сер. відстань</value></data>
+  <data name="StatAveragePoints" xml:space="preserve"><value>Сер. очки</value></data>
+  <data name="BestZone" xml:space="preserve"><value>Найкраща зона</value></data>
+  <data name="WorstZone" xml:space="preserve"><value>Найгірша зона</value></data>
+  <data name="ZoneStatFormat" xml:space="preserve"><value>{0} · {1:0.0} см</value></data>
+  <data name="AvgPointsFormat" xml:space="preserve"><value>{0:0.#}</value></data>
+  <data name="TrendTitle" xml:space="preserve"><value>Середня відстань у часі</value></data>
+  <data name="TrendHint" xml:space="preserve"><value>Точка = одна гра, остання синім. Нижче = краще.</value></data>
+  <data name="TrendTooFew" xml:space="preserve"><value>Графік з’явиться після двох ігор із влучаннями.</value></data>
+  <data name="HeatmapTitle" xml:space="preserve"><value>Теплова карта</value></data>
+  <data name="DeletePlayer" xml:space="preserve"><value>Видалити гравця</value></data>
+  <data name="DeletePlayerTitle" xml:space="preserve"><value>Видалити гравця?</value></data>
+  <data name="DeletePlayerMessageFormat" xml:space="preserve"><value>{0} зникне зі списків і рейтингів. Зіграні раунди залишаться в історії.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Видалити</value></data>
+  <data name="RankingHintFormat" xml:space="preserve"><value>Середні очки за раунд · мін. раундів: {0}</value></data>
+  <data name="RankingBelowFormat" xml:space="preserve"><value>Нижче порогу (мін. раундів: {0})</value></data>
+  <data name="RankingEmpty" xml:space="preserve"><value>Рейтинг з’явиться після гри в одному з режимів.</value></data>
+  <data name="RankingNoQualifiedFormat" xml:space="preserve"><value>У цьому режимі ще ніхто не має потрібної кількості раундів ({0}).</value></data>
+  <data name="RankingDetailFormat" xml:space="preserve"><value>{0} · сер. {1}</value></data>
+  <data name="PointsPerRound" xml:space="preserve"><value>оч. / раунд</value></data>
+  <data name="AllPresets" xml:space="preserve"><value>Усі</value></data>
+  <data name="ShowArrows" xml:space="preserve"><value>Стрілки помилок</value></data>
+  <data name="HeatmapHint" xml:space="preserve"><value>Торкнись зони, щоб побачити деталі.</value></data>
+  <data name="HeatmapNoData" xml:space="preserve"><value>Немає раундів для цього вибору.</value></data>
+  <data name="HeatZoneFormat" xml:space="preserve"><value>{0} · {1} · сер. {2} · {3:0} оч.</value></data>
+  <data name="HeatZoneNoneFormat" xml:space="preserve"><value>{0}: немає раундів</value></data>
+  <data name="LegendMisses" xml:space="preserve"><value>помиляється</value></data>
+  <data name="LegendHits" xml:space="preserve"><value>влучає</value></data>
+  <data name="ArrowsHint" xml:space="preserve"><value>Стрілка: ціль → зона, яку вказують замість неї (мін. 3 рази).</value></data>
+  <data name="GameMode" xml:space="preserve"><value>Режим гри</value></data>
+  <data name="ZoneEditorTitle" xml:space="preserve"><value>Редактор зон</value></data>
+  <data name="TabCustomPoints" xml:space="preserve"><value>Власні точки</value></data>
+  <data name="TabZoneLevels" xml:space="preserve"><value>Рівні зон</value></data>
+  <data name="AddPoint" xml:space="preserve"><value>Додати точку</value></data>
+  <data name="PointNamePlaceholder" xml:space="preserve"><value>Назва, напр. Родимка на плечі</value></data>
+  <data name="PointRadius" xml:space="preserve"><value>Радіус</value></data>
+  <data name="PointLevels" xml:space="preserve"><value>Належить до рівнів</value></data>
+  <data name="PointTapHint" xml:space="preserve"><value>Торкнись моделі в місці точки (наблизь, щоб влучити точно).</value></data>
+  <data name="PointMoveHint" xml:space="preserve"><value>Торкнись іншого місця або перетягни мітку, щоб пересунути точку.</value></data>
+  <data name="NoCustomPoints" xml:space="preserve"><value>Ще немає власних точок.</value></data>
+  <data name="PointDetailFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="PointNoLevels" xml:space="preserve"><value>лише ручний вибір</value></data>
+  <data name="DeletePointTitle" xml:space="preserve"><value>Видалити точку?</value></data>
+  <data name="DeletePointMessageFormat" xml:space="preserve"><value>«{0}» зникне з рівнів і наборів зон. Зіграні раунди залишаться в історії.</value></data>
+  <data name="PointNeedsName" xml:space="preserve"><value>Введи назву точки.</value></data>
+  <data name="PointNeedsPin" xml:space="preserve"><value>Торкнись моделі, щоб вказати місце точки.</value></data>
+  <data name="LevelTargetLabel" xml:space="preserve"><value>Рівень гри</value></data>
+  <data name="LevelTapLabel" xml:space="preserve"><value>Торкайся зон рівня</value></data>
+  <data name="LevelEditorHint" xml:space="preserve"><value>Торкнись зони, щоб додати її до рівня гри або прибрати з нього. Кольорові — у рівні, світло-сірі можна додати, темно-сірі прибрано.</value></data>
+  <data name="LevelSummaryFormat" xml:space="preserve"><value>{0}: {1}</value></data>
+  <data name="LevelChangesFormat" xml:space="preserve"><value> · додано {0}, прибрано {1}</value></data>
+  <data name="RestoreDefaults" xml:space="preserve"><value>Відновити типові</value></data>
+  <data name="RestoreDefaultsTitle" xml:space="preserve"><value>Відновити типові рівні?</value></data>
+  <data name="RestoreDefaultsMessage" xml:space="preserve"><value>Усі зміни прив’язки зон до рівнів буде видалено. Власні точки залишаться.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Відновити</value></data>
+  <data name="PointsOne" xml:space="preserve"><value>{0} точка</value></data>
+  <data name="PointsFew" xml:space="preserve"><value>{0} точки</value></data>
+  <data name="PointsMany" xml:space="preserve"><value>{0} точок</value></data>
+  <data name="ManualZonesHint" xml:space="preserve"><value>Торкнись зони на моделі, щоб додати чи прибрати її вручну. Зони рівня:</value></data>
+  <data name="ManualZonesFormat" xml:space="preserve"><value>Додано вручну: {0}</value></data>
+  <data name="ClearManual" xml:space="preserve"><value>Очистити</value></data>
+  <data name="CustomPointsLabel" xml:space="preserve"><value>Власні точки</value></data>
+  <data name="DefaultConfigTitle" xml:space="preserve"><value>Типові налаштування</value></data>
+  <data name="DefaultConfigCaption" xml:space="preserve"><value>Налаштування · значення для нової гри</value></data>
+  <data name="SectionLanguage" xml:space="preserve"><value>МОВА</value></data>
+  <data name="Language" xml:space="preserve"><value>Мова</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>Мова телефону ({0})</value></data>
+  <data name="LanguageTitle" xml:space="preserve"><value>Мова застосунку</value></data>
+  <data name="LanguageHint" xml:space="preserve"><value>Зміна діє одразу. «Мова телефону» вибирає мову, встановлену в Android (якщо вона не підтримується – англійську).</value></data>
+</root>

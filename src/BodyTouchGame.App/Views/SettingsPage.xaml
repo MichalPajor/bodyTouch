@@ -33,6 +33,11 @@
                 </VerticalStackLayout>
             </Border>
 
+            <Label Grid.Row="5" Text="{x:Static res:AppResources.SectionLanguage}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource PartyViolet}" />
+            <Border Grid.Row="6" Padding="0">
+                <controls:SettingsRow Text="{Binding LanguageText}" Command="{Binding LanguageCommand}" ShowDivider="False" />
+            </Border>
+
             <Label Grid.Row="8" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
         </Grid>
         </ScrollView>

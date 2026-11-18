@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Stage 3: 3D view prototype screen -->
+  <data name="ViewFront" xml:space="preserve"><value>Voor</value></data>
+  <data name="ViewSide" xml:space="preserve"><value>Zij</value></data>
+  <data name="ViewBack" xml:space="preserve"><value>Achter</value></data>
+  <data name="ZoomIn" xml:space="preserve"><value>+</value></data>
+  <data name="ZoomOut" xml:space="preserve"><value>−</value></data>
+  <!-- Stage 5: Start screen (mockup 1) -->
+  <data name="TitleLine1" xml:space="preserve"><value>BODY</value></data>
+  <data name="TitleLine2" xml:space="preserve"><value>TOUCH</value></data>
+  <data name="TitleLine3" xml:space="preserve"><value>GAME</value></data>
+  <data name="Tagline" xml:space="preserve"><value>Ogen dicht. Aanraken. Raden.</value></data>
+  <data name="Play" xml:space="preserve"><value>SPELEN</value></data>
+  <data name="Players" xml:space="preserve"><value>Spelers</value></data>
+  <data name="Rankings" xml:space="preserve"><value>Ranglijsten</value></data>
+  <data name="Settings" xml:space="preserve"><value>Instellingen</value></data>
+  <data name="LastGame" xml:space="preserve"><value>Laatste spel</value></data>
+  <data name="LastGameWinner" xml:space="preserve"><value>{0} op plek 1 · {1} ptn</value></data>
+  <data name="LastGameTie" xml:space="preserve"><value>Gelijkspel: {0} · {1} ptn</value></data>
+  <data name="MannequinDescription" xml:space="preserve"><value>3D-model van de paspop</value></data>
+
+  <!-- Stage 5: Settings screen (mockup 10) -->
+  <data name="SectionGame" xml:space="preserve"><value>SPEL</value></data>
+  <data name="SectionEffects" xml:space="preserve"><value>EFFECTEN</value></data>
+  <data name="DefaultConfig" xml:space="preserve"><value>Standaard spelinstellingen</value></data>
+  <data name="ZoneEditor" xml:space="preserve"><value>Editor voor zones en eigen punten</value></data>
+  <data name="ExcludedZones" xml:space="preserve"><value>Uitgesloten zones</value></data>
+  <data name="Sounds" xml:space="preserve"><value>Geluiden</value></data>
+  <data name="ConfettiOnHit" xml:space="preserve"><value>Confetti bij een treffer</value></data>
+  <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · versie {0}</value></data>
+
+  <!-- 3D view panel -->
+  <data name="RotateHint" xml:space="preserve"><value>Draai met je vinger</value></data>
+  <data name="ZoomInDescription" xml:space="preserve"><value>Inzoomen</value></data>
+  <data name="ZoomOutDescription" xml:space="preserve"><value>Uitzoomen</value></data>
+
+  <!-- Stage 6: common -->
+  <data name="Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Annuleren</value></data>
+  <data name="RoundsOne" xml:space="preserve"><value>{0} ronde</value></data>
+  <data name="RoundsFew" xml:space="preserve"><value>{0} rondes</value></data>
+  <data name="RoundsMany" xml:space="preserve"><value>{0} rondes</value></data>
+  <data name="ZonesOne" xml:space="preserve"><value>{0} zone</value></data>
+  <data name="ZonesFew" xml:space="preserve"><value>{0} zones</value></data>
+  <data name="ZonesMany" xml:space="preserve"><value>{0} zones</value></data>
+  <data name="ExcludedOne" xml:space="preserve"><value>{0} uitgesloten</value></data>
+  <data name="ExcludedFew" xml:space="preserve"><value>{0} uitgesloten</value></data>
+  <data name="ExcludedMany" xml:space="preserve"><value>{0} uitgesloten</value></data>
+  <data name="PresetEasy" xml:space="preserve"><value>Makkelijk</value></data>
+  <data name="PresetMedium" xml:space="preserve"><value>Gemiddeld</value></data>
+  <data name="PresetHard" xml:space="preserve"><value>Moeilijk</value></data>
+  <data name="PresetHardcore" xml:space="preserve"><value>Hardcore</value></data>
+  <data name="PresetCustomConfig" xml:space="preserve"><value>Eigen instellingen</value></data>
+  <data name="TouchWholeHand" xml:space="preserve"><value>Hele hand</value></data>
+  <data name="TouchTwoFingers" xml:space="preserve"><value>Twee vingers</value></data>
+  <data name="TouchOneFinger" xml:space="preserve"><value>Eén vinger</value></data>
+  <data name="TouchTap" xml:space="preserve"><value>Aantikken</value></data>
+  <data name="MovementGentle" xml:space="preserve"><value>Zacht</value></data>
+  <data name="MovementNone" xml:space="preserve"><value>Geen beweging</value></data>
+  <data name="MovementGentleLower" xml:space="preserve"><value>zachte beweging</value></data>
+  <data name="MovementNoneLower" xml:space="preserve"><value>geen beweging</value></data>
+  <data name="SecondsFormat" xml:space="preserve"><value>{0} s</value></data>
+  <data name="CmFormat" xml:space="preserve"><value>{0:0.#} cm</value></data>
+
+  <!-- Stage 6: players selection (mockup 2) -->
+  <data name="NewGameStep1" xml:space="preserve"><value>Nieuw spel · stap 1 van 2</value></data>
+  <data name="WhoPlays" xml:space="preserve"><value>Wie spelen er?</value></data>
+  <data name="AddPlayer" xml:space="preserve"><value>Speler toevoegen</value></data>
+  <data name="AddPlayerTitle" xml:space="preserve"><value>Nieuwe speler</value></data>
+  <data name="AddPlayerMessage" xml:space="preserve"><value>Naam of bijnaam</value></data>
+  <data name="Add" xml:space="preserve"><value>Toevoegen</value></data>
+  <data name="NameTaken" xml:space="preserve"><value>Deze naam is al bezet.</value></data>
+  <data name="NameEmpty" xml:space="preserve"><value>Vul een naam in.</value></data>
+  <data name="SelectedPlayersFormat" xml:space="preserve"><value>Geselecteerd: {0}</value></data>
+  <data name="OrderAllPairs" xml:space="preserve"><value>Volgorde: iedereen met iedereen</value></data>
+  <data name="OrderCircle" xml:space="preserve"><value>Volgorde: om de beurt in een kring</value></data>
+  <data name="Next" xml:space="preserve"><value>Verder</value></data>
+  <data name="PlayerStatsFormat" xml:space="preserve"><value>{0} · gem. {1:0.0} cm</value></data>
+  <data name="PlayerNoRounds" xml:space="preserve"><value>Nog geen rondes gespeeld</value></data>
+  <data name="SelectPlayersHint" xml:space="preserve"><value>Kies 2 tot 8 spelers.</value></data>
+
+  <!-- Stage 6: game configuration (mockup 3) -->
+  <data name="NewGameStep2" xml:space="preserve"><value>Nieuw spel · stap 2 van 2</value></data>
+  <data name="GameSettings" xml:space="preserve"><value>Spelinstellingen</value></data>
+  <data name="Zones" xml:space="preserve"><value>Zones</value></data>
+  <data name="TouchMethodLabel" xml:space="preserve"><value>Soort aanraking</value></data>
+  <data name="GentleMovement" xml:space="preserve"><value>Zachte beweging</value></data>
+  <data name="TouchTime" xml:space="preserve"><value>Aanraaktijd</value></data>
+  <data name="RoundsPerPlayer" xml:space="preserve"><value>Rondes per speler</value></data>
+  <data name="FewerRounds" xml:space="preserve"><value>Minder rondes</value></data>
+  <data name="MoreRounds" xml:space="preserve"><value>Meer rondes</value></data>
+  <data name="Advanced" xml:space="preserve"><value>Geavanceerd</value></data>
+  <data name="TargetChosenByModel" xml:space="preserve"><value>Model kiest het doel</value></data>
+  <data name="GuessTimeLimit" xml:space="preserve"><value>Tijdslimiet voor antwoord</value></data>
+  <data name="GuessTime" xml:space="preserve"><value>Tijd om te antwoorden</value></data>
+  <data name="FullPointsRadius" xml:space="preserve"><value>Straal volle punten (r)</value></data>
+  <data name="ZeroPointsDistance" xml:space="preserve"><value>Afstand zonder punten (z)</value></data>
+  <data name="SpeedBonus" xml:space="preserve"><value>Snelheidsbonus</value></data>
+  <data name="Less" xml:space="preserve"><value>Minder</value></data>
+  <data name="More" xml:space="preserve"><value>Meer</value></data>
+  <data name="SavePreset" xml:space="preserve"><value>Modus opslaan</value></data>
+  <data name="SavePresetMessage" xml:space="preserve"><value>Naam van de modus (bijv. “Feestje 3 s”)</value></data>
+  <data name="Save" xml:space="preserve"><value>Opslaan</value></data>
+  <data name="StartGame" xml:space="preserve"><value>Start spel</value></data>
+  <data name="CannotStartTitle" xml:space="preserve"><value>Kan niet starten</value></data>
+  <data name="NothingToDrawFormat" xml:space="preserve"><value>{0}: geen zones om te loten (uitsluitingen). Wijzig de zones of uitsluitingen.</value></data>
+  <data name="ZonesNotAvailable" xml:space="preserve"><value>Dit niveau heeft nog geen zones (die komen in een volgende versie).</value></data>
+
+  <!-- Stage 6: zone set and exclusions -->
+  <data name="ZoneSetHint" xml:space="preserve"><value>Kies willekeurige niveaus. Gekleurde zones kunnen geloot worden (blauwe zijn handmatig toegevoegd), donkergrijze zijn uitgesloten door gekozen spelers.</value></data>
+  <data name="ZoneSetCountFormat" xml:space="preserve"><value>In de pot: {0} · {1}</value></data>
+  <data name="ExclusionsHint" xml:space="preserve"><value>Tik op een zone op het model om die uit te sluiten of terug te zetten. Een uitgesloten zone wordt niet geloot als deze speler het model is.</value></data>
+  <data name="NoPlayersYet" xml:space="preserve"><value>Voeg eerst spelers toe: SPELEN → Speler toevoegen.</value></data>
+  <data name="ExcludedListFormat" xml:space="preserve"><value>Uitgesloten: {0}</value></data>
+  <data name="ExcludedNone" xml:space="preserve"><value>Geen uitgesloten zones</value></data>
+  <data name="ClearExclusions" xml:space="preserve"><value>Wissen</value></data>
+
+  <!-- Stage 6: round screens (mockups 4-8, WhoIsNext own design) -->
+  <data name="RoundHeaderFormat" xml:space="preserve"><value>Ronde {0} van {1} · {2}</value></data>
+  <data name="PairFormat" xml:space="preserve"><value>Model: {0} · raadt: {1}</value></data>
+  <data name="WhoGuesses" xml:space="preserve"><value>RAADT · ogen dicht</value></data>
+  <data name="WhoTouches" xml:space="preserve"><value>MODEL · pakt de telefoon</value></data>
+  <data name="WhoIsNextHintFormat" xml:space="preserve"><value>{0} doet de ogen dicht. {1} pakt de telefoon.</value></data>
+  <data name="YourTarget" xml:space="preserve"><value>JOUW DOEL</value></data>
+  <data name="ChooseTarget" xml:space="preserve"><value>KIES EEN DOEL</value></data>
+  <data name="ChooseTargetHint" xml:space="preserve"><value>Tik op het model waar het raakt</value></data>
+  <data name="TileTouch" xml:space="preserve"><value>Aanraking</value></data>
+  <data name="TileMovement" xml:space="preserve"><value>Beweging</value></data>
+  <data name="TileTime" xml:space="preserve"><value>Tijd</value></data>
+  <data name="StartTouch" xml:space="preserve"><value>Start aanraking</value></data>
+  <data name="RoundTouchingFormat" xml:space="preserve"><value>Ronde {0} van {1} · {2} raakt aan</value></data>
+  <data name="TouchNow" xml:space="preserve"><value>AANRAKEN!</value></data>
+  <data name="AbortRound" xml:space="preserve"><value>Ronde afbreken</value></data>
+  <data name="AbortRoundTitle" xml:space="preserve"><value>Ronde afbreken?</value></data>
+  <data name="AbortRoundMessage" xml:space="preserve"><value>De ronde wordt niet opgeslagen. Hetzelfde duo speelt hem opnieuw.</value></data>
+  <data name="Abort" xml:space="preserve"><value>Afbreken</value></data>
+  <data name="HandPhone" xml:space="preserve"><value>Geef de telefoon door</value></data>
+  <data name="CurtainHintFormat" xml:space="preserve"><value>Het doel is verborgen. {0} mag de ogen nu openen.</value></data>
+  <data name="Ready" xml:space="preserve"><value>Klaar!</value></data>
+  <data name="RoundGuessingFormat" xml:space="preserve"><value>Ronde {0} van {1} · {2} raadt</value></data>
+  <data name="WhereTouched" xml:space="preserve"><value>Waar heb je aangeraakt?</value></data>
+  <data name="YourPin" xml:space="preserve"><value>Jouw pin</value></data>
+  <data name="PinNotPlaced" xml:space="preserve"><value>Tik op het model</value></data>
+  <data name="HoldToMove" xml:space="preserve"><value>Vasthouden om te verplaatsen</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Bevestigen</value></data>
+  <data name="ResultForFormat" xml:space="preserve"><value>Resultaat: {0}</value></data>
+  <data name="PointsFormat" xml:space="preserve"><value>+{0} ptn</value></data>
+  <data name="DistanceFormat" xml:space="preserve"><value>{0:0.0} cm</value></data>
+  <data name="TimeUp" xml:space="preserve"><value>Tijd is om</value></data>
+  <data name="Unreachable" xml:space="preserve"><value>—</value></data>
+  <data name="LegendPinFormat" xml:space="preserve"><value>Pin: {0}</value></data>
+  <data name="LegendTargetFormat" xml:space="preserve"><value>Doel: {0}</value></data>
+  <data name="ManualPointName" xml:space="preserve"><value>gekozen plek</value></data>
+  <data name="NoPin" xml:space="preserve"><value>geen pin</value></data>
+  <data name="TotalFormat" xml:space="preserve"><value>Totaal: {0} ptn · plek {1}</value></data>
+  <data name="NextRound" xml:space="preserve"><value>Volgende ronde</value></data>
+  <data name="ShowSummary" xml:space="preserve"><value>Overzicht</value></data>
+  <data name="CommentPerfect" xml:space="preserve"><value>Perfect!|In de roos!|Meesterlijk gevoel!|Haarscherpe precisie!|Kun jij gedachten lezen?|Precies daar!</value></data>
+  <data name="CommentClose" xml:space="preserve"><value>Dichtbij!|Bijna perfect!|Goed gevoel!|Er vlak naast!|Op millimeters na!|Het lichaam heeft geen geheimen voor jou.</value></data>
+  <data name="CommentWarm" xml:space="preserve"><value>Warm, warmer…|Goede richting!|Het scheelde niet veel.|Goede buurt!|Bijna, bijna.</value></data>
+  <data name="CommentFar" xml:space="preserve"><value>Ver weg, maar toch punten.|De richting klopt ongeveer.|Er was iets te voelen!|Juiste wijk, verkeerde straat.</value></data>
+  <data name="CommentMiss" xml:space="preserve"><value>Doel: {0}. Pin: {1}. Oeps!|Een heel andere buurt!|Het lichaam heeft de adressen verwisseld.|Doel: {0}. Pin: {1}. Wie had dat gedacht?|De gps is de weg kwijt.|Warm? Eerder ijskoud.</value></data>
+  <data name="CommentTimeUp" xml:space="preserve"><value>De pin is niet op tijd geland.|Tijd is om – de pin bleef in je zak.|De klok was sneller.</value></data>
+  <data name="EndGameTitle" xml:space="preserve"><value>Spel beëindigen?</value></data>
+  <data name="EndGameMessage" xml:space="preserve"><value>Gespeelde rondes worden opgeslagen.</value></data>
+  <data name="End" xml:space="preserve"><value>Stoppen</value></data>
+
+  <!-- Stage 6: session summary (mockup 9) -->
+  <data name="GameOver" xml:space="preserve"><value>Einde spel!</value></data>
+  <data name="SummaryHeaderFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="BestHit" xml:space="preserve"><value>Beste treffer</value></data>
+  <data name="AverageMiss" xml:space="preserve"><value>Gemiddelde afwijking</value></data>
+  <data name="HardestZone" xml:space="preserve"><value>Moeilijkste zone</value></data>
+  <data name="BiggestMiss" xml:space="preserve"><value>Grootste misser</value></data>
+  <data name="BestHitFormat" xml:space="preserve"><value>{0} · {1:0.#} cm · {2}</value></data>
+  <data name="BiggestMissFormat" xml:space="preserve"><value>{0} · {1:0.#} cm</value></data>
+  <data name="PointsShortFormat" xml:space="preserve"><value>{0} ptn</value></data>
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="NewGame" xml:space="preserve"><value>Nieuw spel</value></data>
+  <data name="Done" xml:space="preserve"><value>Klaar</value></data>
+  <data name="ZoneSetCountOnlyFormat" xml:space="preserve"><value>In de pot: {0}</value></data>
+  <data name="NoPlayers" xml:space="preserve"><value>Nog geen spelers. Voeg de eerste toe!</value></data>
+  <data name="PlayerProfile" xml:space="preserve"><value>Spelersprofiel</value></data>
+  <data name="ChangeAvatar" xml:space="preserve"><value>Avatar wijzigen</value></data>
+  <data name="AvatarColor" xml:space="preserve"><value>Kleur</value></data>
+  <data name="AvatarEmoji" xml:space="preserve"><value>Emoji</value></data>
+  <data name="NoEmoji" xml:space="preserve"><value>Aa</value></data>
+  <data name="RenameTitle" xml:space="preserve"><value>Spelersnaam</value></data>
+  <data name="RenameDescription" xml:space="preserve"><value>Naam wijzigen</value></data>
+  <data name="StatRounds" xml:space="preserve"><value>Rondes</value></data>
+  <data name="StatAverageDistance" xml:space="preserve"><value>Gem. afstand</value></data>
+  <data name="StatAveragePoints" xml:space="preserve"><value>Gem. punten</value></data>
+  <data name="BestZone" xml:space="preserve"><value>Beste zone</value></data>
+  <data name="WorstZone" xml:space="preserve"><value>Slechtste zone</value></data>
+  <data name="ZoneStatFormat" xml:space="preserve"><value>{0} · {1:0.0} cm</value></data>
+  <data name="AvgPointsFormat" xml:space="preserve"><value>{0:0.#}</value></data>
+  <data name="TrendTitle" xml:space="preserve"><value>Gemiddelde afstand door de tijd</value></data>
+  <data name="TrendHint" xml:space="preserve"><value>Punt = één sessie, de laatste in blauw. Lager = beter.</value></data>
+  <data name="TrendTooFew" xml:space="preserve"><value>De grafiek verschijnt na twee sessies met treffers.</value></data>
+  <data name="HeatmapTitle" xml:space="preserve"><value>Hittekaart</value></data>
+  <data name="DeletePlayer" xml:space="preserve"><value>Speler verwijderen</value></data>
+  <data name="DeletePlayerTitle" xml:space="preserve"><value>Speler verwijderen?</value></data>
+  <data name="DeletePlayerMessageFormat" xml:space="preserve"><value>{0} verdwijnt uit lijsten en ranglijsten. Gespeelde rondes blijven in de geschiedenis.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Verwijderen</value></data>
+  <data name="RankingHintFormat" xml:space="preserve"><value>Gem. punten per ronde · min. {0} rondes</value></data>
+  <data name="RankingBelowFormat" xml:space="preserve"><value>Onder de drempel (min. {0} rondes)</value></data>
+  <data name="RankingEmpty" xml:space="preserve"><value>De ranglijst verschijnt na een spel in een van de modi.</value></data>
+  <data name="RankingNoQualifiedFormat" xml:space="preserve"><value>Nog niemand heeft {0} rondes in deze modus.</value></data>
+  <data name="RankingDetailFormat" xml:space="preserve"><value>{0} · gem. {1}</value></data>
+  <data name="PointsPerRound" xml:space="preserve"><value>ptn / ronde</value></data>
+  <data name="AllPresets" xml:space="preserve"><value>Alle</value></data>
+  <data name="ShowArrows" xml:space="preserve"><value>Pijlen bij missers</value></data>
+  <data name="HeatmapHint" xml:space="preserve"><value>Tik op een zone voor details.</value></data>
+  <data name="HeatmapNoData" xml:space="preserve"><value>Geen rondes voor deze selectie.</value></data>
+  <data name="HeatZoneFormat" xml:space="preserve"><value>{0} · {1} · gem. {2} · {3:0} ptn</value></data>
+  <data name="HeatZoneNoneFormat" xml:space="preserve"><value>{0}: geen rondes</value></data>
+  <data name="LegendMisses" xml:space="preserve"><value>mis</value></data>
+  <data name="LegendHits" xml:space="preserve"><value>raak</value></data>
+  <data name="ArrowsHint" xml:space="preserve"><value>Pijl: doel → zone die in plaats daarvan gekozen werd (min. 3 keer).</value></data>
+  <data name="GameMode" xml:space="preserve"><value>Spelmodus</value></data>
+  <data name="ZoneEditorTitle" xml:space="preserve"><value>Zone-editor</value></data>
+  <data name="TabCustomPoints" xml:space="preserve"><value>Eigen punten</value></data>
+  <data name="TabZoneLevels" xml:space="preserve"><value>Zoneniveaus</value></data>
+  <data name="AddPoint" xml:space="preserve"><value>Punt toevoegen</value></data>
+  <data name="PointNamePlaceholder" xml:space="preserve"><value>Naam, bijv. Moedervlek op de arm</value></data>
+  <data name="PointRadius" xml:space="preserve"><value>Straal</value></data>
+  <data name="PointLevels" xml:space="preserve"><value>Hoort bij niveaus</value></data>
+  <data name="PointTapHint" xml:space="preserve"><value>Tik op het model waar het punt moet komen (zoom in om precies te raken).</value></data>
+  <data name="PointMoveHint" xml:space="preserve"><value>Tik op een andere plek of sleep de pin om het punt te verplaatsen.</value></data>
+  <data name="NoCustomPoints" xml:space="preserve"><value>Nog geen eigen punten.</value></data>
+  <data name="PointDetailFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="PointNoLevels" xml:space="preserve"><value>alleen handmatige keuze</value></data>
+  <data name="DeletePointTitle" xml:space="preserve"><value>Punt verwijderen?</value></data>
+  <data name="DeletePointMessageFormat" xml:space="preserve"><value>“{0}” verdwijnt uit niveaus en zonesets. Gespeelde rondes blijven in de geschiedenis.</value></data>
+  <data name="PointNeedsName" xml:space="preserve"><value>Vul een naam voor het punt in.</value></data>
+  <data name="PointNeedsPin" xml:space="preserve"><value>Tik op het model om de plek van het punt aan te geven.</value></data>
+  <data name="LevelTargetLabel" xml:space="preserve"><value>Spelniveau</value></data>
+  <data name="LevelTapLabel" xml:space="preserve"><value>Tik op zones van het niveau</value></data>
+  <data name="LevelEditorHint" xml:space="preserve"><value>Tik op een zone om die aan het spelniveau toe te voegen of eruit te halen. Gekleurde horen bij het niveau, lichtgrijze kun je toevoegen, donkergrijze zijn verwijderd.</value></data>
+  <data name="LevelSummaryFormat" xml:space="preserve"><value>{0}: {1}</value></data>
+  <data name="LevelChangesFormat" xml:space="preserve"><value> · {0} toegevoegd, {1} verwijderd</value></data>
+  <data name="RestoreDefaults" xml:space="preserve"><value>Standaard herstellen</value></data>
+  <data name="RestoreDefaultsTitle" xml:space="preserve"><value>Standaardniveaus herstellen?</value></data>
+  <data name="RestoreDefaultsMessage" xml:space="preserve"><value>Alle wijzigingen in de indeling van zones in niveaus worden verwijderd. Eigen punten blijven.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Herstellen</value></data>
+  <data name="PointsOne" xml:space="preserve"><value>{0} punt</value></data>
+  <data name="PointsFew" xml:space="preserve"><value>{0} punten</value></data>
+  <data name="PointsMany" xml:space="preserve"><value>{0} punten</value></data>
+  <data name="ManualZonesHint" xml:space="preserve"><value>Tik op een zone op het model om die handmatig toe te voegen of te verwijderen. Zones van het niveau:</value></data>
+  <data name="ManualZonesFormat" xml:space="preserve"><value>Handmatig toegevoegd: {0}</value></data>
+  <data name="ClearManual" xml:space="preserve"><value>Wissen</value></data>
+  <data name="CustomPointsLabel" xml:space="preserve"><value>Eigen punten</value></data>
+  <data name="DefaultConfigTitle" xml:space="preserve"><value>Standaardinstellingen</value></data>
+  <data name="DefaultConfigCaption" xml:space="preserve"><value>Instellingen · voorgestelde waarden voor een nieuw spel</value></data>
+  <data name="SectionLanguage" xml:space="preserve"><value>TAAL</value></data>
+  <data name="Language" xml:space="preserve"><value>Taal</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>Taal van telefoon ({0})</value></data>
+  <data name="LanguageTitle" xml:space="preserve"><value>App-taal</value></data>
+  <data name="LanguageHint" xml:space="preserve"><value>Wijzigingen gelden direct. “Taal van telefoon” gebruikt de taal die in Android is ingesteld (Engels als die niet wordt ondersteund).</value></data>
+</root>

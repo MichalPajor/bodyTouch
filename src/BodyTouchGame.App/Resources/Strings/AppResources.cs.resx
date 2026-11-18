@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Stage 3: 3D view prototype screen -->
+  <data name="ViewFront" xml:space="preserve"><value>Zepředu</value></data>
+  <data name="ViewSide" xml:space="preserve"><value>Z boku</value></data>
+  <data name="ViewBack" xml:space="preserve"><value>Zezadu</value></data>
+  <data name="ZoomIn" xml:space="preserve"><value>+</value></data>
+  <data name="ZoomOut" xml:space="preserve"><value>−</value></data>
+  <!-- Stage 5: Start screen (mockup 1) -->
+  <data name="TitleLine1" xml:space="preserve"><value>BODY</value></data>
+  <data name="TitleLine2" xml:space="preserve"><value>TOUCH</value></data>
+  <data name="TitleLine3" xml:space="preserve"><value>GAME</value></data>
+  <data name="Tagline" xml:space="preserve"><value>Zakryj oči. Dotkni se. Hádej.</value></data>
+  <data name="Play" xml:space="preserve"><value>HRÁT</value></data>
+  <data name="Players" xml:space="preserve"><value>Hráči</value></data>
+  <data name="Rankings" xml:space="preserve"><value>Žebříčky</value></data>
+  <data name="Settings" xml:space="preserve"><value>Nastavení</value></data>
+  <data name="LastGame" xml:space="preserve"><value>Poslední hra</value></data>
+  <data name="LastGameWinner" xml:space="preserve"><value>{0} na 1. místě · {1} b.</value></data>
+  <data name="LastGameTie" xml:space="preserve"><value>Remíza: {0} · {1} b.</value></data>
+  <data name="MannequinDescription" xml:space="preserve"><value>3D model figuríny</value></data>
+
+  <!-- Stage 5: Settings screen (mockup 10) -->
+  <data name="SectionGame" xml:space="preserve"><value>HRA</value></data>
+  <data name="SectionEffects" xml:space="preserve"><value>EFEKTY</value></data>
+  <data name="DefaultConfig" xml:space="preserve"><value>Výchozí nastavení hry</value></data>
+  <data name="ZoneEditor" xml:space="preserve"><value>Editor zón a vlastních bodů</value></data>
+  <data name="ExcludedZones" xml:space="preserve"><value>Vyloučené zóny</value></data>
+  <data name="Sounds" xml:space="preserve"><value>Zvuky</value></data>
+  <data name="ConfettiOnHit" xml:space="preserve"><value>Konfety při zásahu</value></data>
+  <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · verze {0}</value></data>
+
+  <!-- 3D view panel -->
+  <data name="RotateHint" xml:space="preserve"><value>Otáčej prstem</value></data>
+  <data name="ZoomInDescription" xml:space="preserve"><value>Přiblížit</value></data>
+  <data name="ZoomOutDescription" xml:space="preserve"><value>Oddálit</value></data>
+
+  <!-- Stage 6: common -->
+  <data name="Ok" xml:space="preserve"><value>OK</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Zrušit</value></data>
+  <data name="RoundsOne" xml:space="preserve"><value>{0} kolo</value></data>
+  <data name="RoundsFew" xml:space="preserve"><value>{0} kola</value></data>
+  <data name="RoundsMany" xml:space="preserve"><value>{0} kol</value></data>
+  <data name="ZonesOne" xml:space="preserve"><value>{0} zóna</value></data>
+  <data name="ZonesFew" xml:space="preserve"><value>{0} zóny</value></data>
+  <data name="ZonesMany" xml:space="preserve"><value>{0} zón</value></data>
+  <data name="ExcludedOne" xml:space="preserve"><value>{0} vyloučená</value></data>
+  <data name="ExcludedFew" xml:space="preserve"><value>{0} vyloučené</value></data>
+  <data name="ExcludedMany" xml:space="preserve"><value>{0} vyloučených</value></data>
+  <data name="PresetEasy" xml:space="preserve"><value>Snadný</value></data>
+  <data name="PresetMedium" xml:space="preserve"><value>Střední</value></data>
+  <data name="PresetHard" xml:space="preserve"><value>Těžký</value></data>
+  <data name="PresetHardcore" xml:space="preserve"><value>Hardcore</value></data>
+  <data name="PresetCustomConfig" xml:space="preserve"><value>Vlastní nastavení</value></data>
+  <data name="TouchWholeHand" xml:space="preserve"><value>Celá dlaň</value></data>
+  <data name="TouchTwoFingers" xml:space="preserve"><value>Dva prsty</value></data>
+  <data name="TouchOneFinger" xml:space="preserve"><value>Jeden prst</value></data>
+  <data name="TouchTap" xml:space="preserve"><value>Ťuknutí</value></data>
+  <data name="MovementGentle" xml:space="preserve"><value>Jemný</value></data>
+  <data name="MovementNone" xml:space="preserve"><value>Bez pohybu</value></data>
+  <data name="MovementGentleLower" xml:space="preserve"><value>jemný pohyb</value></data>
+  <data name="MovementNoneLower" xml:space="preserve"><value>bez pohybu</value></data>
+  <data name="SecondsFormat" xml:space="preserve"><value>{0} s</value></data>
+  <data name="CmFormat" xml:space="preserve"><value>{0:0.#} cm</value></data>
+
+  <!-- Stage 6: players selection (mockup 2) -->
+  <data name="NewGameStep1" xml:space="preserve"><value>Nová hra · krok 1 ze 2</value></data>
+  <data name="WhoPlays" xml:space="preserve"><value>Kdo hraje?</value></data>
+  <data name="AddPlayer" xml:space="preserve"><value>Přidat hráče</value></data>
+  <data name="AddPlayerTitle" xml:space="preserve"><value>Nový hráč</value></data>
+  <data name="AddPlayerMessage" xml:space="preserve"><value>Jméno nebo přezdívka</value></data>
+  <data name="Add" xml:space="preserve"><value>Přidat</value></data>
+  <data name="NameTaken" xml:space="preserve"><value>Toto jméno už je obsazené.</value></data>
+  <data name="NameEmpty" xml:space="preserve"><value>Zadej jméno.</value></data>
+  <data name="SelectedPlayersFormat" xml:space="preserve"><value>Počet hráčů: {0}</value></data>
+  <data name="OrderAllPairs" xml:space="preserve"><value>Pořadí: každý s každým</value></data>
+  <data name="OrderCircle" xml:space="preserve"><value>Pořadí: postupně v kruhu</value></data>
+  <data name="Next" xml:space="preserve"><value>Dále</value></data>
+  <data name="PlayerStatsFormat" xml:space="preserve"><value>{0} · prům. {1:0.0} cm</value></data>
+  <data name="PlayerNoRounds" xml:space="preserve"><value>Zatím žádná kola</value></data>
+  <data name="SelectPlayersHint" xml:space="preserve"><value>Vyber 2 až 8 hráčů.</value></data>
+
+  <!-- Stage 6: game configuration (mockup 3) -->
+  <data name="NewGameStep2" xml:space="preserve"><value>Nová hra · krok 2 ze 2</value></data>
+  <data name="GameSettings" xml:space="preserve"><value>Nastavení hry</value></data>
+  <data name="Zones" xml:space="preserve"><value>Zóny</value></data>
+  <data name="TouchMethodLabel" xml:space="preserve"><value>Způsob doteku</value></data>
+  <data name="GentleMovement" xml:space="preserve"><value>Jemný pohyb</value></data>
+  <data name="TouchTime" xml:space="preserve"><value>Čas doteku</value></data>
+  <data name="RoundsPerPlayer" xml:space="preserve"><value>Kola na hráče</value></data>
+  <data name="FewerRounds" xml:space="preserve"><value>Méně kol</value></data>
+  <data name="MoreRounds" xml:space="preserve"><value>Více kol</value></data>
+  <data name="Advanced" xml:space="preserve"><value>Pokročilé</value></data>
+  <data name="TargetChosenByModel" xml:space="preserve"><value>Cíl vybírá model</value></data>
+  <data name="GuessTimeLimit" xml:space="preserve"><value>Časový limit na odpověď</value></data>
+  <data name="GuessTime" xml:space="preserve"><value>Čas na odpověď</value></data>
+  <data name="FullPointsRadius" xml:space="preserve"><value>Poloměr plných bodů (r)</value></data>
+  <data name="ZeroPointsDistance" xml:space="preserve"><value>Vzdálenost bez bodů (z)</value></data>
+  <data name="SpeedBonus" xml:space="preserve"><value>Bonus za rychlost</value></data>
+  <data name="Less" xml:space="preserve"><value>Méně</value></data>
+  <data name="More" xml:space="preserve"><value>Více</value></data>
+  <data name="SavePreset" xml:space="preserve"><value>Uložit režim</value></data>
+  <data name="SavePresetMessage" xml:space="preserve"><value>Název režimu (např. „Párty 3 s“)</value></data>
+  <data name="Save" xml:space="preserve"><value>Uložit</value></data>
+  <data name="StartGame" xml:space="preserve"><value>Start hry</value></data>
+  <data name="CannotStartTitle" xml:space="preserve"><value>Nelze začít</value></data>
+  <data name="NothingToDrawFormat" xml:space="preserve"><value>{0}: nejsou zóny k losování (vyloučení). Změň zóny nebo vyloučení.</value></data>
+  <data name="ZonesNotAvailable" xml:space="preserve"><value>Tato úroveň zatím nemá zóny (přibudou v další verzi).</value></data>
+
+  <!-- Stage 6: zone set and exclusions -->
+  <data name="ZoneSetHint" xml:space="preserve"><value>Vyber libovolné úrovně. Barevné zóny se můžou vylosovat (modré jsou přidané ručně), tmavě šedé vylučují vybraní hráči.</value></data>
+  <data name="ZoneSetCountFormat" xml:space="preserve"><value>K losování: {0} · {1}</value></data>
+  <data name="ExclusionsHint" xml:space="preserve"><value>Ťuknutím na zónu na modelu ji vyloučíš nebo vrátíš. Vyloučená zóna se nevylosuje, když je tento hráč modelem.</value></data>
+  <data name="NoPlayersYet" xml:space="preserve"><value>Nejdřív přidej hráče: HRÁT → Přidat hráče.</value></data>
+  <data name="ExcludedListFormat" xml:space="preserve"><value>Vyloučené: {0}</value></data>
+  <data name="ExcludedNone" xml:space="preserve"><value>Žádné vyloučené zóny</value></data>
+  <data name="ClearExclusions" xml:space="preserve"><value>Vymazat</value></data>
+
+  <!-- Stage 6: round screens (mockups 4-8, WhoIsNext own design) -->
+  <data name="RoundHeaderFormat" xml:space="preserve"><value>Kolo {0} z {1} · {2}</value></data>
+  <data name="PairFormat" xml:space="preserve"><value>Model: {0} · hádá: {1}</value></data>
+  <data name="WhoGuesses" xml:space="preserve"><value>HÁDÁ · zakrývá si oči</value></data>
+  <data name="WhoTouches" xml:space="preserve"><value>MODEL · bere telefon</value></data>
+  <data name="WhoIsNextHintFormat" xml:space="preserve"><value>{0} si zakrývá oči. {1} bere telefon.</value></data>
+  <data name="YourTarget" xml:space="preserve"><value>TVŮJ CÍL</value></data>
+  <data name="ChooseTarget" xml:space="preserve"><value>VYBER CÍL</value></data>
+  <data name="ChooseTargetHint" xml:space="preserve"><value>Ťukni na model v místě doteku</value></data>
+  <data name="TileTouch" xml:space="preserve"><value>Dotek</value></data>
+  <data name="TileMovement" xml:space="preserve"><value>Pohyb</value></data>
+  <data name="TileTime" xml:space="preserve"><value>Čas</value></data>
+  <data name="StartTouch" xml:space="preserve"><value>Start doteku</value></data>
+  <data name="RoundTouchingFormat" xml:space="preserve"><value>Kolo {0} z {1} · {2} se dotýká</value></data>
+  <data name="TouchNow" xml:space="preserve"><value>DOTÝKEJ SE!</value></data>
+  <data name="AbortRound" xml:space="preserve"><value>Přerušit kolo</value></data>
+  <data name="AbortRoundTitle" xml:space="preserve"><value>Přerušit kolo?</value></data>
+  <data name="AbortRoundMessage" xml:space="preserve"><value>Kolo se neuloží. Stejná dvojice ho odehraje znovu.</value></data>
+  <data name="Abort" xml:space="preserve"><value>Přerušit</value></data>
+  <data name="HandPhone" xml:space="preserve"><value>Předej telefon</value></data>
+  <data name="CurtainHintFormat" xml:space="preserve"><value>Cíl je skrytý. {0} už může otevřít oči.</value></data>
+  <data name="Ready" xml:space="preserve"><value>Hotovo!</value></data>
+  <data name="RoundGuessingFormat" xml:space="preserve"><value>Kolo {0} z {1} · {2} hádá</value></data>
+  <data name="WhereTouched" xml:space="preserve"><value>Kde byl dotek?</value></data>
+  <data name="YourPin" xml:space="preserve"><value>Tvůj špendlík</value></data>
+  <data name="PinNotPlaced" xml:space="preserve"><value>Ťukni na model</value></data>
+  <data name="HoldToMove" xml:space="preserve"><value>Podrž a posuň</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Potvrdit</value></data>
+  <data name="ResultForFormat" xml:space="preserve"><value>Výsledek: {0}</value></data>
+  <data name="PointsFormat" xml:space="preserve"><value>+{0} b.</value></data>
+  <data name="DistanceFormat" xml:space="preserve"><value>{0:0.0} cm</value></data>
+  <data name="TimeUp" xml:space="preserve"><value>Čas vypršel</value></data>
+  <data name="Unreachable" xml:space="preserve"><value>—</value></data>
+  <data name="LegendPinFormat" xml:space="preserve"><value>Tip: {0}</value></data>
+  <data name="LegendTargetFormat" xml:space="preserve"><value>Cíl: {0}</value></data>
+  <data name="ManualPointName" xml:space="preserve"><value>vybrané místo</value></data>
+  <data name="NoPin" xml:space="preserve"><value>bez špendlíku</value></data>
+  <data name="TotalFormat" xml:space="preserve"><value>Celkem: {0} b. · {1}. místo</value></data>
+  <data name="NextRound" xml:space="preserve"><value>Další kolo</value></data>
+  <data name="ShowSummary" xml:space="preserve"><value>Shrnutí</value></data>
+  <data name="CommentPerfect" xml:space="preserve"><value>Perfektní!|Přesně do černého!|Mistrovský cit!|Odstřelovačská přesnost!|Čteš myšlenky?|Přesně tam!</value></data>
+  <data name="CommentClose" xml:space="preserve"><value>Blízko!|Skoro dokonalé!|Skvělý cit!|Kousek vedle!|Milimetry od cíle!|Tělo před tebou nemá tajemství.</value></data>
+  <data name="CommentWarm" xml:space="preserve"><value>Přihořívá…|Dobrý směr!|Chybělo málo.|Dobrá čtvrť!|Skoro, skoro.</value></data>
+  <data name="CommentFar" xml:space="preserve"><value>Daleko, ale body jsou.|Směr zhruba sedí.|Něco tam bylo cítit!|Stejná čtvrť, jiná ulice.</value></data>
+  <data name="CommentMiss" xml:space="preserve"><value>Cíl: {0}. Špendlík: {1}. Jejda!|Úplně jiná čtvrť!|Tělo si spletlo adresu.|Cíl: {0}. Špendlík: {1}. Kdo by to řekl?|GPS se ztratila.|Přihořívá? Spíš mrzne.</value></data>
+  <data name="CommentTimeUp" xml:space="preserve"><value>Špendlík nestihl přistát.|Čas vypršel – špendlík zůstal v kapse.|Hodiny byly rychlejší.</value></data>
+  <data name="EndGameTitle" xml:space="preserve"><value>Ukončit hru?</value></data>
+  <data name="EndGameMessage" xml:space="preserve"><value>Odehraná kola se uloží.</value></data>
+  <data name="End" xml:space="preserve"><value>Ukončit</value></data>
+
+  <!-- Stage 6: session summary (mockup 9) -->
+  <data name="GameOver" xml:space="preserve"><value>Konec hry!</value></data>
+  <data name="SummaryHeaderFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="BestHit" xml:space="preserve"><value>Nejlepší zásah</value></data>
+  <data name="AverageMiss" xml:space="preserve"><value>Průměrná chyba</value></data>
+  <data name="HardestZone" xml:space="preserve"><value>Nejtěžší zóna</value></data>
+  <data name="BiggestMiss" xml:space="preserve"><value>Největší přešlap</value></data>
+  <data name="BestHitFormat" xml:space="preserve"><value>{0} · {1:0.#} cm · {2}</value></data>
+  <data name="BiggestMissFormat" xml:space="preserve"><value>{0} · {1:0.#} cm</value></data>
+  <data name="PointsShortFormat" xml:space="preserve"><value>{0} b.</value></data>
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="NewGame" xml:space="preserve"><value>Nová hra</value></data>
+  <data name="Done" xml:space="preserve"><value>Hotovo</value></data>
+  <data name="ZoneSetCountOnlyFormat" xml:space="preserve"><value>K losování: {0}</value></data>
+  <data name="NoPlayers" xml:space="preserve"><value>Zatím tu nejsou žádní hráči. Přidej prvního!</value></data>
+  <data name="PlayerProfile" xml:space="preserve"><value>Profil hráče</value></data>
+  <data name="ChangeAvatar" xml:space="preserve"><value>Změnit avatar</value></data>
+  <data name="AvatarColor" xml:space="preserve"><value>Barva</value></data>
+  <data name="AvatarEmoji" xml:space="preserve"><value>Emoji</value></data>
+  <data name="NoEmoji" xml:space="preserve"><value>Aa</value></data>
+  <data name="RenameTitle" xml:space="preserve"><value>Jméno hráče</value></data>
+  <data name="RenameDescription" xml:space="preserve"><value>Přejmenovat</value></data>
+  <data name="StatRounds" xml:space="preserve"><value>Kola</value></data>
+  <data name="StatAverageDistance" xml:space="preserve"><value>Prům. vzdálenost</value></data>
+  <data name="StatAveragePoints" xml:space="preserve"><value>Prům. body</value></data>
+  <data name="BestZone" xml:space="preserve"><value>Nejlepší zóna</value></data>
+  <data name="WorstZone" xml:space="preserve"><value>Nejhorší zóna</value></data>
+  <data name="ZoneStatFormat" xml:space="preserve"><value>{0} · {1:0.0} cm</value></data>
+  <data name="AvgPointsFormat" xml:space="preserve"><value>{0:0.#}</value></data>
+  <data name="TrendTitle" xml:space="preserve"><value>Průměrná vzdálenost v čase</value></data>
+  <data name="TrendHint" xml:space="preserve"><value>Bod = jedna hra, poslední modře. Níž = líp.</value></data>
+  <data name="TrendTooFew" xml:space="preserve"><value>Graf se objeví po dvou hrách se zásahy.</value></data>
+  <data name="HeatmapTitle" xml:space="preserve"><value>Tepelná mapa</value></data>
+  <data name="DeletePlayer" xml:space="preserve"><value>Smazat hráče</value></data>
+  <data name="DeletePlayerTitle" xml:space="preserve"><value>Smazat hráče?</value></data>
+  <data name="DeletePlayerMessageFormat" xml:space="preserve"><value>{0} zmizí ze seznamů a žebříčků. Odehraná kola zůstanou v historii.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Smazat</value></data>
+  <data name="RankingHintFormat" xml:space="preserve"><value>Průměr bodů na kolo · min. počet kol: {0}</value></data>
+  <data name="RankingBelowFormat" xml:space="preserve"><value>Pod hranicí (min. počet kol: {0})</value></data>
+  <data name="RankingEmpty" xml:space="preserve"><value>Žebříček se objeví po odehrání hry v některém z režimů.</value></data>
+  <data name="RankingNoQualifiedFormat" xml:space="preserve"><value>V tomto režimu zatím nikdo nemá potřebný počet kol ({0}).</value></data>
+  <data name="RankingDetailFormat" xml:space="preserve"><value>{0} · prům. {1}</value></data>
+  <data name="PointsPerRound" xml:space="preserve"><value>b. / kolo</value></data>
+  <data name="AllPresets" xml:space="preserve"><value>Vše</value></data>
+  <data name="ShowArrows" xml:space="preserve"><value>Šipky chyb</value></data>
+  <data name="HeatmapHint" xml:space="preserve"><value>Ťukni na zónu pro podrobnosti.</value></data>
+  <data name="HeatmapNoData" xml:space="preserve"><value>Pro tento výběr nejsou žádná kola.</value></data>
+  <data name="HeatZoneFormat" xml:space="preserve"><value>{0} · {1} · prům. {2} · {3:0} b.</value></data>
+  <data name="HeatZoneNoneFormat" xml:space="preserve"><value>{0}: žádná kola</value></data>
+  <data name="LegendMisses" xml:space="preserve"><value>chybuje</value></data>
+  <data name="LegendHits" xml:space="preserve"><value>trefuje</value></data>
+  <data name="ArrowsHint" xml:space="preserve"><value>Šipka: cíl → zóna ukazovaná místo něj (min. 3krát).</value></data>
+  <data name="GameMode" xml:space="preserve"><value>Herní režim</value></data>
+  <data name="ZoneEditorTitle" xml:space="preserve"><value>Editor zón</value></data>
+  <data name="TabCustomPoints" xml:space="preserve"><value>Vlastní body</value></data>
+  <data name="TabZoneLevels" xml:space="preserve"><value>Úrovně zón</value></data>
+  <data name="AddPoint" xml:space="preserve"><value>Přidat bod</value></data>
+  <data name="PointNamePlaceholder" xml:space="preserve"><value>Název, např. Znaménko na rameni</value></data>
+  <data name="PointRadius" xml:space="preserve"><value>Poloměr</value></data>
+  <data name="PointLevels" xml:space="preserve"><value>Patří do úrovní</value></data>
+  <data name="PointTapHint" xml:space="preserve"><value>Ťukni na model v místě bodu (přibliž, ať se trefíš přesně).</value></data>
+  <data name="PointMoveHint" xml:space="preserve"><value>Ťukni jinde nebo přetáhni špendlík a bod se posune.</value></data>
+  <data name="NoCustomPoints" xml:space="preserve"><value>Zatím žádné vlastní body.</value></data>
+  <data name="PointDetailFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="PointNoLevels" xml:space="preserve"><value>jen ruční výběr</value></data>
+  <data name="DeletePointTitle" xml:space="preserve"><value>Smazat bod?</value></data>
+  <data name="DeletePointMessageFormat" xml:space="preserve"><value>„{0}“ zmizí z úrovní a sad zón. Odehraná kola zůstanou v historii.</value></data>
+  <data name="PointNeedsName" xml:space="preserve"><value>Zadej název bodu.</value></data>
+  <data name="PointNeedsPin" xml:space="preserve"><value>Ťukni na model a urči místo bodu.</value></data>
+  <data name="LevelTargetLabel" xml:space="preserve"><value>Úroveň hry</value></data>
+  <data name="LevelTapLabel" xml:space="preserve"><value>Ťukej na zóny úrovně</value></data>
+  <data name="LevelEditorHint" xml:space="preserve"><value>Ťuknutím na zónu ji přidáš do úrovně hry nebo z ní odebereš. Barevné jsou v úrovni, světle šedé lze přidat, tmavě šedé jsou odebrané.</value></data>
+  <data name="LevelSummaryFormat" xml:space="preserve"><value>{0}: {1}</value></data>
+  <data name="LevelChangesFormat" xml:space="preserve"><value> · přidáno {0}, odebráno {1}</value></data>
+  <data name="RestoreDefaults" xml:space="preserve"><value>Obnovit výchozí</value></data>
+  <data name="RestoreDefaultsTitle" xml:space="preserve"><value>Obnovit výchozí úrovně?</value></data>
+  <data name="RestoreDefaultsMessage" xml:space="preserve"><value>Všechny změny přiřazení zón k úrovním budou odstraněny. Vlastní body zůstanou.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Obnovit</value></data>
+  <data name="PointsOne" xml:space="preserve"><value>{0} bod</value></data>
+  <data name="PointsFew" xml:space="preserve"><value>{0} body</value></data>
+  <data name="PointsMany" xml:space="preserve"><value>{0} bodů</value></data>
+  <data name="ManualZonesHint" xml:space="preserve"><value>Ťuknutím na zónu na modelu ji ručně přidáš nebo odebereš. Zóny úrovně:</value></data>
+  <data name="ManualZonesFormat" xml:space="preserve"><value>Přidáno ručně: {0}</value></data>
+  <data name="ClearManual" xml:space="preserve"><value>Vymazat</value></data>
+  <data name="CustomPointsLabel" xml:space="preserve"><value>Vlastní body</value></data>
+  <data name="DefaultConfigTitle" xml:space="preserve"><value>Výchozí nastavení</value></data>
+  <data name="DefaultConfigCaption" xml:space="preserve"><value>Nastavení · hodnoty navrhované pro novou hru</value></data>
+  <data name="SectionLanguage" xml:space="preserve"><value>JAZYK</value></data>
+  <data name="Language" xml:space="preserve"><value>Jazyk</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>Jazyk telefonu ({0})</value></data>
+  <data name="LanguageTitle" xml:space="preserve"><value>Jazyk aplikace</value></data>
+  <data name="LanguageHint" xml:space="preserve"><value>Změna platí hned. „Jazyk telefonu“ použije jazyk nastavený v Androidu (když není podporovaný – angličtinu).</value></data>
+</root>

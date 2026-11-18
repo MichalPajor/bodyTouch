@@ -164,3 +164,46 @@ public class ZoneColoringTests
         if (level == ZoneLevel.Easy) Assert.Contains("leg-l", neighbours["pelvis"]);
     }
 }
+
+/// <summary>Stage 10: every language has every UI string (same placeholders) and a name for every zone.</summary>
+public class TranslationTests
+{
+    private static readonly string Resources = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(RealData.ZonesPath)!, "..", "..", ".."));
+
+    public static TheoryData<string> Languages => new() { "en", "de", "it", "fr", "es", "pt", "tr", "cs", "sk", "uk", "nl" };
+
+    private static Dictionary<string, string> Strings(string file) =>
+        System.Xml.Linq.XDocument.Load(Path.Combine(Resources, "Strings", file)).Root!.Elements("data")
+            .ToDictionary(d => d.Attribute("name")!.Value, d => d.Element("value")?.Value ?? string.Empty);
+
+    private static IEnumerable<string> Placeholders(string text) =>
+        System.Text.RegularExpressions.Regex.Matches(text, @"\{\d+(:[^}]*)?\}").Select(m => m.Value).Order(StringComparer.Ordinal);
+
+    [Theory]
+    [MemberData(nameof(Languages))]
+    public void EveryStringIsTranslatedWithTheSamePlaceholders(string language)
+    {
+        var polish = Strings("AppResources.resx");
+        var translated = Strings($"AppResources.{language}.resx");
+
+        Assert.Equal(polish.Keys.Order(StringComparer.Ordinal), translated.Keys.Order(StringComparer.Ordinal));
+        Assert.All(polish, p =>
+        {
+            Assert.False(string.IsNullOrWhiteSpace(translated[p.Key]), p.Key);
+            Assert.Equal(Placeholders(p.Value), Placeholders(translated[p.Key]));
+            Assert.Equal(p.Value.Contains('|'), translated[p.Key].Contains('|'));
+        });
+    }
+
+    [Theory]
+    [MemberData(nameof(Languages))]
+    public void EveryZoneHasANameInEveryLanguage(string language)
+    {
+        using var zones = File.OpenRead(RealData.ZonesPath);
+        var catalog = ZoneCatalog.Load(zones);
+        var names = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(
+            File.ReadAllText(Path.Combine(Resources, "Raw", "zone_names", $"{language}.json")))!;
+
+        Assert.All(catalog.Zones, z => Assert.False(string.IsNullOrWhiteSpace(names.GetValueOrDefault(z.Id)), z.Id));
+    }
+}

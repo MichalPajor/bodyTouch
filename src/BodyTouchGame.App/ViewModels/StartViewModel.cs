@@ -40,7 +40,7 @@ public sealed partial class StartViewModel(ISessionRepository sessions, IPlayerR
             }
 
             var names = string.Join(", ", winners.Select(w => allPlayers[w.PlayerId].Name));
-            LastGameText = string.Format(CultureInfo.CurrentCulture, winners.Count == 1 ? AppResources.LastGameWinner : AppResources.LastGameTie,
+            LastGameText = string.Format(AppCulture.Format, winners.Count == 1 ? AppResources.LastGameWinner : AppResources.LastGameTie,
                 names, winners[0].TotalPoints);
             HasLastGame = true;
         }

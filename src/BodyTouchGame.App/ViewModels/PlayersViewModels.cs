@@ -58,7 +58,7 @@ public sealed partial class PlayerProfileViewModel(
     INavigationService navigation,
     IDialogService dialogs) : ObservableObject, IQueryAttributable
 {
-    private static CultureInfo Culture => CultureInfo.CurrentCulture;
+    private static CultureInfo Culture => AppCulture.Format;
     private long _playerId;
 
     [ObservableProperty] public partial Player? Player { get; set; }
@@ -106,7 +106,7 @@ public sealed partial class PlayerProfileViewModel(
 
         string ZoneText(ZoneStat? zone) => zone is null
             ? AppResources.Unreachable
-            : string.Format(Culture, AppResources.ZoneStatFormat, catalog.TryGet(zone.ZoneId, out var z) ? z.NamePl : zone.ZoneId, zone.AverageDistanceCm);
+            : string.Format(Culture, AppResources.ZoneStatFormat, catalog.TryGet(zone.ZoneId, out var z) ? ZoneNames.Of(z) : zone.ZoneId, zone.AverageDistanceCm);
     }
 
     [RelayCommand]

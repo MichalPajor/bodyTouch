@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Stage 3: 3D view prototype screen -->
+  <data name="ViewFront" xml:space="preserve"><value>Ön</value></data>
+  <data name="ViewSide" xml:space="preserve"><value>Yan</value></data>
+  <data name="ViewBack" xml:space="preserve"><value>Arka</value></data>
+  <data name="ZoomIn" xml:space="preserve"><value>+</value></data>
+  <data name="ZoomOut" xml:space="preserve"><value>−</value></data>
+  <!-- Stage 5: Start screen (mockup 1) -->
+  <data name="TitleLine1" xml:space="preserve"><value>BODY</value></data>
+  <data name="TitleLine2" xml:space="preserve"><value>TOUCH</value></data>
+  <data name="TitleLine3" xml:space="preserve"><value>GAME</value></data>
+  <data name="Tagline" xml:space="preserve"><value>Gözlerini kapat. Dokun. Tahmin et.</value></data>
+  <data name="Play" xml:space="preserve"><value>OYNA</value></data>
+  <data name="Players" xml:space="preserve"><value>Oyuncular</value></data>
+  <data name="Rankings" xml:space="preserve"><value>Sıralamalar</value></data>
+  <data name="Settings" xml:space="preserve"><value>Ayarlar</value></data>
+  <data name="LastGame" xml:space="preserve"><value>Son oyun</value></data>
+  <data name="LastGameWinner" xml:space="preserve"><value>{0} 1. sırada · {1} puan</value></data>
+  <data name="LastGameTie" xml:space="preserve"><value>Beraberlik: {0} · {1} puan</value></data>
+  <data name="MannequinDescription" xml:space="preserve"><value>Mankenin 3D modeli</value></data>
+
+  <!-- Stage 5: Settings screen (mockup 10) -->
+  <data name="SectionGame" xml:space="preserve"><value>OYUN</value></data>
+  <data name="SectionEffects" xml:space="preserve"><value>EFEKTLER</value></data>
+  <data name="DefaultConfig" xml:space="preserve"><value>Varsayılan oyun ayarları</value></data>
+  <data name="ZoneEditor" xml:space="preserve"><value>Bölge ve özel nokta düzenleyici</value></data>
+  <data name="ExcludedZones" xml:space="preserve"><value>Hariç tutulan bölgeler</value></data>
+  <data name="Sounds" xml:space="preserve"><value>Sesler</value></data>
+  <data name="ConfettiOnHit" xml:space="preserve"><value>İsabette konfeti</value></data>
+  <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · sürüm {0}</value></data>
+
+  <!-- 3D view panel -->
+  <data name="RotateHint" xml:space="preserve"><value>Parmağınla döndür</value></data>
+  <data name="ZoomInDescription" xml:space="preserve"><value>Yakınlaştır</value></data>
+  <data name="ZoomOutDescription" xml:space="preserve"><value>Uzaklaştır</value></data>
+
+  <!-- Stage 6: common -->
+  <data name="Ok" xml:space="preserve"><value>Tamam</value></data>
+  <data name="Cancel" xml:space="preserve"><value>İptal</value></data>
+  <data name="RoundsOne" xml:space="preserve"><value>{0} tur</value></data>
+  <data name="RoundsFew" xml:space="preserve"><value>{0} tur</value></data>
+  <data name="RoundsMany" xml:space="preserve"><value>{0} tur</value></data>
+  <data name="ZonesOne" xml:space="preserve"><value>{0} bölge</value></data>
+  <data name="ZonesFew" xml:space="preserve"><value>{0} bölge</value></data>
+  <data name="ZonesMany" xml:space="preserve"><value>{0} bölge</value></data>
+  <data name="ExcludedOne" xml:space="preserve"><value>{0} hariç</value></data>
+  <data name="ExcludedFew" xml:space="preserve"><value>{0} hariç</value></data>
+  <data name="ExcludedMany" xml:space="preserve"><value>{0} hariç</value></data>
+  <data name="PresetEasy" xml:space="preserve"><value>Kolay</value></data>
+  <data name="PresetMedium" xml:space="preserve"><value>Orta</value></data>
+  <data name="PresetHard" xml:space="preserve"><value>Zor</value></data>
+  <data name="PresetHardcore" xml:space="preserve"><value>Hardcore</value></data>
+  <data name="PresetCustomConfig" xml:space="preserve"><value>Özel ayarlar</value></data>
+  <data name="TouchWholeHand" xml:space="preserve"><value>Tüm el</value></data>
+  <data name="TouchTwoFingers" xml:space="preserve"><value>İki parmak</value></data>
+  <data name="TouchOneFinger" xml:space="preserve"><value>Tek parmak</value></data>
+  <data name="TouchTap" xml:space="preserve"><value>Tek dokunuş</value></data>
+  <data name="MovementGentle" xml:space="preserve"><value>Hafif</value></data>
+  <data name="MovementNone" xml:space="preserve"><value>Hareketsiz</value></data>
+  <data name="MovementGentleLower" xml:space="preserve"><value>hafif hareket</value></data>
+  <data name="MovementNoneLower" xml:space="preserve"><value>hareketsiz</value></data>
+  <data name="SecondsFormat" xml:space="preserve"><value>{0} sn</value></data>
+  <data name="CmFormat" xml:space="preserve"><value>{0:0.#} cm</value></data>
+
+  <!-- Stage 6: players selection (mockup 2) -->
+  <data name="NewGameStep1" xml:space="preserve"><value>Yeni oyun · adım 1/2</value></data>
+  <data name="WhoPlays" xml:space="preserve"><value>Kim oynuyor?</value></data>
+  <data name="AddPlayer" xml:space="preserve"><value>Oyuncu ekle</value></data>
+  <data name="AddPlayerTitle" xml:space="preserve"><value>Yeni oyuncu</value></data>
+  <data name="AddPlayerMessage" xml:space="preserve"><value>İsim veya lakap</value></data>
+  <data name="Add" xml:space="preserve"><value>Ekle</value></data>
+  <data name="NameTaken" xml:space="preserve"><value>Bu isim zaten alınmış.</value></data>
+  <data name="NameEmpty" xml:space="preserve"><value>Bir isim gir.</value></data>
+  <data name="SelectedPlayersFormat" xml:space="preserve"><value>Seçilen oyuncular: {0}</value></data>
+  <data name="OrderAllPairs" xml:space="preserve"><value>Sıra: herkes herkesle</value></data>
+  <data name="OrderCircle" xml:space="preserve"><value>Sıra: çember usulü</value></data>
+  <data name="Next" xml:space="preserve"><value>İleri</value></data>
+  <data name="PlayerStatsFormat" xml:space="preserve"><value>{0} · ort. {1:0.0} cm</value></data>
+  <data name="PlayerNoRounds" xml:space="preserve"><value>Oynanmış tur yok</value></data>
+  <data name="SelectPlayersHint" xml:space="preserve"><value>2 ile 8 arası oyuncu seç.</value></data>
+
+  <!-- Stage 6: game configuration (mockup 3) -->
+  <data name="NewGameStep2" xml:space="preserve"><value>Yeni oyun · adım 2/2</value></data>
+  <data name="GameSettings" xml:space="preserve"><value>Oyun ayarları</value></data>
+  <data name="Zones" xml:space="preserve"><value>Bölgeler</value></data>
+  <data name="TouchMethodLabel" xml:space="preserve"><value>Dokunma şekli</value></data>
+  <data name="GentleMovement" xml:space="preserve"><value>Hafif hareket</value></data>
+  <data name="TouchTime" xml:space="preserve"><value>Dokunma süresi</value></data>
+  <data name="RoundsPerPlayer" xml:space="preserve"><value>Oyuncu başına tur</value></data>
+  <data name="FewerRounds" xml:space="preserve"><value>Daha az tur</value></data>
+  <data name="MoreRounds" xml:space="preserve"><value>Daha fazla tur</value></data>
+  <data name="Advanced" xml:space="preserve"><value>Gelişmiş</value></data>
+  <data name="TargetChosenByModel" xml:space="preserve"><value>Hedefi model seçer</value></data>
+  <data name="GuessTimeLimit" xml:space="preserve"><value>Cevap için süre sınırı</value></data>
+  <data name="GuessTime" xml:space="preserve"><value>Cevap süresi</value></data>
+  <data name="FullPointsRadius" xml:space="preserve"><value>Tam puan yarıçapı (r)</value></data>
+  <data name="ZeroPointsDistance" xml:space="preserve"><value>Puansız mesafe (z)</value></data>
+  <data name="SpeedBonus" xml:space="preserve"><value>Hız bonusu</value></data>
+  <data name="Less" xml:space="preserve"><value>Daha az</value></data>
+  <data name="More" xml:space="preserve"><value>Daha fazla</value></data>
+  <data name="SavePreset" xml:space="preserve"><value>Modu kaydet</value></data>
+  <data name="SavePresetMessage" xml:space="preserve"><value>Mod adı (ör. “Parti 3 sn”)</value></data>
+  <data name="Save" xml:space="preserve"><value>Kaydet</value></data>
+  <data name="StartGame" xml:space="preserve"><value>Başlat</value></data>
+  <data name="CannotStartTitle" xml:space="preserve"><value>Başlatılamıyor</value></data>
+  <data name="NothingToDrawFormat" xml:space="preserve"><value>{0}: çekilecek bölge yok (hariç tutmalar). Bölgeleri veya hariç tutmaları değiştir.</value></data>
+  <data name="ZonesNotAvailable" xml:space="preserve"><value>Bu seviyede henüz bölge yok (sonraki sürümde gelecek).</value></data>
+
+  <!-- Stage 6: zone set and exclusions -->
+  <data name="ZoneSetHint" xml:space="preserve"><value>İstediğin seviyeleri seç. Renkli bölgeler çekilebilir (maviler elle eklendi), koyu grileri seçili oyuncular hariç tuttu.</value></data>
+  <data name="ZoneSetCountFormat" xml:space="preserve"><value>Çekilecek: {0} · {1}</value></data>
+  <data name="ExclusionsHint" xml:space="preserve"><value>Hariç tutmak veya geri almak için modeldeki bir bölgeye dokun. Bu oyuncu model olduğunda hariç tutulan bölge çekilmez.</value></data>
+  <data name="NoPlayersYet" xml:space="preserve"><value>Önce oyuncu ekle: OYNA → Oyuncu ekle.</value></data>
+  <data name="ExcludedListFormat" xml:space="preserve"><value>Hariç: {0}</value></data>
+  <data name="ExcludedNone" xml:space="preserve"><value>Hariç tutulan bölge yok</value></data>
+  <data name="ClearExclusions" xml:space="preserve"><value>Temizle</value></data>
+
+  <!-- Stage 6: round screens (mockups 4-8, WhoIsNext own design) -->
+  <data name="RoundHeaderFormat" xml:space="preserve"><value>Tur {0}/{1} · {2}</value></data>
+  <data name="PairFormat" xml:space="preserve"><value>Model: {0} · tahmin eden: {1}</value></data>
+  <data name="WhoGuesses" xml:space="preserve"><value>TAHMİN EDER · gözlerini kapatır</value></data>
+  <data name="WhoTouches" xml:space="preserve"><value>MODEL · telefonu alır</value></data>
+  <data name="WhoIsNextHintFormat" xml:space="preserve"><value>{0} gözlerini kapatsın. {1} telefonu alsın.</value></data>
+  <data name="YourTarget" xml:space="preserve"><value>HEDEFİN</value></data>
+  <data name="ChooseTarget" xml:space="preserve"><value>HEDEF SEÇ</value></data>
+  <data name="ChooseTargetHint" xml:space="preserve"><value>Dokunulacak yerde modele dokun</value></data>
+  <data name="TileTouch" xml:space="preserve"><value>Dokunuş</value></data>
+  <data name="TileMovement" xml:space="preserve"><value>Hareket</value></data>
+  <data name="TileTime" xml:space="preserve"><value>Süre</value></data>
+  <data name="StartTouch" xml:space="preserve"><value>Dokunuşu başlat</value></data>
+  <data name="RoundTouchingFormat" xml:space="preserve"><value>Tur {0}/{1} · {2} dokunuyor</value></data>
+  <data name="TouchNow" xml:space="preserve"><value>DOKUN!</value></data>
+  <data name="AbortRound" xml:space="preserve"><value>Turu durdur</value></data>
+  <data name="AbortRoundTitle" xml:space="preserve"><value>Tur durdurulsun mu?</value></data>
+  <data name="AbortRoundMessage" xml:space="preserve"><value>Tur kaydedilmeyecek. Aynı ikili turu baştan oynayacak.</value></data>
+  <data name="Abort" xml:space="preserve"><value>Durdur</value></data>
+  <data name="HandPhone" xml:space="preserve"><value>Telefonu ver</value></data>
+  <data name="CurtainHintFormat" xml:space="preserve"><value>Hedef gizlendi. {0} artık gözlerini açabilir.</value></data>
+  <data name="Ready" xml:space="preserve"><value>Bitti!</value></data>
+  <data name="RoundGuessingFormat" xml:space="preserve"><value>Tur {0}/{1} · {2} tahmin ediyor</value></data>
+  <data name="WhereTouched" xml:space="preserve"><value>Nereye dokunuldu?</value></data>
+  <data name="YourPin" xml:space="preserve"><value>Raptiyen</value></data>
+  <data name="PinNotPlaced" xml:space="preserve"><value>Modele dokun</value></data>
+  <data name="HoldToMove" xml:space="preserve"><value>Taşımak için basılı tut</value></data>
+  <data name="Confirm" xml:space="preserve"><value>Onayla</value></data>
+  <data name="ResultForFormat" xml:space="preserve"><value>Sonuç: {0}</value></data>
+  <data name="PointsFormat" xml:space="preserve"><value>+{0} puan</value></data>
+  <data name="DistanceFormat" xml:space="preserve"><value>{0:0.0} cm</value></data>
+  <data name="TimeUp" xml:space="preserve"><value>Süre doldu</value></data>
+  <data name="Unreachable" xml:space="preserve"><value>—</value></data>
+  <data name="LegendPinFormat" xml:space="preserve"><value>Tahmin: {0}</value></data>
+  <data name="LegendTargetFormat" xml:space="preserve"><value>Hedef: {0}</value></data>
+  <data name="ManualPointName" xml:space="preserve"><value>seçilen yer</value></data>
+  <data name="NoPin" xml:space="preserve"><value>raptiye yok</value></data>
+  <data name="TotalFormat" xml:space="preserve"><value>Toplam: {0} puan · {1}. sıra</value></data>
+  <data name="NextRound" xml:space="preserve"><value>Sonraki tur</value></data>
+  <data name="ShowSummary" xml:space="preserve"><value>Özet</value></data>
+  <data name="CommentPerfect" xml:space="preserve"><value>Mükemmel!|Tam on ikiden!|Usta işi his!|Keskin nişancı hassasiyeti!|Akıl mı okuyorsun?|Tam orası!</value></data>
+  <data name="CommentClose" xml:space="preserve"><value>Yakın!|Neredeyse mükemmel!|Harika his!|Hemen yanı başında!|Hedefe milimetreler kaldı!|Vücudun senden saklısı yok.</value></data>
+  <data name="CommentWarm" xml:space="preserve"><value>Sıcak, sıcak…|Yön fena değil!|Az kalsın.|Doğru mahalle!|Neredeyse, neredeyse.</value></data>
+  <data name="CommentFar" xml:space="preserve"><value>Uzak ama puan var.|Yön aşağı yukarı doğru.|Bir şeyler hissedilmiş!|Aynı mahalle, başka sokak.</value></data>
+  <data name="CommentMiss" xml:space="preserve"><value>Hedef: {0}. Raptiye: {1}. Hoppala!|Bambaşka bir mahalle!|Vücut adresleri karıştırdı.|Hedef: {0}. Raptiye: {1}. Kim derdi?|GPS kayboldu.|Sıcak mı? Daha çok soğuk.</value></data>
+  <data name="CommentTimeUp" xml:space="preserve"><value>Raptiye inmeye yetişemedi.|Süre doldu – raptiye cepte kaldı.|Saat daha hızlıydı.</value></data>
+  <data name="EndGameTitle" xml:space="preserve"><value>Oyun bitirilsin mi?</value></data>
+  <data name="EndGameMessage" xml:space="preserve"><value>Oynanan turlar kaydedilecek.</value></data>
+  <data name="End" xml:space="preserve"><value>Bitir</value></data>
+
+  <!-- Stage 6: session summary (mockup 9) -->
+  <data name="GameOver" xml:space="preserve"><value>Oyun bitti!</value></data>
+  <data name="SummaryHeaderFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="BestHit" xml:space="preserve"><value>En iyi isabet</value></data>
+  <data name="AverageMiss" xml:space="preserve"><value>Ortalama sapma</value></data>
+  <data name="HardestZone" xml:space="preserve"><value>En zor bölge</value></data>
+  <data name="BiggestMiss" xml:space="preserve"><value>En büyük gaf</value></data>
+  <data name="BestHitFormat" xml:space="preserve"><value>{0} · {1:0.#} cm · {2}</value></data>
+  <data name="BiggestMissFormat" xml:space="preserve"><value>{0} · {1:0.#} cm</value></data>
+  <data name="PointsShortFormat" xml:space="preserve"><value>{0} puan</value></data>
+  <data name="Menu" xml:space="preserve"><value>Menü</value></data>
+  <data name="NewGame" xml:space="preserve"><value>Yeni oyun</value></data>
+  <data name="Done" xml:space="preserve"><value>Bitti</value></data>
+  <data name="ZoneSetCountOnlyFormat" xml:space="preserve"><value>Çekilecek: {0}</value></data>
+  <data name="NoPlayers" xml:space="preserve"><value>Henüz oyuncu yok. İlkini ekle!</value></data>
+  <data name="PlayerProfile" xml:space="preserve"><value>Oyuncu profili</value></data>
+  <data name="ChangeAvatar" xml:space="preserve"><value>Avatarı değiştir</value></data>
+  <data name="AvatarColor" xml:space="preserve"><value>Renk</value></data>
+  <data name="AvatarEmoji" xml:space="preserve"><value>Emoji</value></data>
+  <data name="NoEmoji" xml:space="preserve"><value>Aa</value></data>
+  <data name="RenameTitle" xml:space="preserve"><value>Oyuncu adı</value></data>
+  <data name="RenameDescription" xml:space="preserve"><value>Adı değiştir</value></data>
+  <data name="StatRounds" xml:space="preserve"><value>Turlar</value></data>
+  <data name="StatAverageDistance" xml:space="preserve"><value>Ort. mesafe</value></data>
+  <data name="StatAveragePoints" xml:space="preserve"><value>Ort. puan</value></data>
+  <data name="BestZone" xml:space="preserve"><value>En iyi bölge</value></data>
+  <data name="WorstZone" xml:space="preserve"><value>En kötü bölge</value></data>
+  <data name="ZoneStatFormat" xml:space="preserve"><value>{0} · {1:0.0} cm</value></data>
+  <data name="AvgPointsFormat" xml:space="preserve"><value>{0:0.#}</value></data>
+  <data name="TrendTitle" xml:space="preserve"><value>Zaman içinde ortalama mesafe</value></data>
+  <data name="TrendHint" xml:space="preserve"><value>Nokta = bir oturum, sonuncusu mavi. Daha aşağı = daha iyi.</value></data>
+  <data name="TrendTooFew" xml:space="preserve"><value>Grafik, isabetli iki oturumdan sonra görünecek.</value></data>
+  <data name="HeatmapTitle" xml:space="preserve"><value>Isı haritası</value></data>
+  <data name="DeletePlayer" xml:space="preserve"><value>Oyuncuyu sil</value></data>
+  <data name="DeletePlayerTitle" xml:space="preserve"><value>Oyuncu silinsin mi?</value></data>
+  <data name="DeletePlayerMessageFormat" xml:space="preserve"><value>{0} listelerden ve sıralamalardan kaldırılacak. Oynanan turlar geçmişte kalır.</value></data>
+  <data name="Delete" xml:space="preserve"><value>Sil</value></data>
+  <data name="RankingHintFormat" xml:space="preserve"><value>Tur başına ortalama puan · en az {0} tur</value></data>
+  <data name="RankingBelowFormat" xml:space="preserve"><value>Eşiğin altında (en az {0} tur)</value></data>
+  <data name="RankingEmpty" xml:space="preserve"><value>Sıralama, modlardan birinde oyun oynandıktan sonra görünecek.</value></data>
+  <data name="RankingNoQualifiedFormat" xml:space="preserve"><value>Bu modda henüz kimse {0} tur oynamadı.</value></data>
+  <data name="RankingDetailFormat" xml:space="preserve"><value>{0} · ort. {1}</value></data>
+  <data name="PointsPerRound" xml:space="preserve"><value>puan / tur</value></data>
+  <data name="AllPresets" xml:space="preserve"><value>Tümü</value></data>
+  <data name="ShowArrows" xml:space="preserve"><value>Hata okları</value></data>
+  <data name="HeatmapHint" xml:space="preserve"><value>Ayrıntılar için bir bölgeye dokun.</value></data>
+  <data name="HeatmapNoData" xml:space="preserve"><value>Bu seçim için tur yok.</value></data>
+  <data name="HeatZoneFormat" xml:space="preserve"><value>{0} · {1} · ort. {2} · {3:0} puan</value></data>
+  <data name="HeatZoneNoneFormat" xml:space="preserve"><value>{0}: tur yok</value></data>
+  <data name="LegendMisses" xml:space="preserve"><value>ıskalar</value></data>
+  <data name="LegendHits" xml:space="preserve"><value>tutturur</value></data>
+  <data name="ArrowsHint" xml:space="preserve"><value>Ok: hedef → onun yerine gösterilen bölge (en az 3 kez).</value></data>
+  <data name="GameMode" xml:space="preserve"><value>Oyun modu</value></data>
+  <data name="ZoneEditorTitle" xml:space="preserve"><value>Bölge düzenleyici</value></data>
+  <data name="TabCustomPoints" xml:space="preserve"><value>Özel noktalar</value></data>
+  <data name="TabZoneLevels" xml:space="preserve"><value>Bölge seviyeleri</value></data>
+  <data name="AddPoint" xml:space="preserve"><value>Nokta ekle</value></data>
+  <data name="PointNamePlaceholder" xml:space="preserve"><value>Ad, ör. Koldaki ben</value></data>
+  <data name="PointRadius" xml:space="preserve"><value>Yarıçap</value></data>
+  <data name="PointLevels" xml:space="preserve"><value>Ait olduğu seviyeler</value></data>
+  <data name="PointTapHint" xml:space="preserve"><value>Noktanın yerinde modele dokun (tam isabet için yakınlaştır).</value></data>
+  <data name="PointMoveHint" xml:space="preserve"><value>Noktayı taşımak için başka bir yere dokun veya raptiyeyi sürükle.</value></data>
+  <data name="NoCustomPoints" xml:space="preserve"><value>Henüz özel nokta yok.</value></data>
+  <data name="PointDetailFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="PointNoLevels" xml:space="preserve"><value>yalnızca elle seçim</value></data>
+  <data name="DeletePointTitle" xml:space="preserve"><value>Nokta silinsin mi?</value></data>
+  <data name="DeletePointMessageFormat" xml:space="preserve"><value>“{0}” seviyelerden ve bölge setlerinden kaldırılacak. Oynanan turlar geçmişte kalır.</value></data>
+  <data name="PointNeedsName" xml:space="preserve"><value>Noktaya bir ad ver.</value></data>
+  <data name="PointNeedsPin" xml:space="preserve"><value>Noktanın yerini göstermek için modele dokun.</value></data>
+  <data name="LevelTargetLabel" xml:space="preserve"><value>Oyun seviyesi</value></data>
+  <data name="LevelTapLabel" xml:space="preserve"><value>Seviyenin bölgelerine dokun</value></data>
+  <data name="LevelEditorHint" xml:space="preserve"><value>Bir bölgeyi oyun seviyesine eklemek veya çıkarmak için ona dokun. Renkliler seviyede, açık griler eklenebilir, koyu griler çıkarıldı.</value></data>
+  <data name="LevelSummaryFormat" xml:space="preserve"><value>{0}: {1}</value></data>
+  <data name="LevelChangesFormat" xml:space="preserve"><value> · eklenen {0}, çıkarılan {1}</value></data>
+  <data name="RestoreDefaults" xml:space="preserve"><value>Varsayılana dön</value></data>
+  <data name="RestoreDefaultsTitle" xml:space="preserve"><value>Varsayılan seviyelere dönülsün mü?</value></data>
+  <data name="RestoreDefaultsMessage" xml:space="preserve"><value>Bölgelerin seviyelere atanmasındaki tüm değişiklikler silinecek. Özel noktalar kalır.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Geri yükle</value></data>
+  <data name="PointsOne" xml:space="preserve"><value>{0} nokta</value></data>
+  <data name="PointsFew" xml:space="preserve"><value>{0} nokta</value></data>
+  <data name="PointsMany" xml:space="preserve"><value>{0} nokta</value></data>
+  <data name="ManualZonesHint" xml:space="preserve"><value>Elle eklemek veya çıkarmak için modeldeki bir bölgeye dokun. Seviyenin bölgeleri:</value></data>
+  <data name="ManualZonesFormat" xml:space="preserve"><value>Elle eklenen: {0}</value></data>
+  <data name="ClearManual" xml:space="preserve"><value>Temizle</value></data>
+  <data name="CustomPointsLabel" xml:space="preserve"><value>Özel noktalar</value></data>
+  <data name="DefaultConfigTitle" xml:space="preserve"><value>Varsayılan ayarlar</value></data>
+  <data name="DefaultConfigCaption" xml:space="preserve"><value>Ayarlar · yeni oyunda önerilen değerler</value></data>
+  <data name="SectionLanguage" xml:space="preserve"><value>DİL</value></data>
+  <data name="Language" xml:space="preserve"><value>Dil</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>Telefon dili ({0})</value></data>
+  <data name="LanguageTitle" xml:space="preserve"><value>Uygulama dili</value></data>
+  <data name="LanguageHint" xml:space="preserve"><value>Değişiklik hemen geçerli olur. “Telefon dili”, Android’de ayarlı dili seçer (desteklenmiyorsa İngilizce).</value></data>
+</root>

@@ -30,7 +30,7 @@ const PIN_GRAB_PX = 44;        // touching the pin closer than this drags it
 const CAMERA_TWEEN_MS = 700;
 const REVEAL_PATH_MS = 1300;
 const REVEAL_TARGET_MS = 350;   // target fade-in after the path
-const SMALL_TARGET_CM = 12;  // focusTarget zooms in on targets smaller than this (half-extent)
+const SMALL_TARGET_CM = 9;   // focusTarget zooms in on targets smaller than this (half-extent): fingers, Hard/Hardcore zones, points
 
 const state = {
   mode: 'View',

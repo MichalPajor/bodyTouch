@@ -70,8 +70,8 @@ public sealed partial class GameConfigViewModel(
     public string AdvancedGlyph => ShowAdvanced ? "−" : "+";
     public string TouchSecondsText => ConfigTexts.Seconds(TouchSeconds);
     public string GuessSecondsText => ConfigTexts.Seconds(GuessSeconds);
-    public string FullRadiusText => string.Format(CultureInfo.CurrentCulture, AppResources.CmFormat, FullPointsRadiusCm);
-    public string ZeroDistanceText => string.Format(CultureInfo.CurrentCulture, AppResources.CmFormat, ZeroPointsDistanceCm);
+    public string FullRadiusText => string.Format(AppCulture.Format, AppResources.CmFormat, FullPointsRadiusCm);
+    public string ZeroDistanceText => string.Format(AppCulture.Format, AppResources.CmFormat, ZeroPointsDistanceCm);
 
     public async Task LoadAsync()
     {
@@ -173,7 +173,7 @@ public sealed partial class GameConfigViewModel(
             {
                 var pools = await setup.BuildTargetPoolsAsync(catalog);
                 problems.AddRange(setup.Players.Where(p => pools[p.Id].Count == 0)
-                    .Select(p => string.Format(CultureInfo.CurrentCulture, AppResources.NothingToDrawFormat, p.Name)));
+                    .Select(p => string.Format(AppCulture.Format, AppResources.NothingToDrawFormat, p.Name)));
             }
         }
 

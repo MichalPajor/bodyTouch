@@ -26,7 +26,7 @@ public sealed partial class LevelItem(ZoneLevel level, bool isAvailable) : Obser
 /// </summary>
 public sealed partial class ZoneSetViewModel(GameSetupService setup, BodyDataService bodyData, INavigationService navigation) : ObservableObject
 {
-    private static CultureInfo Culture => CultureInfo.CurrentCulture;
+    private static CultureInfo Culture => AppCulture.Format;
 
     private BodyViewBridge? _bridge;
     private Task _modelLoaded = Task.CompletedTask;
@@ -123,10 +123,10 @@ public sealed partial class ZoneSetViewModel(GameSetupService setup, BodyDataSer
             : string.Format(Culture, AppResources.ZoneSetCountOnlyFormat, Targets(preview));
         HasManual = selection.ZoneIds.Count > 0;
         ManualText = string.Format(Culture, AppResources.ManualZonesFormat,
-            string.Join(", ", selection.ZoneIds.Select(id => catalog.TryGet(id, out var z) ? z.NamePl : id)));
+            string.Join(", ", selection.ZoneIds.Select(id => catalog.TryGet(id, out var z) ? ZoneNames.Of(z) : id)));
 
         Points.Clear();
-        foreach (var p in preview.AllPoints.OrderBy(p => p.Name, StringComparer.CurrentCultureIgnoreCase))
+        foreach (var p in preview.AllPoints.OrderBy(p => p.Name, StringComparer.Create(AppCulture.Format, ignoreCase: true)))
             Points.Add(new ChoiceItem(p.Id, p.Name) { IsSelected = selection.CustomPointIds.Contains(p.Id) || p.Levels.Any(selection.Levels.Contains) });
         HasPoints = Points.Count > 0;
 

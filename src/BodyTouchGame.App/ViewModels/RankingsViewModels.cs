@@ -27,7 +27,7 @@ public sealed record RankingRow(string Place, string Name, string Color, string?
 /// <summary>Rankings (spec 10, own design D7): a tab per preset, average points per round, threshold 5 rounds.</summary>
 public sealed partial class RankingsViewModel(IPresetRepository presets, IPlayerRepository players, HistoryService history) : ObservableObject
 {
-    private static CultureInfo Culture => CultureInfo.CurrentCulture;
+    private static CultureInfo Culture => AppCulture.Format;
     private static readonly Color[] PlaceAccents = [Color.FromArgb("#FF9A3C"), Color.FromArgb("#22D3EE"), Color.FromArgb("#FF3D9A")];
 
     private IReadOnlyList<HistoryRound> _history = [];
@@ -41,9 +41,9 @@ public sealed partial class RankingsViewModel(IPresetRepository presets, IPlayer
     [ObservableProperty] public partial bool HasBelow { get; set; }
     [ObservableProperty] public partial bool HasNoQualified { get; set; }
 
-    public string Hint { get; } = string.Format(CultureInfo.CurrentCulture, AppResources.RankingHintFormat, Rankings.MinRounds);
-    public string BelowTitle { get; } = string.Format(CultureInfo.CurrentCulture, AppResources.RankingBelowFormat, Rankings.MinRounds);
-    public string NoQualifiedText { get; } = string.Format(CultureInfo.CurrentCulture, AppResources.RankingNoQualifiedFormat, Rankings.MinRounds);
+    public string Hint { get; } = string.Format(AppCulture.Format, AppResources.RankingHintFormat, Rankings.MinRounds);
+    public string BelowTitle { get; } = string.Format(AppCulture.Format, AppResources.RankingBelowFormat, Rankings.MinRounds);
+    public string NoQualifiedText { get; } = string.Format(AppCulture.Format, AppResources.RankingNoQualifiedFormat, Rankings.MinRounds);
 
     public async Task LoadAsync()
     {
@@ -101,7 +101,7 @@ public sealed partial class RankingsViewModel(IPresetRepository presets, IPlayer
 public sealed partial class HeatmapViewModel(IPlayerRepository players, IPresetRepository presets, HistoryService history, BodyDataService bodyData)
     : ObservableObject, IQueryAttributable
 {
-    private static CultureInfo Culture => CultureInfo.CurrentCulture;
+    private static CultureInfo Culture => AppCulture.Format;
     private BodyViewBridge? _bridge;
     private Task _modelLoaded = Task.CompletedTask;
     private IReadOnlyList<HistoryRound> _history = [];
@@ -194,9 +194,9 @@ public sealed partial class HeatmapViewModel(IPlayerRepository players, IPresetR
         var candidates = new[] { zone }.Concat(catalog.Ancestors(zone.Id));
         var found = candidates.Select(z => (Zone: z, Heat: _heat.GetValueOrDefault(z.Id))).FirstOrDefault(x => x.Heat is not null);
         InfoText = found.Heat is { } heat
-            ? string.Format(Culture, AppResources.HeatZoneFormat, found.Zone.NamePl, PolishPlural.Rounds(heat.Rounds),
+            ? string.Format(Culture, AppResources.HeatZoneFormat, ZoneNames.Of(found.Zone), PolishPlural.Rounds(heat.Rounds),
                 heat.AverageDistanceCm is { } d ? string.Format(Culture, AppResources.DistanceFormat, d) : AppResources.Unreachable,
                 heat.AverageBasePoints)
-            : string.Format(Culture, AppResources.HeatZoneNoneFormat, zone.NamePl);
+            : string.Format(Culture, AppResources.HeatZoneNoneFormat, ZoneNames.Of(zone));
     }
 }

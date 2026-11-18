@@ -92,7 +92,7 @@ public sealed partial class PlayersSelectViewModel(
     {
         SelectedText = SelectedCount < RoleScheduler.MinPlayers
             ? AppResources.SelectPlayersHint
-            : string.Format(CultureInfo.CurrentCulture, AppResources.SelectedPlayersFormat, SelectedCount);
+            : string.Format(AppCulture.Format, AppResources.SelectedPlayersFormat, SelectedCount);
         OrderText = setup.RoleOrder == RoleOrder.AllPairs ? AppResources.OrderAllPairs : AppResources.OrderCircle;
         NextCommand.NotifyCanExecuteChanged();
     }

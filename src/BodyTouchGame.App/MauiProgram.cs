@@ -13,12 +13,9 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        // The interface is Polish only: Polish number formats (4,8 cm) and sorting regardless of the phone language.
-        var polish = new System.Globalization.CultureInfo("pl-PL");
-        System.Globalization.CultureInfo.DefaultThreadCurrentCulture = polish;
-        System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = polish;
-        System.Globalization.CultureInfo.CurrentCulture = polish;
-        System.Globalization.CultureInfo.CurrentUICulture = polish;
+        // App language (stage 10): the phone language or the one chosen in Settings, for texts, numbers and sorting.
+        var localization = new LocalizationService(Preferences.Default);
+        localization.Apply();
 
         var builder = MauiApp.CreateBuilder();
         builder
@@ -57,6 +54,7 @@ public static class MauiProgram
 
         // App services
         services.AddSingleton<ISettingsService, SettingsService>();
+        services.AddSingleton(localization);
         services.AddSingleton<INavigationService, ShellNavigationService>();
         services.AddSingleton<BodyDataService>();
         services.AddSingleton<IDialogService, DialogService>();
@@ -91,6 +89,8 @@ public static class MauiProgram
         services.AddTransient<HeatmapViewModel>();
         services.AddTransient<ZoneEditorPage>();
         services.AddTransient<ZoneEditorViewModel>();
+        services.AddTransient<LanguagePage>();
+        services.AddTransient<LanguageViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

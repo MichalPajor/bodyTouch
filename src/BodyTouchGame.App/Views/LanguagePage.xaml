@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Settings → Język (stage 10): the phone language or one of the supported languages. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
+             xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
+             xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             x:Class="BodyTouchGame.App.Views.LanguagePage"
+             x:DataType="vm:LanguageViewModel">
+    <Grid>
+        <controls:ConfettiBackground />
+
+        <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12" Padding="20,12,20,16">
+            <Label Text="{x:Static res:AppResources.LanguageTitle}" Style="{StaticResource ScreenTitle}" />
+            <Label Grid.Row="1" Text="{x:Static res:AppResources.LanguageHint}" FontSize="13" TextColor="{StaticResource Muted}" />
+            <ScrollView Grid.Row="2">
+                <Border Padding="0" VerticalOptions="Start">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Languages}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:LanguageItem">
+                                <Grid ColumnDefinitions="*,Auto" HeightRequest="56" Padding="16,0">
+                                    <Label Text="{Binding Name}" FontFamily="{StaticResource FontBold}" FontSize="16" VerticalOptions="Center" />
+                                    <Grid Grid.Column="1" WidthRequest="24" HeightRequest="24" VerticalOptions="Center">
+                                        <Border StrokeThickness="2" Stroke="#4A4170" BackgroundColor="Transparent" />
+                                        <Grid IsVisible="{Binding IsSelected}" BackgroundColor="{StaticResource Primary}">
+                                            <controls:LineIcon Data="M5 12 L10 17 L19 7" StrokeColor="{StaticResource OnPrimary}" StrokeWidth="3" IconSize="14"
+                                                               HorizontalOptions="Center" VerticalOptions="Center" />
+                                        </Grid>
+                                    </Grid>
+                                    <BoxView Grid.ColumnSpan="2" HeightRequest="1" Color="{StaticResource Border}" VerticalOptions="End" Margin="-16,0" />
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LanguageViewModel}}, Path=SelectCommand, x:DataType=vm:LanguageViewModel}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </Border>
+            </ScrollView>
+        </Grid>
+    </Grid>
+</ContentPage>

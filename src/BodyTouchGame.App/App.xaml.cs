@@ -14,4 +14,16 @@ public partial class App : Application
 	{
 		return new Window(new AppShell());
 	}
+
+	/// <summary>
+	/// Rebuilds the screens after a language change (texts are read when a page is created), returning to Settings.
+	/// </summary>
+	public static async Task ReloadShellAsync(string route)
+	{
+		var window = Current?.Windows.FirstOrDefault();
+		if (window is null) return;
+		var shell = new AppShell();
+		window.Page = shell;
+		await shell.GoToAsync(route, false);
+	}
 }

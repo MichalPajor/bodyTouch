@@ -1,3 +1,4 @@
+using BodyTouchGame.App.Services;
 using System.Globalization;
 
 namespace BodyTouchGame.App.Controls;
@@ -43,7 +44,7 @@ public sealed class TrendChart : GraphicsView
             foreach (var v in new[] { max, min })
             {
                 canvas.DrawLine(plot.Left, Y(v), plot.Right, Y(v));
-                canvas.DrawString(string.Format(CultureInfo.CurrentCulture, "{0:0.#} cm", v), rect.X, Y(v) - 8, left - 6, 16,
+                canvas.DrawString(string.Format(AppCulture.Format, BodyTouchGame.App.Resources.Strings.AppResources.CmFormat, v), rect.X, Y(v) - 8, left - 6, 16,
                     HorizontalAlignment.Right, VerticalAlignment.Center);
             }
 

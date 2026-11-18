@@ -116,8 +116,8 @@ public sealed partial class ExclusionsViewModel(IPlayerRepository players, IExcl
         HasExclusions = excluded.Count > 0;
         ExcludedText = excluded.Count == 0
             ? AppResources.ExcludedNone
-            : string.Format(CultureInfo.CurrentCulture, AppResources.ExcludedListFormat,
-                string.Join(", ", excluded.Select(id => catalog.TryGet(id, out var z) ? z.NamePl : id)));
+            : string.Format(AppCulture.Format, AppResources.ExcludedListFormat,
+                string.Join(", ", excluded.Select(id => catalog.TryGet(id, out var z) ? ZoneNames.Of(z) : id)));
 
         if (_bridge is null) return;
         await _modelLoaded;

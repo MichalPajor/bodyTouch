@@ -258,4 +258,9 @@
   <data name="CustomPointsLabel" xml:space="preserve"><value>Własne punkty</value></data>
   <data name="DefaultConfigTitle" xml:space="preserve"><value>Domyślna konfiguracja</value></data>
   <data name="DefaultConfigCaption" xml:space="preserve"><value>Ustawienia · wartości proponowane przy nowej grze</value></data>
+  <data name="SectionLanguage" xml:space="preserve"><value>JĘZYK</value></data>
+  <data name="Language" xml:space="preserve"><value>Język</value></data>
+  <data name="LanguageSystem" xml:space="preserve"><value>Język telefonu ({0})</value></data>
+  <data name="LanguageTitle" xml:space="preserve"><value>Język aplikacji</value></data>
+  <data name="LanguageHint" xml:space="preserve"><value>Zmiana działa od razu. „Język telefonu” wybiera język ustawiony w Androidzie (gdy nie jest obsługiwany – angielski).</value></data>
 </root>

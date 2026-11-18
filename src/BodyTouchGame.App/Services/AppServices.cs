@@ -46,6 +46,7 @@ public static class Routes
     public const string Rankings = "rankings";
     public const string Heatmap = "heatmap";
     public const string ZoneEditor = "zone-editor";
+    public const string Language = "language";
 }
 
 public interface INavigationService
@@ -151,16 +152,28 @@ public sealed class FeedbackService(IAudioManager audio, ISettingsService settin
     }
 }
 
-/// <summary>Polish plural forms: 1 runda, 2–4 rundy, 5+ rund (12–14 rund).</summary>
+/// <summary>
+/// Counted nouns ("3 rundy", "3 rounds") in the app language. Resources have three forms per noun (One / Few / Many);
+/// the rule picks the form like CLDR: Polish and Ukrainian one / few (2–4, not 12–14) / many; Czech and Slovak
+/// one / few (2–4) / many; French and Portuguese one for 0 and 1; other languages one for 1, otherwise many.
+/// </summary>
 public static class PolishPlural
 {
     public static string Format(int n, string one, string few, string many)
     {
-        var form = n == 1 ? one
-            : n % 10 is >= 2 and <= 4 && n % 100 is < 12 or > 14 ? few
-            : many;
-        return string.Format(CultureInfo.CurrentCulture, form, n);
+        var language = AppCulture.Ui.TwoLetterISOLanguageName;
+        var form = language switch
+        {
+            "pl" => n == 1 ? one : IsFewSlavic(n) ? few : many,
+            "uk" => n % 10 == 1 && n % 100 != 11 ? one : IsFewSlavic(n) ? few : many,
+            "cs" or "sk" => n == 1 ? one : n is >= 2 and <= 4 ? few : many,
+            "fr" or "pt" => n is 0 or 1 ? one : many,
+            _ => n == 1 ? one : many,
+        };
+        return string.Format(AppCulture.Format, form, n);
     }
+
+    private static bool IsFewSlavic(int n) => n % 10 is >= 2 and <= 4 && n % 100 is < 12 or > 14;
 
     public static string Rounds(int n) => Format(n, AppResources.RoundsOne, AppResources.RoundsFew, AppResources.RoundsMany);
 
@@ -207,7 +220,7 @@ public static class ConfigTexts
     public static string TouchLine(GameConfig config) =>
         $"{TouchMethod(config.TouchMethod)} · {(config.MovementAllowed ? AppResources.MovementGentleLower : AppResources.MovementNoneLower)}";
 
-    public static string Seconds(int seconds) => string.Format(CultureInfo.CurrentCulture, AppResources.SecondsFormat, seconds);
+    public static string Seconds(int seconds) => string.Format(AppCulture.Format, AppResources.SecondsFormat, seconds);
 }
 
 /// <summary>Avatar colours (Party colours) assigned to new players in turn.</summary>

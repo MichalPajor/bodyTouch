@@ -33,7 +33,7 @@ public sealed partial class GameViewModel(
 {
     private static IDispatcher Dispatcher => Application.Current!.Dispatcher;
 
-    private static CultureInfo Culture => CultureInfo.CurrentCulture;
+    private static CultureInfo Culture => AppCulture.Format;
     // Finished rounds in Party colours; the current round is orange (Primary), so orange is not among them.
     private static readonly Color[] PartyColors = [Color.FromArgb("#FF3D9A"), Color.FromArgb("#22D3EE"), Color.FromArgb("#8B5CF6")];
 
@@ -417,7 +417,7 @@ public sealed partial class GameViewModel(
         };
         PointsText = string.Format(Culture, AppResources.PointsFormat, result.Points);
         var targetName = TargetLabel(result.Target, capitalised: false);
-        var guessed = result.GuessedZoneId is { } g && _catalog!.TryGet(g, out var zone) ? Lower(zone.NamePl) : AppResources.NoPin;
+        var guessed = result.GuessedZoneId is { } g && _catalog!.TryGet(g, out var zone) ? Lower(ZoneNames.Of(zone)) : AppResources.NoPin;
         CommentText = Comment(RevealComments.KindOf(result), targetName, guessed);
         LegendPin = string.Format(Culture, AppResources.LegendPinFormat, guessed);
         LegendTarget = string.Format(Culture, AppResources.LegendTargetFormat, targetName);
@@ -474,7 +474,7 @@ public sealed partial class GameViewModel(
             ? string.Format(Culture, AppResources.BestHitFormat, names[best.GuesserId], best.DistanceCm, TargetLabel(best.Target, capitalised: false))
             : AppResources.Unreachable;
         AverageMissText = summary.AverageDistanceCm is { } avg ? string.Format(Culture, AppResources.DistanceFormat, avg) : AppResources.Unreachable;
-        HardestZoneText = summary.HardestZoneId is { } hardest && _catalog!.TryGet(hardest, out var zone) ? zone.NamePl : AppResources.Unreachable;
+        HardestZoneText = summary.HardestZoneId is { } hardest && _catalog!.TryGet(hardest, out var zone) ? ZoneNames.Of(zone) : AppResources.Unreachable;
         BiggestMissText = summary.BiggestMiss is { } worst
             ? string.Format(Culture, AppResources.BiggestMissFormat, names[worst.GuesserId], worst.DistanceCm)
             : AppResources.Unreachable;
@@ -566,7 +566,7 @@ public sealed partial class GameViewModel(
     {
         var name = target switch
         {
-            ZoneTarget zone => _catalog!.Get(zone.ZoneId).NamePl,
+            ZoneTarget zone => ZoneNames.Of(_catalog!.Get(zone.ZoneId)),
             CustomPointTarget point => point.Name,
             ManualPointTarget manual => ZoneName(manual.Point, _catalog!.Levels.Last()) ?? AppResources.ManualPointName,
             _ => string.Empty,
@@ -574,7 +574,7 @@ public sealed partial class GameViewModel(
         return capitalised ? name : Lower(name);
     }
 
-    private string? ZoneName(SurfacePoint point, ZoneLevel level) => _catalog!.ZoneAt(point.TriangleIndex, level)?.NamePl;
+    private string? ZoneName(SurfacePoint point, ZoneLevel level) => _catalog!.ZoneAt(point.TriangleIndex, level) is { } zone ? ZoneNames.Of(zone) : null;
 
     /// <summary>Zone name under the pin only when the zone set is Easy/Medium (spec 12).</summary>
     private bool ShowZoneUnderPin() => IsChosenByModel || SelectedLevels().All(l => l is ZoneLevel.Easy or ZoneLevel.Medium);

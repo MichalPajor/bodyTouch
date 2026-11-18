@@ -33,7 +33,7 @@ public sealed partial class ZoneEditorViewModel(
     BodyDataService bodyData,
     IDialogService dialogs) : ObservableObject
 {
-    private static CultureInfo Culture => CultureInfo.CurrentCulture;
+    private static CultureInfo Culture => AppCulture.Format;
 
     private BodyViewBridge? _bridge;
     private Task _modelLoaded = Task.CompletedTask;
@@ -201,7 +201,7 @@ public sealed partial class ZoneEditorViewModel(
     {
         var all = await customPoints.GetAllAsync();
         Points.Clear();
-        foreach (var p in all.OrderBy(p => p.Name, StringComparer.CurrentCultureIgnoreCase))
+        foreach (var p in all.OrderBy(p => p.Name, StringComparer.Create(AppCulture.Format, ignoreCase: true)))
         {
             var levels = p.Levels.Count == 0 ? AppResources.PointNoLevels : string.Join(", ", p.Levels.Order().Select(ConfigTexts.Level));
             Points.Add(new CustomPointItem(p, string.Format(Culture, AppResources.PointDetailFormat,
