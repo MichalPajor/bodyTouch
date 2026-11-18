@@ -54,7 +54,7 @@ public sealed class GameSetupService(IPreferences preferences, IExclusionReposit
                 _config = null;
             }
 
-            return _config ??= BuiltInPresets.Medium;
+            return _config = _config?.Normalized() ?? BuiltInPresets.Medium;
         }
         set
         {

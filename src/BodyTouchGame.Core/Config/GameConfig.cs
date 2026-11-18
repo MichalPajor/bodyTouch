@@ -49,12 +49,31 @@ public sealed record GameConfig(
     bool SpeedBonus,
     int RoundsPerPlayer)
 {
-    public const int MinTouchSeconds = 1;
-    public const int MaxTouchSeconds = 10;
+    public const int MinTouchSeconds = 5;     // 5..30 s: owner's decision after stage 8 (was 1..10)
+    public const int MaxTouchSeconds = 30;
     public const int MinGuessSeconds = 3;
     public const int MaxGuessSeconds = 30;
     public const int MinRoundsPerPlayer = 1;
     public const int MaxRoundsPerPlayer = 20;
+
+    /// <summary>
+    /// The configuration with every number moved into its allowed range (configurations saved by older versions,
+    /// e.g. a touch time of 2 s before the range became 5..30 s). Valid configurations are returned unchanged.
+    /// </summary>
+    public GameConfig Normalized()
+    {
+        var full = Math.Max(0, double.IsFinite(FullPointsRadiusCm) ? FullPointsRadiusCm : 0);
+        var zero = double.IsFinite(ZeroPointsDistanceCm) && ZeroPointsDistanceCm > full ? ZeroPointsDistanceCm : full + 1;
+        var normalized = this with
+        {
+            TouchSeconds = Math.Clamp(TouchSeconds, MinTouchSeconds, MaxTouchSeconds),
+            GuessSeconds = GuessSeconds is { } g ? Math.Clamp(g, MinGuessSeconds, MaxGuessSeconds) : null,
+            FullPointsRadiusCm = full,
+            ZeroPointsDistanceCm = zero,
+            RoundsPerPlayer = Math.Clamp(RoundsPerPlayer, MinRoundsPerPlayer, MaxRoundsPerPlayer),
+        };
+        return normalized == this ? this : normalized;
+    }
 
     /// <summary>Problems that make the configuration unusable (empty = valid). Messages are for developers/logs;
     /// the UI prevents invalid values with constrained controls.</summary>

@@ -33,8 +33,6 @@ public sealed partial class ZoneEditorViewModel(
     BodyDataService bodyData,
     IDialogService dialogs) : ObservableObject
 {
-    public const string LevelColor = "#FF9A3C";
-    public const string RemovedColor = "#4A4560";
     private static CultureInfo Culture => CultureInfo.CurrentCulture;
 
     private BodyViewBridge? _bridge;
@@ -281,36 +279,46 @@ public sealed partial class ZoneEditorViewModel(
         TargetPoolBuilder.EffectiveLevels(zone, _overrides.GroupBy(o => o.ZoneId, StringComparer.Ordinal)
             .ToDictionary(g => g.Key, g => g.ToList(), StringComparer.Ordinal));
 
+    /// <summary>
+    /// Every zone of the level in its own warm shade; the zones of the tap level outside the level in alternating
+    /// greys (so the tappable zones are visible); built-in zones removed from the level dark grey.
+    /// </summary>
     private async Task ShowLevelsOnModelAsync()
     {
         if (_bridge is null) return;
         var catalog = bodyData.Zones!;
         var level = TargetLevel;
+        var tapLevel = TapLevel;
         var map = _overrides.GroupBy(o => o.ZoneId, StringComparer.Ordinal).ToDictionary(g => g.Key, g => g.ToList(), StringComparer.Ordinal);
+        var members = catalog.Zones.Where(z => z.Drawable && TargetPoolBuilder.EffectiveLevels(z, map).Contains(level))
+            .Select(z => z.Id).ToHashSet(StringComparer.Ordinal);
         var colors = new Dictionary<string, string>();
-        int count = 0, added = 0, removed = 0;
+        int added = 0, removed = 0;
         foreach (var zone in catalog.Zones.Where(z => z.Drawable))
         {
-            var member = TargetPoolBuilder.EffectiveLevels(zone, map).Contains(level);
-            if (member)
+            var index = bodyData.ColorSlot(zone.Id);
+            if (members.Contains(zone.Id))
             {
-                colors[zone.Id] = LevelColor;
-                count++;
+                colors[zone.Id] = ZonePalette.Warm(index);
                 if (zone.Level != level) added++;
             }
             else if (zone.Level == level)
             {
-                colors[zone.Id] = RemovedColor;
+                colors[zone.Id] = ZonePalette.Removed;
                 removed++;
+            }
+            else if (zone.Level == tapLevel && !catalog.Ancestors(zone.Id).Any(a => members.Contains(a.Id)))
+            {
+                colors[zone.Id] = ZonePalette.Grey(index);
             }
         }
 
-        LevelSummary = string.Format(Culture, AppResources.LevelSummaryFormat, ConfigTexts.Level(level), PolishPlural.Zones(count)) +
+        LevelSummary = string.Format(Culture, AppResources.LevelSummaryFormat, ConfigTexts.Level(level), PolishPlural.Zones(members.Count)) +
                        (added + removed > 0 ? string.Format(Culture, AppResources.LevelChangesFormat, added, removed) : string.Empty);
         await _modelLoaded;
         await _bridge.ClearTargetAsync();
         await _bridge.SetCustomPointsAsync([]);
-        await _bridge.SetModeAsync("Editor", new ViewModeOptions(false, TapLevel.ToString()));
+        await _bridge.SetModeAsync("Editor", new ViewModeOptions(false, tapLevel.ToString()));
         await _bridge.SetZoneColorsAsync(colors);
     }
 

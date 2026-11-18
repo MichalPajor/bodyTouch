@@ -17,7 +17,7 @@ const COLORS = {
   arrow: '#22D3EE',
   customPoint: '#8B5CF6',
 };
-const MAX_ZOOM = 8;            // spec 12: zoom up to about 8x
+const MAX_ZOOM = 24;           // spec 12: zoom up to about 24x (owner's remark after stage 8; was 8x)
 const PIN_RADIUS_CM = 1.1;
 const PATH_RADIUS_CM = 0.3;
 const PATH_LIFT_CM = 0.45;     // the path is drawn slightly above the skin
@@ -84,7 +84,7 @@ renderer.setClearColor(COLORS.surface);
 container.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(30, 1, 1, 5000);
+const camera = new THREE.PerspectiveCamera(30, 1, 0.5, 5000);
 scene.add(new THREE.HemisphereLight(0xffffff, 0x3a3456, 1.4));
 const key = new THREE.DirectionalLight(0xffffff, 1.7);
 key.position.set(120, 220, 260);
@@ -100,6 +100,8 @@ controls.rotateSpeed = 0.9;
 controls.enablePan = true;
 controls.screenSpacePanning = true;
 controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+// Pinch zooms towards the fingers, not towards the orbit centre inside the torso (deep zoom on a hand or a toe).
+controls.zoomToCursor = true;
 
 const material = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.85, metalness: 0, vertexColors: true });
 // Soft rim light along the silhouette ("delikatna poświata krawędzi", spec 13): fresnel term added to the shading.
@@ -455,10 +457,23 @@ function setPixelRatio(ratio) {
   return renderer.getPixelRatio();
 }
 
+/**
+ * Zoom buttons. Zooming in goes towards the skin in the middle of the visible area (not towards the orbit centre
+ * inside the torso), so a deep zoom (up to MAX_ZOOM) shows the surface; zooming far out returns to the home centre.
+ */
 function zoomBy(factor) {
-  const offset = camera.position.clone().sub(controls.target);
-  const distance = THREE.MathUtils.clamp(offset.length() / factor, controls.minDistance, controls.maxDistance);
-  moveCamera(controls.target.clone().add(offset.setLength(distance)), controls.target.clone(), true);
+  let target = controls.target.clone();
+  if (factor > 1) {
+    const rect = renderer.domElement.getBoundingClientRect();
+    const centreY = rect.top + state.insets.top + (rect.height - state.insets.top - state.insets.bottom) / 2;
+    const hit = hitAt(rect.left + rect.width / 2, centreY);
+    if (hit) target = hit.point.clone();
+  }
+  const direction = target.clone().sub(camera.position).normalize();
+  const current = camera.position.distanceTo(target);
+  const distance = THREE.MathUtils.clamp(current / factor, controls.minDistance, controls.maxDistance);
+  if (factor < 1 && distance >= state.home.distance * 0.9) target = state.home.target.clone();
+  moveCamera(target.clone().addScaledVector(direction, -distance), target, true);
   return true;
 }
 

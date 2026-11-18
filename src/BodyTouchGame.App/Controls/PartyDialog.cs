@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Core.Platform;
 using Microsoft.Maui.Controls.Shapes;
 
 namespace BodyTouchGame.App.Controls;
@@ -143,14 +144,23 @@ public sealed class PartyDialog : ContentPage
     /// <summary>Accepted (or false on cancel / back / tap outside) and the entered text for input dialogs.</summary>
     public Task<(bool Accepted, string? Text)> Result => _result.Task;
 
+    /// <summary>Input dialogs open with the cursor in the field and the on-screen keyboard shown (owner's remark).</summary>
     protected override void OnAppearing()
     {
         base.OnAppearing();
         if (_entry is null) return;
-        Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(150), () =>
+        Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(250), async () =>
         {
             _entry.Focus();
             _entry.CursorPosition = _entry.Text?.Length ?? 0;
+            try
+            {
+                await _entry.ShowKeyboardAsync(CancellationToken.None);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[BTG] keyboard: {e.Message}");
+            }
         });
     }
 

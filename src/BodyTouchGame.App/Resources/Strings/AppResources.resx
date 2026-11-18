@@ -113,7 +113,7 @@
   <data name="ZonesNotAvailable" xml:space="preserve"><value>Ten poziom nie ma jeszcze stref (pojawią się w kolejnej wersji).</value></data>
 
   <!-- Stage 6: zone set and exclusions -->
-  <data name="ZoneSetHint" xml:space="preserve"><value>Wybierz dowolne poziomy. Pomarańczowe strefy mogą zostać wylosowane, niebieskie dodano ręcznie, szare wykluczają wybrani gracze.</value></data>
+  <data name="ZoneSetHint" xml:space="preserve"><value>Wybierz dowolne poziomy. Kolorowe strefy mogą zostać wylosowane (niebieskie dodano ręcznie), ciemnoszare wykluczają wybrani gracze.</value></data>
   <data name="ZoneSetCountFormat" xml:space="preserve"><value>Do losowania: {0} · {1}</value></data>
   <data name="ExclusionsHint" xml:space="preserve"><value>Stuknij strefę na modelu, aby ją wykluczyć lub przywrócić. Wykluczonej strefy nie wylosuje się, gdy ten gracz jest modelem.</value></data>
   <data name="NoPlayersYet" xml:space="preserve"><value>Najpierw dodaj graczy: GRAJ → Dodaj gracza.</value></data>
@@ -123,9 +123,9 @@
 
   <!-- Stage 6: round screens (mockups 4-8, WhoIsNext own design) -->
   <data name="RoundHeaderFormat" xml:space="preserve"><value>Runda {0} z {1} · {2}</value></data>
-  <data name="PairFormat" xml:space="preserve"><value>{0} dotyka · {1} zgaduje</value></data>
-  <data name="WhoGuesses" xml:space="preserve"><value>ZGADUJE</value></data>
-  <data name="WhoTouches" xml:space="preserve"><value>DOTYKA</value></data>
+  <data name="PairFormat" xml:space="preserve"><value>Model: {0} · zgaduje: {1}</value></data>
+  <data name="WhoGuesses" xml:space="preserve"><value>ZGADUJE · zasłania oczy</value></data>
+  <data name="WhoTouches" xml:space="preserve"><value>MODEL · bierze telefon</value></data>
   <data name="WhoIsNextHintFormat" xml:space="preserve"><value>{0} zasłania oczy. {1} bierze telefon.</value></data>
   <data name="YourTarget" xml:space="preserve"><value>TWÓJ CEL</value></data>
   <data name="ChooseTarget" xml:space="preserve"><value>WYBIERZ CEL</value></data>
@@ -242,7 +242,7 @@
   <data name="PointNeedsPin" xml:space="preserve"><value>Stuknij model, aby wskazać miejsce punktu.</value></data>
   <data name="LevelTargetLabel" xml:space="preserve"><value>Poziom gry</value></data>
   <data name="LevelTapLabel" xml:space="preserve"><value>Stukaj w strefy poziomu</value></data>
-  <data name="LevelEditorHint" xml:space="preserve"><value>Stuknij strefę, aby dodać ją do poziomu gry albo z niego usunąć. Pomarańczowe są w poziomie, szare usunięte.</value></data>
+  <data name="LevelEditorHint" xml:space="preserve"><value>Stuknij strefę, aby dodać ją do poziomu gry albo z niego usunąć. Kolorowe są w poziomie, jasnoszare można dodać, ciemnoszare usunięto.</value></data>
   <data name="LevelSummaryFormat" xml:space="preserve"><value>{0}: {1}</value></data>
   <data name="LevelChangesFormat" xml:space="preserve"><value> · dodane {0}, usunięte {1}</value></data>
   <data name="RestoreDefaults" xml:space="preserve"><value>Przywróć domyślne</value></data>

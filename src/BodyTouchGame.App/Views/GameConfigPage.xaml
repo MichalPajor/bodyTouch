@@ -94,7 +94,7 @@
                                     <Label Text="{x:Static res:AppResources.TouchTime}" Style="{StaticResource RowLabel}" />
                                     <Label Grid.Column="1" Text="{Binding TouchSecondsText}" Style="{StaticResource RowValue}" />
                                 </Grid>
-                                <controls:SquareSlider Minimum="1" Maximum="10" Value="{Binding TouchSeconds}" />
+                                <controls:SquareSlider Minimum="5" Maximum="30" Value="{Binding TouchSeconds}" />
                             </VerticalStackLayout>
                             <BoxView Style="{StaticResource Divider}" />
 

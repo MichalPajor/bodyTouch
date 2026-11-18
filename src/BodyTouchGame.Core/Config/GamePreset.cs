@@ -21,8 +21,9 @@ public static class BuiltInPresets
 
     public static GameConfig Easy { get; } = Create(ZoneLevel.Easy, TouchMethod.WholeHand, movement: true, touchSeconds: 6, r: 10, z: 60);
     public static GameConfig Medium { get; } = Create(ZoneLevel.Medium, TouchMethod.TwoFingers, movement: true, touchSeconds: 5, r: 5, z: 40);
-    public static GameConfig Hard { get; } = Create(ZoneLevel.Hard, TouchMethod.OneFinger, movement: true, touchSeconds: 4, r: 3, z: 25);
-    public static GameConfig Hardcore { get; } = Create(ZoneLevel.Hardcore, TouchMethod.Tap, movement: false, touchSeconds: 2, r: 1.5, z: 15);
+    // Touch time at least 5 s (range 5..30 s since stage 8): Hard 4 s -> 5 s, Hardcore 2 s -> 5 s.
+    public static GameConfig Hard { get; } = Create(ZoneLevel.Hard, TouchMethod.OneFinger, movement: true, touchSeconds: 5, r: 3, z: 25);
+    public static GameConfig Hardcore { get; } = Create(ZoneLevel.Hardcore, TouchMethod.Tap, movement: false, touchSeconds: 5, r: 1.5, z: 15);
 
     /// <summary>Key and configuration in display order.</summary>
     public static IReadOnlyList<(string Key, GameConfig Config)> All { get; } =

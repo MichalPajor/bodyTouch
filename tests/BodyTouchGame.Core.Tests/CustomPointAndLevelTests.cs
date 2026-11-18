@@ -137,3 +137,30 @@ public class CustomPointAndLevelTests
         Assert.Equal(0, inside.DistanceCm);
     }
 }
+
+public class ZoneColoringTests
+{
+    [Theory]
+    [InlineData(ZoneLevel.Easy)]
+    [InlineData(ZoneLevel.Medium)]
+    [InlineData(ZoneLevel.Hard)]
+    [InlineData(ZoneLevel.Hardcore)]
+    public void NeighbouringZonesNeverShareAColourSlot(ZoneLevel level)
+    {
+        using var zones = File.OpenRead(RealData.ZonesPath);
+        var catalog = ZoneCatalog.Load(zones);
+        var body = BodyGraphSerializer.ReadFile(RealData.GraphPath);
+
+        var slots = ZoneColoring.Slots(catalog, body, level);
+        var neighbours = ZoneColoring.Neighbours(catalog, body, level);
+
+        Assert.Equal(catalog.Zones.Count(z => z.Level == level), slots.Count);
+        foreach (var (zone, around) in neighbours)
+        {
+            Assert.All(around, n => Assert.NotEqual(slots[zone], slots[n]));
+        }
+
+        Assert.True(slots.Values.Max() < 8, $"{level}: {slots.Values.Max() + 1} colours needed");   // the palette has 8 shades
+        if (level == ZoneLevel.Easy) Assert.Contains("leg-l", neighbours["pelvis"]);
+    }
+}

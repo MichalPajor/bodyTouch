@@ -24,16 +24,16 @@ public class GameConfigTests
         });
         Assert.Equal((ZoneLevel.Easy, TouchMethod.WholeHand, true, 6), Describe(BuiltInPresets.Easy));
         Assert.Equal((ZoneLevel.Medium, TouchMethod.TwoFingers, true, 5), Describe(BuiltInPresets.Medium));
-        Assert.Equal((ZoneLevel.Hard, TouchMethod.OneFinger, true, 4), Describe(BuiltInPresets.Hard));
-        Assert.Equal((ZoneLevel.Hardcore, TouchMethod.Tap, false, 2), Describe(BuiltInPresets.Hardcore));
+        Assert.Equal((ZoneLevel.Hard, TouchMethod.OneFinger, true, 5), Describe(BuiltInPresets.Hard));
+        Assert.Equal((ZoneLevel.Hardcore, TouchMethod.Tap, false, 5), Describe(BuiltInPresets.Hardcore));
     }
 
     private static (ZoneLevel, TouchMethod, bool, int) Describe(GameConfig c) =>
         (c.ZoneSet.Levels.Single(), c.TouchMethod, c.MovementAllowed, c.TouchSeconds);
 
     [Theory]
-    [InlineData(0, null, 5, 40, 3, "TouchSeconds")]
-    [InlineData(11, null, 5, 40, 3, "TouchSeconds")]
+    [InlineData(4, null, 5, 40, 3, "TouchSeconds")]
+    [InlineData(31, null, 5, 40, 3, "TouchSeconds")]
     [InlineData(5, 2, 5, 40, 3, "GuessSeconds")]
     [InlineData(5, 31, 5, 40, 3, "GuessSeconds")]
     [InlineData(5, null, -1, 40, 3, "FullPointsRadiusCm")]
@@ -44,6 +44,22 @@ public class GameConfigTests
         var config = BuiltInPresets.Medium with { TouchSeconds = touch, GuessSeconds = guess, FullPointsRadiusCm = r, ZeroPointsDistanceCm = z, RoundsPerPlayer = rounds };
 
         Assert.Contains(config.Validate(), p => p.Contains(field));
+    }
+
+    [Fact]
+    public void NormalizedMovesOldValuesIntoTheAllowedRanges()
+    {
+        var old = BuiltInPresets.Medium with { TouchSeconds = 2, GuessSeconds = 60, ZeroPointsDistanceCm = 3, RoundsPerPlayer = 0 };
+
+        var normalized = old.Normalized();
+
+        Assert.Empty(normalized.Validate());
+        Assert.Equal(5, normalized.TouchSeconds);
+        Assert.Equal(30, normalized.GuessSeconds);
+        Assert.Equal(1, normalized.RoundsPerPlayer);
+        Assert.True(normalized.ZeroPointsDistanceCm > normalized.FullPointsRadiusCm);
+        Assert.Same(BuiltInPresets.Medium, BuiltInPresets.Medium.Normalized());
+        Assert.Equal(30, (BuiltInPresets.Medium with { TouchSeconds = 40 }).Normalized().TouchSeconds);
     }
 
     [Fact]
@@ -58,8 +74,8 @@ public class GameConfigTests
     [Fact]
     public void AnyMixOfFieldsCanBeChanged()
     {
-        // spec 6 example: "Easy + two fingers + 3 s"
-        var custom = BuiltInPresets.Easy with { TouchMethod = TouchMethod.TwoFingers, TouchSeconds = 3 };
+        // spec 6 example: "Easy + two fingers + 12 s"
+        var custom = BuiltInPresets.Easy with { TouchMethod = TouchMethod.TwoFingers, TouchSeconds = 12 };
 
         Assert.Empty(custom.Validate());
         Assert.NotEqual(BuiltInPresets.Easy, custom);

@@ -20,6 +20,20 @@ public sealed class BodyDataService
     public ZoneCatalog? Zones { get; private set; }
     public GeodesicDistanceCalculator? Distances { get; private set; }
 
+    private readonly Dictionary<Core.Config.ZoneLevel, IReadOnlyDictionary<string, int>> _colorSlots = [];
+
+    /// <summary>Colour slot of a zone: neighbouring zones of one level always differ (zone editor, zone set).</summary>
+    public int ColorSlot(string zoneId)
+    {
+        var zone = Zones!.Get(zoneId);
+        lock (_colorSlots)
+        {
+            if (!_colorSlots.TryGetValue(zone.Level, out var slots))
+                _colorSlots[zone.Level] = slots = ZoneColoring.Slots(Zones, Body!, zone.Level);
+            return slots.GetValueOrDefault(zoneId);
+        }
+    }
+
     /// <summary>Loads the data once. Runs entirely off the UI thread.</summary>
     public async Task LoadAsync()
     {

@@ -164,7 +164,7 @@ public sealed class PresetRepository(BodyTouchDatabase database) : IPresetReposi
     }
 
     private static GamePreset ToDomain(GamePresetEntity e) =>
-        new(e.Id, e.Name, e.IsBuiltIn, Json.Read(e.ConfigJson, CoreJsonContext.Default.GameConfig));
+        new(e.Id, e.Name, e.IsBuiltIn, Json.Read(e.ConfigJson, CoreJsonContext.Default.GameConfig).Normalized());
 }
 
 public sealed class CustomPointRepository(BodyTouchDatabase database) : ICustomPointRepository

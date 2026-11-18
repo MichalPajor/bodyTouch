@@ -113,6 +113,10 @@ public class ViewDirectorTests
             Assert.DoesNotContain(s.Item2, c => c is FocusTarget or ShowReveal);
         });
         Assert.Contains(new SetViewMode(ViewMode.Guess), states[2].Item2);
+        // The camera is reset already behind the countdown and the curtain, not when the guesser's screen appears.
+        Assert.Contains(new ResetCamera("Front"), states[0].Item2);
+        Assert.Contains(new ResetCamera("Front"), states[1].Item2);
+        Assert.Contains(new ClearPin(), states[1].Item2);
     }
 
     [Fact]

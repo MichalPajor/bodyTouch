@@ -135,7 +135,7 @@ public class PresetPointAndOverrideTests : IAsyncLifetime
     public async Task CustomPresetsAreSavedAfterBuiltInOnes()
     {
         var presets = new PresetRepository(_db.Database);
-        var party = BuiltInPresets.Easy with { TouchMethod = TouchMethod.TwoFingers, TouchSeconds = 3 };
+        var party = BuiltInPresets.Easy with { TouchMethod = TouchMethod.TwoFingers, TouchSeconds = 12 };
 
         var saved = await presets.SaveCustomAsync(new GamePreset(0, "Impreza 3 s", false, party));
         await presets.SaveCustomAsync(new GamePreset(0, "Antek", false, BuiltInPresets.Hard));
@@ -144,8 +144,8 @@ public class PresetPointAndOverrideTests : IAsyncLifetime
         Assert.Equal(["Easy", "Medium", "Hard", "Hardcore", "Antek", "Impreza 3 s"], all.Select(p => p.Name));
         Assert.Equal(party, (await presets.GetAsync(saved.Id))!.Config);
 
-        await presets.SaveCustomAsync(saved with { Config = party with { TouchSeconds = 4 } });
-        Assert.Equal(4, (await presets.GetAsync(saved.Id))!.Config.TouchSeconds);
+        await presets.SaveCustomAsync(saved with { Config = party with { TouchSeconds = 20 } });
+        Assert.Equal(20, (await presets.GetAsync(saved.Id))!.Config.TouchSeconds);
 
         await presets.DeleteCustomAsync(saved.Id);
         Assert.Null(await presets.GetAsync(saved.Id));

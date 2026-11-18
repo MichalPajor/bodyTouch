@@ -26,9 +26,6 @@ public sealed partial class LevelItem(ZoneLevel level, bool isAvailable) : Obser
 /// </summary>
 public sealed partial class ZoneSetViewModel(GameSetupService setup, BodyDataService bodyData, INavigationService navigation) : ObservableObject
 {
-    public const string DrawableColor = "#FF9A3C";
-    public const string ManualColor = "#22D3EE";
-    public const string ExcludedColor = "#4A4560";
     private static CultureInfo Culture => CultureInfo.CurrentCulture;
 
     private BodyViewBridge? _bridge;
@@ -137,8 +134,13 @@ public sealed partial class ZoneSetViewModel(GameSetupService setup, BodyDataSer
         await _modelLoaded;
         var manual = selection.ZoneIds.ToHashSet(StringComparer.Ordinal);
         var colors = new Dictionary<string, string>();
-        foreach (var id in preview.DrawableZones) colors[id] = manual.Contains(id) ? ManualColor : DrawableColor;
-        foreach (var id in preview.ExcludedZones) colors[id] = ExcludedColor;
+        foreach (var id in preview.DrawableZones)
+        {
+            var index = bodyData.ColorSlot(id);
+            colors[id] = manual.Contains(id) ? ZonePalette.Cyan(index) : ZonePalette.Warm(index);
+        }
+
+        foreach (var id in preview.ExcludedZones) colors[id] = ZonePalette.Removed;
         await _bridge.SetModeAsync("Editor", new ViewModeOptions(false, TapLevels.First(l => l.IsSelected).Level.ToString()));
         await _bridge.SetZoneColorsAsync(colors);
         await _bridge.SetCustomPointsAsync(preview.AllPoints

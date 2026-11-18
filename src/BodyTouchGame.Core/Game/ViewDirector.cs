@@ -64,6 +64,10 @@ public static class ViewDirector
                 [new ClearTarget(), new ClearPin(), new ResetCamera("Front"), new SetViewMode(ViewMode.Guess)],
             GameState.Reveal when session.LastResult is { } result =>
                 [new ClearTarget(), new SetViewMode(ViewMode.Reveal), new ShowReveal(result.Pin, result.Target, result.Path, result.DistanceCm)],
+            // Behind the touch countdown and the curtain the view is already put into its Guessing state (front view,
+            // no pin), so nothing jumps when the guesser's screen appears (owner's remark after stage 8).
+            GameState.Touching or GameState.Curtain =>
+                [new ClearTarget(), new ClearPin(), new ResetCamera("Front"), new SetViewMode(ViewMode.View)],
             _ => [new ClearTarget(), new ClearPin(), new SetViewMode(ViewMode.View)],
         };
     }

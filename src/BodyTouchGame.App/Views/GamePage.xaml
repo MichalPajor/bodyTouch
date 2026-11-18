@@ -142,8 +142,8 @@
                             <BoxView Color="{StaticResource PartyCyan}" />
                             <controls:Avatar Grid.Column="1" Name="{Binding GuesserName}" Color="{Binding GuesserColor}" Emoji="{Binding GuesserEmoji}" Size="64" Margin="16" />
                             <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
-                                <Label Text="{x:Static res:AppResources.WhoGuesses}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1.5" TextColor="{StaticResource PartyCyan}" />
-                                <Label Text="{Binding GuesserName}" FontFamily="{StaticResource FontTitle}" FontSize="26" />
+                                <Label Text="{Binding GuesserName}" FontFamily="{StaticResource FontTitle}" FontSize="26" LineBreakMode="TailTruncation" />
+                                <Label Text="{x:Static res:AppResources.WhoGuesses}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1" TextColor="{StaticResource PartyCyan}" />
                             </VerticalStackLayout>
                         </Grid>
                     </Border>
@@ -152,8 +152,8 @@
                             <BoxView Color="{StaticResource PartyPink}" />
                             <controls:Avatar Grid.Column="1" Name="{Binding ModelName}" Color="{Binding ModelColor}" Emoji="{Binding ModelEmoji}" Size="64" Margin="16" />
                             <VerticalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
-                                <Label Text="{x:Static res:AppResources.WhoTouches}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1.5" TextColor="{StaticResource PartyPink}" />
-                                <Label Text="{Binding ModelName}" FontFamily="{StaticResource FontTitle}" FontSize="26" />
+                                <Label Text="{Binding ModelName}" FontFamily="{StaticResource FontTitle}" FontSize="26" LineBreakMode="TailTruncation" />
+                                <Label Text="{x:Static res:AppResources.WhoTouches}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1" TextColor="{StaticResource PartyPink}" />
                             </VerticalStackLayout>
                         </Grid>
                     </Border>

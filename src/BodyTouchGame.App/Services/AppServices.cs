@@ -201,3 +201,25 @@ public static class AvatarPalette
 
     public static string Next(int existingPlayers) => Colors[existingPlayers % Colors.Length];
 }
+
+/// <summary>
+/// Colours of zones on the model (zone editor, zone set preview): the slot from <see cref="BodyDataService.ColorSlot"/>
+/// (neighbouring zones have different slots), so the borders are visible at a glance (owner's remark after stage 8).
+/// </summary>
+public static class ZonePalette
+{
+    private static readonly string[] WarmShades = ["#FF9A3C", "#D9480F", "#FFD43B", "#FF6B6B", "#F76707", "#FFC078", "#C2410C", "#FFA94D"];
+    private static readonly string[] CyanShades = ["#22D3EE", "#0E7490", "#A5F3FC", "#0891B2", "#67E8F9", "#155E75", "#06B6D4", "#CFFAFE"];
+    private static readonly string[] GreyShades = ["#A7ABB8", "#6F7586", "#D3D6DE", "#8C91A1", "#BEC2CD", "#5E6475", "#B0B4C0", "#7E8494"];
+
+    public const string Removed = "#4A4560";
+
+    /// <summary>Zone that is drawn / belongs to the level.</summary>
+    public static string Warm(int slot) => WarmShades[slot % WarmShades.Length];
+
+    /// <summary>Zone picked by hand.</summary>
+    public static string Cyan(int slot) => CyanShades[slot % CyanShades.Length];
+
+    /// <summary>Zone that can be tapped but is not drawn.</summary>
+    public static string Grey(int slot) => GreyShades[slot % GreyShades.Length];
+}
