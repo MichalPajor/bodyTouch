@@ -81,9 +81,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- Stage 11: AdMob interstitials, Google Play Billing ("remove_ads"), Google Play In-App Review. -->
+		<!-- Stage 11: AdMob interstitials, Plugin.InAppBilling ("remove_ads", as in testowy2), Google Play In-App Review. -->
 		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Lite" Version="124.0.0.9" />
-		<PackageReference Include="Xamarin.Android.Google.BillingClient" Version="9.1.0.2" />
+		<PackageReference Include="Plugin.InAppBilling" Version="10.0.0" />
 		<PackageReference Include="Xamarin.Google.Android.Play.Review" Version="2.0.2.10" />
 		<PackageReference Include="Xamarin.Google.UserMessagingPlatform" Version="4.0.0.4" />
 		<!-- The Google libraries bring AndroidX.Fragment 1.9 (Kotlin extensions merged into it); MAUI references

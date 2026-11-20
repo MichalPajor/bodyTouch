@@ -1,14 +1,14 @@
-using Android.BillingClient.Api;
 using Android.Gms.Ads;
 using Android.Gms.Ads.Interstitial;
 using Google.Android.Play.Core.Review;
+using Plugin.InAppBilling;
 using Xamarin.Google.UserMesssagingPlatform;
 using Activity = Android.App.Activity;
 
 namespace BodyTouchGame.App.Services;
 
 // Stage 11 (decision D10): AdMob interstitials every ~6 rounds between rounds, the one-time purchase "remove_ads"
-// (Google Play Billing) and the Google Play in-app review after the 3rd finished game.
+// (Plugin.InAppBilling, as in testowy2) and the Google Play in-app review after the 3rd finished game.
 
 /// <summary>Whether the player bought "remove_ads" (kept in preferences, refreshed from Google Play on start).</summary>
 public sealed class PremiumState(IPreferences preferences)
@@ -182,102 +182,111 @@ public abstract class TypedInterstitialLoadCallback : InterstitialAdLoadCallback
     }
 }
 
-/// <summary>The one-time purchase "remove_ads" through Google Play Billing (buy, restore on start / on request).</summary>
-public sealed class PurchaseService(PremiumState premium) : Java.Lang.Object, IPurchasesUpdatedListener
+/// <summary>
+/// The one-time purchase "remove_ads" through Plugin.InAppBilling (the same plugin and approach as in the owner's
+/// project testowy2). The result is kept in <see cref="PremiumState"/> so the game works offline; on start it is
+/// checked quietly with the store (e.g. after a refund).
+/// </summary>
+public sealed class PurchaseService(PremiumState premium)
 {
+    /// <summary>Product id in Google Play Console (one-time product).</summary>
     public const string ProductId = "remove_ads";
 
-    private BillingClient? _client;
-    private ProductDetails? _product;
-    private TaskCompletionSource<bool>? _purchase;
+    // The plugin has a single connection to the store – operations must not overlap.
+    private readonly SemaphoreSlim _billingLock = new(1, 1);
 
     /// <summary>Price from Google Play ("9,99 zł"), null until known.</summary>
     public string? Price { get; private set; }
 
-    /// <summary>Connects, reads the price and restores an earlier purchase. False when Google Play is unavailable.</summary>
+    /// <summary>
+    /// Reads the price and restores an earlier purchase (a missing purchase in the store's answer – e.g. after a
+    /// refund – takes "no ads" away; no connection changes nothing). False when Google Play is unavailable.
+    /// </summary>
     public async Task<bool> RefreshAsync()
     {
         try
         {
-            if (!await ConnectAsync()) return false;
-            var query = QueryProductDetailsParams.NewBuilder()
-                .SetProductList([QueryProductDetailsParams.Product.NewBuilder().SetProductId(ProductId).SetProductType(BillingClient.ProductType.Inapp).Build()])
-                .Build();
-            var details = await _client!.QueryProductDetailsAsync(query);
-            _product = details.ProductDetails?.FirstOrDefault();
-            Price = _product?.GetOneTimePurchaseOfferDetails()?.FormattedPrice;
-
-            var purchases = await _client.QueryPurchasesAsync(QueryPurchasesParams.NewBuilder().SetProductType(BillingClient.ProductType.Inapp).Build());
-            var owned = false;
-            foreach (var purchase in purchases.Purchases ?? [])
+            var result = await WithBillingAsync<bool?>(async billing =>
             {
-                if (purchase.Products.Contains(ProductId) && purchase.PurchaseState == PurchaseState.Purchased)
-                {
-                    owned = true;
-                    await AcknowledgeAsync(purchase);
-                }
-            }
+                var products = await billing.GetProductInfoAsync(ItemType.InAppPurchase, [ProductId]);
+                Price = products?.FirstOrDefault(p => p.ProductId == ProductId)?.LocalizedPrice ?? Price;
 
-            if (owned) premium.AdsRemoved = true;
-            return true;
+                var purchases = await billing.GetPurchasesAsync(ItemType.InAppPurchase);
+                var purchase = purchases?.FirstOrDefault(p => p.ProductId == ProductId || (p.ProductIds?.Contains(ProductId) ?? false));
+                if (purchase is null)
+                {
+                    premium.AdsRemoved = false;
+                    return true;
+                }
+
+                await AcceptAsync(billing, purchase);
+                return true;
+            });
+            return result == true;
         }
         catch (Exception e)
         {
-            Console.WriteLine($"[BTG] billing: {e.Message}");
+            Console.WriteLine($"[BTG] billing refresh: {e.Message}");
             return false;
         }
     }
 
-    /// <summary>Opens the Google Play purchase sheet; true when the purchase went through.</summary>
+    /// <summary>Opens the Google Play purchase sheet; true when "no ads" is unlocked.</summary>
     public async Task<bool> BuyAsync()
     {
-        if (_product is null && !await RefreshAsync()) return false;
-        if (_product is null || Platform.CurrentActivity is not { } activity) return false;
-        _purchase = new TaskCompletionSource<bool>();
-        var flow = BillingFlowParams.NewBuilder()
-            .SetProductDetailsParamsList([BillingFlowParams.ProductDetailsParams.NewBuilder().SetProductDetails(_product).Build()])
-            .Build();
-        var result = _client!.LaunchBillingFlow(activity, flow);
-        if (result.ResponseCode != BillingResponseCode.Ok) return false;
-        return await _purchase.Task;
+        try
+        {
+            return await WithBillingAsync<bool?>(async billing =>
+            {
+                var purchase = await billing.PurchaseAsync(ProductId, ItemType.InAppPurchase);
+                return purchase is not null && await AcceptAsync(billing, purchase);
+            }) == true;
+        }
+        catch (InAppBillingPurchaseException e) when (e.PurchaseError == PurchaseError.UserCancelled)
+        {
+            return false;
+        }
+        catch (InAppBillingPurchaseException e) when (e.PurchaseError == PurchaseError.AlreadyOwned)
+        {
+            return await RefreshAsync() && premium.AdsRemoved;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[BTG] billing purchase: {e.Message}");
+            return false;
+        }
     }
 
-    public void OnPurchasesUpdated(BillingResult result, IList<Purchase>? purchases)
+    /// <summary>Unlocks "no ads" for a paid purchase and acknowledges it – Google refunds unacknowledged purchases
+    /// after 3 days. Pending payments do not unlock yet.</summary>
+    private async Task<bool> AcceptAsync(IInAppBilling billing, InAppBillingPurchase purchase)
     {
-        var bought = result.ResponseCode == BillingResponseCode.Ok &&
-                     (purchases ?? []).Any(p => p.Products.Contains(ProductId) && p.PurchaseState == PurchaseState.Purchased);
-        if (bought)
+        if (purchase.State is not (PurchaseState.Purchased or PurchaseState.Restored)) return false;
+        premium.AdsRemoved = true;
+        if (purchase.IsAcknowledged != true && !string.IsNullOrEmpty(purchase.PurchaseToken))
         {
-            premium.AdsRemoved = true;
-            foreach (var p in purchases!) _ = AcknowledgeAsync(p);
+            // If this fails, it is retried on the next start (RefreshAsync).
+            await billing.FinalizePurchaseAsync([purchase.PurchaseToken]);
         }
 
-        _purchase?.TrySetResult(bought);
+        return true;
     }
 
-    private async Task AcknowledgeAsync(Purchase purchase)
+    /// <summary>Connects to the store for the operation; null when the store is unavailable (no Google Play, offline).</summary>
+    private async Task<T?> WithBillingAsync<T>(Func<IInAppBilling, Task<T>> operation)
     {
-        if (purchase.IsAcknowledged || purchase.PurchaseState != PurchaseState.Purchased) return;
-        await _client!.AcknowledgePurchaseAsync(AcknowledgePurchaseParams.NewBuilder().SetPurchaseToken(purchase.PurchaseToken).Build());
-    }
-
-    private async Task<bool> ConnectAsync()
-    {
-        _client ??= BillingClient.NewBuilder(Platform.AppContext)
-            .SetListener(this)
-            .EnablePendingPurchases(PendingPurchasesParams.NewBuilder().EnableOneTimeProducts().Build())
-            .Build();
-        if (_client.IsReady) return true;
-        var connected = new TaskCompletionSource<bool>();
-        _client.StartConnection(new StateListener(connected));
-        return await Task.WhenAny(connected.Task, Task.Delay(TimeSpan.FromSeconds(10))) == connected.Task && connected.Task.Result;
-    }
-
-    private sealed class StateListener(TaskCompletionSource<bool> connected) : Java.Lang.Object, IBillingClientStateListener
-    {
-        public void OnBillingSetupFinished(BillingResult result) => connected.TrySetResult(result.ResponseCode == BillingResponseCode.Ok);
-
-        public void OnBillingServiceDisconnected() => connected.TrySetResult(false);
+        await _billingLock.WaitAsync();
+        var billing = CrossInAppBilling.Current;
+        try
+        {
+            if (!await billing.ConnectAsync(true)) return default;
+            return await operation(billing);
+        }
+        finally
+        {
+            await billing.DisconnectAsync();
+            _billingLock.Release();
+        }
     }
 }
 
