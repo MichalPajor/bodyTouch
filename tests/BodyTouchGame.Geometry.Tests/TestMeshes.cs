@@ -59,13 +59,13 @@ internal static class TestMeshes
         var random = new Random(seed);
         var positions = new Vector3[(nx + 1) * (ny + 1)];
         for (var j = 0; j <= ny; j++)
-        for (var i = 0; i <= nx; i++)
-        {
-            var p = new Vector3(i * width / nx, j * height / ny, 0);
-            if (jitter > 0 && i > 0 && j > 0 && i < nx && j < ny)
-                p += new Vector3((float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1), 0) * (jitter * step);
-            positions[j * (nx + 1) + i] = p;
-        }
+            for (var i = 0; i <= nx; i++)
+            {
+                var p = new Vector3(i * width / nx, j * height / ny, 0);
+                if (jitter > 0 && i > 0 && j > 0 && i < nx && j < ny)
+                    p += new Vector3((float)(random.NextDouble() * 2 - 1), (float)(random.NextDouble() * 2 - 1), 0) * (jitter * step);
+                positions[j * (nx + 1) + i] = p;
+            }
 
         return new TestMesh(positions, GridIndices(nx, ny, wrapX: false));
     }
@@ -99,12 +99,12 @@ internal static class TestMeshes
         {
             var grid = new int[divisions + 1, divisions + 1];
             for (var i = 0; i <= divisions; i++)
-            for (var j = 0; j <= divisions; j++)
-                grid[i, j] = Vertex(origin + u * ((float)i / divisions) + v * ((float)j / divisions));
+                for (var j = 0; j <= divisions; j++)
+                    grid[i, j] = Vertex(origin + u * ((float)i / divisions) + v * ((float)j / divisions));
 
             for (var i = 0; i < divisions; i++)
-            for (var j = 0; j < divisions; j++)
-                AddCell(indices, grid[i, j], grid[i + 1, j], grid[i + 1, j + 1], grid[i, j + 1], (i + j) % 2 == 0);
+                for (var j = 0; j < divisions; j++)
+                    AddCell(indices, grid[i, j], grid[i + 1, j], grid[i + 1, j + 1], grid[i, j + 1], (i + j) % 2 == 0);
         }
 
         return new TestMesh(positions.ToArray(), indices.ToArray());
@@ -115,11 +115,11 @@ internal static class TestMeshes
     {
         var positions = new Vector3[segments * (rings + 1)];
         for (var j = 0; j <= rings; j++)
-        for (var i = 0; i < segments; i++)
-        {
-            var angle = 2 * MathF.PI * i / segments;
-            positions[j * segments + i] = new Vector3(radius * MathF.Cos(angle), radius * MathF.Sin(angle), height * j / rings);
-        }
+            for (var i = 0; i < segments; i++)
+            {
+                var angle = 2 * MathF.PI * i / segments;
+                positions[j * segments + i] = new Vector3(radius * MathF.Cos(angle), radius * MathF.Sin(angle), height * j / rings);
+            }
 
         return new TestMesh(positions, GridIndices(segments, rings, wrapX: true));
     }
@@ -150,8 +150,8 @@ internal static class TestMeshes
         }
 
         for (var j = 1; j < rings - 1; j++)
-        for (var i = 0; i < segments; i++)
-            AddCell(indices, Ring(j, i), Ring(j, i + 1), Ring(j + 1, i + 1), Ring(j + 1, i), (i + j) % 2 == 0);
+            for (var i = 0; i < segments; i++)
+                AddCell(indices, Ring(j, i), Ring(j, i + 1), Ring(j + 1, i + 1), Ring(j + 1, i), (i + j) % 2 == 0);
 
         return new TestMesh(positions.ToArray(), indices.ToArray());
     }
@@ -161,24 +161,24 @@ internal static class TestMeshes
     {
         var positions = new Vector3[majorSegments * minorSegments];
         for (var j = 0; j < minorSegments; j++)
-        for (var i = 0; i < majorSegments; i++)
-        {
-            var u = 2 * MathF.PI * i / majorSegments;
-            var v = 2 * MathF.PI * j / minorSegments;
-            var r = majorRadius + minorRadius * MathF.Cos(v);
-            positions[j * majorSegments + i] = new Vector3(r * MathF.Cos(u), r * MathF.Sin(u), minorRadius * MathF.Sin(v));
-        }
+            for (var i = 0; i < majorSegments; i++)
+            {
+                var u = 2 * MathF.PI * i / majorSegments;
+                var v = 2 * MathF.PI * j / minorSegments;
+                var r = majorRadius + minorRadius * MathF.Cos(v);
+                positions[j * majorSegments + i] = new Vector3(r * MathF.Cos(u), r * MathF.Sin(u), minorRadius * MathF.Sin(v));
+            }
 
         var indices = new List<int>();
         for (var j = 0; j < minorSegments; j++)
-        for (var i = 0; i < majorSegments; i++)
-        {
-            int a = j * majorSegments + i;
-            int b = j * majorSegments + (i + 1) % majorSegments;
-            int c = (j + 1) % minorSegments * majorSegments + (i + 1) % majorSegments;
-            int d = (j + 1) % minorSegments * majorSegments + i;
-            AddCell(indices, a, b, c, d, (i + j) % 2 == 0);
-        }
+            for (var i = 0; i < majorSegments; i++)
+            {
+                int a = j * majorSegments + i;
+                int b = j * majorSegments + (i + 1) % majorSegments;
+                int c = (j + 1) % minorSegments * majorSegments + (i + 1) % majorSegments;
+                int d = (j + 1) % minorSegments * majorSegments + i;
+                AddCell(indices, a, b, c, d, (i + j) % 2 == 0);
+            }
 
         return new TestMesh(positions, indices.ToArray());
     }
@@ -188,11 +188,11 @@ internal static class TestMeshes
         var columns = wrapX ? nx : nx + 1;
         var indices = new List<int>(nx * ny * 6);
         for (var j = 0; j < ny; j++)
-        for (var i = 0; i < nx; i++)
-        {
-            var i1 = wrapX ? (i + 1) % nx : i + 1;
-            AddCell(indices, j * columns + i, j * columns + i1, (j + 1) * columns + i1, (j + 1) * columns + i, (i + j) % 2 == 0);
-        }
+            for (var i = 0; i < nx; i++)
+            {
+                var i1 = wrapX ? (i + 1) % nx : i + 1;
+                AddCell(indices, j * columns + i, j * columns + i1, (j + 1) * columns + i1, (j + 1) * columns + i, (i + j) % 2 == 0);
+            }
 
         return indices.ToArray();
     }

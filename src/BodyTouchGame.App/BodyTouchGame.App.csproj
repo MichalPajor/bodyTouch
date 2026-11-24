@@ -29,7 +29,7 @@
 		<ApplicationId>place.yourmoment.bodytouchgame</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
 		<!-- API 23 (Android 6.0): required by Google Mobile Ads / Play Billing (stage 11). -->

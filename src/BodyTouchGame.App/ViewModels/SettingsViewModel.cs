@@ -17,7 +17,7 @@ public sealed partial class SettingsViewModel : ObservableObject
     private readonly AdService _ads;
     private readonly IDialogService _dialogs;
 
-    public SettingsViewModel(ISettingsService settings, INavigationService navigation, IAppInfo appInfo, LocalizationService localization,
+    public SettingsViewModel(ISettingsService settings, INavigationService navigation, LocalizationService localization,
         PremiumState premium, PurchaseService purchases, AdService ads, IDialogService dialogs)
     {
         _premium = premium;
@@ -28,7 +28,6 @@ public sealed partial class SettingsViewModel : ObservableObject
         _navigation = navigation;
         SoundEnabled = settings.SoundEnabled;
         ConfettiEnabled = settings.ConfettiEnabled;
-        VersionText = string.Format(AppCulture.Format, AppResources.VersionFormat, appInfo.VersionString);
         var language = localization.Choice.Length == 0
             ? string.Format(AppCulture.Format, AppResources.LanguageSystem, LocalizationService.SystemLanguage.NativeName)
             : localization.Current.NativeName;
@@ -40,8 +39,6 @@ public sealed partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     public partial bool ConfettiEnabled { get; set; }
-
-    public string VersionText { get; }
 
     public string LanguageText { get; }
 

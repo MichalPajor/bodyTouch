@@ -146,9 +146,9 @@ public sealed class TriangleSpatialIndex
         int y0 = Cell(lo.Y, _ny), y1 = Cell(hi.Y, _ny);
         int z0 = Cell(lo.Z, _nz), z1 = Cell(hi.Z, _nz);
         for (var x = x0; x <= x1; x++)
-        for (var y = y0; y <= y1; y++)
-        for (var z = z0; z <= z1; z++)
-            action((x * _ny + y) * _nz + z);
+            for (var y = y0; y <= y1; y++)
+                for (var z = z0; z <= z1; z++)
+                    action((x * _ny + y) * _nz + z);
     }
 
     private int Cell(float offset, int count) => Math.Clamp((int)(offset / _cellSize), 0, count - 1);

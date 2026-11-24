@@ -172,14 +172,17 @@ public abstract class TypedInterstitialLoadCallback : InterstitialAdLoadCallback
     }
 
     private static Delegate GetOnAdLoadedHandler() =>
-        _onAdLoaded ??= Android.Runtime.JNINativeWrapper.CreateDelegate(new Action<IntPtr, IntPtr, IntPtr>(OnAdLoadedNative));
+        _onAdLoaded ??= Android.Runtime.JNINativeWrapper.CreateDelegate(new Action<IntPtr, IntPtr, IntPtr>(n_OnAdLoaded));
 
-    private static void OnAdLoadedNative(IntPtr env, IntPtr self, IntPtr ad)
+    // The name n_OnAdLoaded is what the Android build expects for static registration of onAdLoaded.
+#pragma warning disable IDE1006
+    private static void n_OnAdLoaded(IntPtr env, IntPtr self, IntPtr ad)
     {
         var callback = GetObject<TypedInterstitialLoadCallback>(env, self, Android.Runtime.JniHandleOwnership.DoNotTransfer);
         var interstitial = GetObject<InterstitialAd>(ad, Android.Runtime.JniHandleOwnership.DoNotTransfer);
         if (callback is not null && interstitial is not null) callback.OnInterstitialLoaded(interstitial);
     }
+#pragma warning restore IDE1006
 }
 
 /// <summary>

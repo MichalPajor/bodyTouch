@@ -33,7 +33,6 @@
   <data name="ExcludedZones" xml:space="preserve"><value>Hariç tutulan bölgeler</value></data>
   <data name="Sounds" xml:space="preserve"><value>Sesler</value></data>
   <data name="ConfettiOnHit" xml:space="preserve"><value>İsabette konfeti</value></data>
-  <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · sürüm {0}</value></data>
 
   <!-- 3D view panel -->
   <data name="RotateHint" xml:space="preserve"><value>Parmağınla döndür</value></data>

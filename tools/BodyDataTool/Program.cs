@@ -117,16 +117,16 @@ internal static class TriangleMatcher
             var best = -1;
             var bestDistance = Tolerance;
             for (var dx = -1; dx <= 1; dx++)
-            for (var dy = -1; dy <= 1; dy++)
-            for (var dz = -1; dz <= 1; dz++)
-            {
-                if (!grid.TryGetValue((kx + dx, ky + dy, kz + dz), out var list)) continue;
-                foreach (var b in list)
-                {
-                    var d = Vector3.Distance(c, new Vector3(centroids[b * 3], centroids[b * 3 + 1], centroids[b * 3 + 2]));
-                    if (d <= bestDistance && !used[b]) { bestDistance = d; best = b; }
-                }
-            }
+                for (var dy = -1; dy <= 1; dy++)
+                    for (var dz = -1; dz <= 1; dz++)
+                    {
+                        if (!grid.TryGetValue((kx + dx, ky + dy, kz + dz), out var list)) continue;
+                        foreach (var b in list)
+                        {
+                            var d = Vector3.Distance(c, new Vector3(centroids[b * 3], centroids[b * 3 + 1], centroids[b * 3 + 2]));
+                            if (d <= bestDistance && !used[b]) { bestDistance = d; best = b; }
+                        }
+                    }
 
             if (best < 0) throw new InvalidDataException($"glb triangle {t} has no matching Blender triangle (centroid {c}).");
             used[best] = true;

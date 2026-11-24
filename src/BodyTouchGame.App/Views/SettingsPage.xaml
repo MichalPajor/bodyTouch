@@ -10,10 +10,9 @@
     <Grid>
         <controls:ConfettiBackground />
 
-        <!-- Scrolls on short screens; otherwise the content fills the screen and the version sits at the bottom
-             (MinimumHeightRequest of the grid follows the viewport height, see code-behind). -->
+        <!-- Scrolls on short screens. -->
         <ScrollView x:Name="Scroller">
-        <Grid x:Name="ContentGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto" RowSpacing="16" Padding="20,12,20,16">
+        <Grid x:Name="ContentGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="16" Padding="20,12,20,16">
             <Label Text="{x:Static res:AppResources.Settings}" Style="{StaticResource ScreenTitle}" />
 
             <Label Grid.Row="1" Text="{x:Static res:AppResources.SectionGame}" Style="{StaticResource SectionHeader}" TextColor="{StaticResource PartyPink}" />
@@ -51,8 +50,6 @@
                     <controls:SettingsRow Text="{x:Static res:AppResources.RateApp}" Command="{Binding RateAppCommand}" ShowDivider="False" />
                 </VerticalStackLayout>
             </Border>
-
-            <Label Grid.Row="10" Text="{Binding VersionText}" FontSize="12" TextColor="{StaticResource Muted}" HorizontalOptions="Center" />
         </Grid>
         </ScrollView>
     </Grid>

@@ -124,6 +124,7 @@ const customPointMaterial = new THREE.MeshStandardMaterial({ color: COLORS.custo
 function resize() {
   const w = container.clientWidth || 1;
   const h = container.clientHeight || 1;
+  state.resizes = (state.resizes || 0) + 1;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   // Shift the picture so its centre is the centre of the area not covered by overlays.
@@ -132,8 +133,11 @@ function resize() {
   camera.updateProjectionMatrix();
   if (state.body) {
     updateHome(state.body);
-    if (!state.userMoved && !state.cameraTween) resetCamera('Front');
+    // A camera in a home pose (resetCamera, nobody touched it since) is re-framed for the new size, otherwise the
+    // model would appear scaled or shifted; then the frame is drawn at once, so no stretched picture is ever shown.
+    if (state.atHome && !state.cameraTween) resetCamera(state.homeView || 'Front');
   }
+  renderer.render(scene, camera);
 }
 new ResizeObserver(resize).observe(container);
 resize();
@@ -184,6 +188,8 @@ function resetCamera(view = 'Front', animate = false) {
   const { target, distance } = state.home;
   const position = new THREE.Vector3(target.x + distance * Math.sin(a), target.y, target.z + distance * Math.cos(a));
   moveCamera(position, target, animate);
+  state.atHome = true;          // re-applied on resize until the camera is moved by the user or by a focus
+  state.homeView = view;
   return true;
 }
 
@@ -436,6 +442,7 @@ function getDebugState() {
     hasTarget: state.target !== null || state.highlight !== null || state.targetMarker !== null,
     hasPin: state.pin !== null,
     hasReveal: state.revealGroup !== null,
+    width: container.clientWidth, height: container.clientHeight, resizes: state.resizes || 0,
     arrows: state.arrowGroup ? state.arrowGroup.children.filter((o) => o.geometry?.type === 'ConeGeometry').length : 0,
   };
 }
@@ -626,6 +633,7 @@ function applyColors(amount) {
 // ------------------------------------------------------------------ camera
 
 function moveCamera(position, target, animate) {
+  state.atHome = false;
   if (!animate) {
     state.cameraTween = null;
     controls.target.copy(target);
@@ -781,6 +789,7 @@ function screenDistanceTo(object, clientX, clientY) {
 renderer.domElement.addEventListener('pointerdown', (e) => {
   pointers.set(e.pointerId, e);
   state.userMoved = true;
+  state.atHome = false;
   state.cameraTween = null;
   tapCandidate = pointers.size === 1 ? { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() } : null;
   // Touching an existing pin drags it ("Przytrzymaj, by przesunąć").

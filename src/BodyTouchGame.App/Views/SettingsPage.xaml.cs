@@ -8,6 +8,5 @@ public partial class SettingsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
-        Scroller.SizeChanged += (_, _) => ContentGrid.MinimumHeightRequest = Scroller.Height;
     }
 }

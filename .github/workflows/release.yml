@@ -1,0 +1,188 @@
+# ---------------------------------------------------------------------------
+# Body Touch Game – wydanie (na wzór projektu testowy)
+# ---------------------------------------------------------------------------
+# Osobny przebieg dla wydania: pakiet AAB, podpisywanie i wersja ze znacznika gita.
+#
+# Osobny plik, bo wydanie ma inne wyzwalacze (znacznik, nie commit), inne uprawnienia (zapis
+# wydań) i dostęp do sekretów z kluczem podpisu – nie wpuszczamy go w każdy przebieg z PR.
+#
+# Znacznik nadaje wersję widoczną dla użytkownika (v1.2.3 → 1.2.3), a numer przebiegu – kod
+# wersji dla sklepu (musi rosnąć z każdym wgraniem; numer przebiegu tę własność ma).
+#
+# Sekrety (Settings → Secrets and variables → Actions):
+#   ANDROID_KEYSTORE_BASE64   – plik .keystore zakodowany base64
+#   ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD, ANDROID_KEYSTORE_PASSWORD
+# Bez nich powstaje pakiet bez podpisu (do sprawdzenia przebiegu, nie do sklepu).
+# ---------------------------------------------------------------------------
+
+name: Wydanie
+
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+    inputs:
+      wersja:
+        description: 'Wersja do zbudowania, np. 1.0.0'
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  BTG_BUILD_ROOT: ${{ github.workspace }}/out
+
+jobs:
+  pakiet:
+    name: Pakiet AAB
+    runs-on: ubuntu-latest
+
+    env:
+      MAGAZYN_KLUCZY: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: .NET SDK
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Workload MAUI (Android)
+        run: dotnet workload install maui-android
+
+      - name: Ustalenie wersji
+        id: wersja
+        run: |
+          if [ -n "${{ inputs.wersja }}" ]; then
+            WERSJA="${{ inputs.wersja }}"
+          else
+            WERSJA="${GITHUB_REF_NAME#v}"
+          fi
+
+          echo "numer=$WERSJA" >> "$GITHUB_OUTPUT"
+          echo "Wersja wydania: $WERSJA (kod ${{ github.run_number }})"
+
+      # Wersja w projekcie aplikacji musi zgadzać się ze znacznikiem – to ta wartość trafia
+      # do sklepu jako wersja widoczna dla użytkownika.
+      - name: Kontrola zgodności wersji
+        run: |
+          W_PLIKU=$(grep -oP '(?<=<ApplicationDisplayVersion>)[^<]+' src/BodyTouchGame.App/BodyTouchGame.App.csproj | head -1)
+          ZE_ZNACZNIKA="${{ steps.wersja.outputs.numer }}"
+
+          if [ "$W_PLIKU" != "$ZE_ZNACZNIKA" ]; then
+            echo "::error::Znacznik mówi $ZE_ZNACZNIKA, a ApplicationDisplayVersion w BodyTouchGame.App.csproj to $W_PLIKU."
+            echo 'Podnies ApplicationDisplayVersion do numeru ze znacznika albo oznacz inny commit.'
+            exit 1
+          fi
+
+          echo "Wersja zgodna: $W_PLIKU"
+
+      # Testy przed pakietem: wydanie, którego testy nie przechodzą, nie ma prawa powstać.
+      - name: Testy
+        run: |
+          for projekt in tests/*/*.csproj; do
+            dotnet test "$projekt" --configuration Release
+          done
+
+      # Testowe identyfikatory Google zawsze zwracają reklamę testową, więc pakiet z nimi wygląda
+      # na sprawny i nie zarabia – a zauważa się to po tygodniach. Znacznik (prawdziwe wydanie):
+      # BLOKADA. Uruchomienie ręczne (przebieg próbny, np. sprawdzenie podpisu): tylko ostrzeżenie.
+      - name: Kontrola identyfikatorów reklam
+        run: |
+          if grep -rq 'ca-app-pub-3940256099942544' \
+               src/BodyTouchGame.App/Services/Monetization.cs \
+               src/BodyTouchGame.App/Platforms/Android/AndroidManifest.xml; then
+            if [ '${{ startsWith(github.ref, 'refs/tags/v') }}' = 'true' ]; then
+              echo '::error::Pakiet wydania ma TESTOWE identyfikatory reklam Google.'
+              echo 'Wpisz identyfikatory z konta AdMob w AdService.InterstitialUnitId (Services/Monetization.cs) i w AndroidManifest.xml.'
+              exit 1
+            fi
+
+            echo '::warning::Przebieg probny: w kodzie sa TESTOWE identyfikatory reklam Google.'
+            echo 'Pakiet z tego przebiegu nie nadaje sie do sklepu – sluzy do sprawdzenia podpisu.'
+          fi
+
+      - name: Odtworzenie klucza podpisu
+        if: env.MAGAZYN_KLUCZY != ''
+        run: |
+          echo "$MAGAZYN_KLUCZY" | base64 --decode > "$RUNNER_TEMP/klucz.keystore"
+
+      - name: Pakiet AAB (podpisany)
+        if: env.MAGAZYN_KLUCZY != ''
+        run: >
+          dotnet publish src/BodyTouchGame.App/BodyTouchGame.App.csproj
+          --configuration Release
+          --framework net10.0-android
+          -p:AndroidPackageFormat=aab
+          -p:ApplicationDisplayVersion=${{ steps.wersja.outputs.numer }}
+          -p:ApplicationVersion=${{ github.run_number }}
+          -p:AndroidKeyStore=true
+          -p:AndroidSigningKeyStore=$RUNNER_TEMP/klucz.keystore
+          -p:AndroidSigningKeyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          -p:AndroidSigningKeyPass=${{ secrets.ANDROID_KEY_PASSWORD }}
+          -p:AndroidSigningStorePass=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+
+      # Bez sekretów też budujemy, ale pakietu bez podpisu nie da się wgrać do sklepu –
+      # nazwa artefaktu mówi to wprost.
+      - name: Pakiet AAB (bez podpisu)
+        if: env.MAGAZYN_KLUCZY == ''
+        run: >
+          dotnet publish src/BodyTouchGame.App/BodyTouchGame.App.csproj
+          --configuration Release
+          --framework net10.0-android
+          -p:AndroidPackageFormat=aab
+          -p:ApplicationDisplayVersion=${{ steps.wersja.outputs.numer }}
+          -p:ApplicationVersion=${{ github.run_number }}
+
+      - name: Usunięcie klucza podpisu
+        if: always() && env.MAGAZYN_KLUCZY != ''
+        run: rm -f "$RUNNER_TEMP/klucz.keystore"
+
+      # Jeden plik do wgrania, a nie całe drzewo katalogów z kilkoma .aab.
+      - name: Przygotowanie pakietu do wydania
+        id: pakiet
+        run: |
+          KATALOG=out/bin/BodyTouchGame.App/Release/net10.0-android/publish
+          mkdir -p pakiet
+
+          # Bez klucza publish i tak tworzy *-Signed.aab – podpisany kluczem debug, którego sklep nie
+          # przyjmie. O podpisie decyduje więc obecność sekretu, a nie nazwa pliku.
+          if [ -n "$MAGAZYN_KLUCZY" ]; then
+            PLIK=$(ls "$KATALOG"/*-Signed.aab | head -1)
+            NAZWA="body-touch-game-${{ steps.wersja.outputs.numer }}.aab"
+          else
+            PLIK=$(ls "$KATALOG"/*.aab | grep -v -- '-Signed.aab' | head -1)
+            NAZWA="body-touch-game-${{ steps.wersja.outputs.numer }}-BEZ-PODPISU.aab"
+            echo '::warning::Pakiet nie jest podpisany – Google Play go odrzuci.'
+          fi
+
+          cp "$PLIK" "pakiet/$NAZWA"
+          echo "nazwa=$NAZWA" >> "$GITHUB_OUTPUT"
+          echo "Do wydania: $NAZWA ($(du -h "pakiet/$NAZWA" | cut -f1))"
+
+      - name: Pakiet jako artefakt
+        uses: actions/upload-artifact@v7
+        with:
+          name: body-touch-game-${{ steps.wersja.outputs.numer }}-aab${{ env.MAGAZYN_KLUCZY == '' && '-bez-podpisu' || '' }}
+          path: pakiet/*.aab
+          if-no-files-found: error
+
+      # Wydanie w GitHubie wbudowanym narzędziem gh – mniej cudzych akcji w łańcuchu z kluczem podpisu.
+      - name: Wydanie w GitHubie
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "Body Touch Game ${{ steps.wersja.outputs.numer }}" \
+            --generate-notes \
+            pakiet/*.aab

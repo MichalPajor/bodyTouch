@@ -60,7 +60,7 @@ public sealed partial class GameViewModel(
 
     // ---- state flags (which panel is visible)
     [ObservableProperty, NotifyPropertyChangedFor(nameof(IsWhoIsNext), nameof(IsDraw), nameof(IsTouching), nameof(IsCurtain), nameof(IsGuessing),
-         nameof(IsReveal), nameof(IsSummary), nameof(ShowBody), nameof(ShowHeader), nameof(ShowProgress), nameof(ShowOverlay))]
+         nameof(IsReveal), nameof(IsSummary), nameof(ShowBody), nameof(ShowHeader), nameof(IsGuessLayout), nameof(ShowProgress), nameof(ShowOverlay))]
     public partial GameState State { get; set; } = GameState.Setup;
 
     public bool IsWhoIsNext => State == GameState.WhoIsNext;
@@ -68,10 +68,17 @@ public sealed partial class GameViewModel(
     public bool IsTouching => State == GameState.Touching;
     public bool IsCurtain => State == GameState.Curtain;
     public bool IsGuessing => State == GameState.Guessing;
+
+    /// <summary>
+    /// The screen under the touch countdown and the curtain already has the Guessing layout (title, pin panel), so the
+    /// 3D view keeps its size when the guesser's screen appears – a size change re-framed the model in front of the
+    /// players ("jump" after "Gotowe!", owner's remark). Nothing of the target is in this layout.
+    /// </summary>
+    public bool IsGuessLayout => State is GameState.Touching or GameState.Curtain or GameState.Guessing;
     public bool IsReveal => State == GameState.Reveal;
     public bool IsSummary => State == GameState.SessionSummary;
     public bool ShowBody => State is GameState.Draw or GameState.Guessing or GameState.Reveal;
-    public bool ShowHeader => State is GameState.Draw or GameState.Guessing or GameState.Reveal;
+    public bool ShowHeader => State is GameState.Draw or GameState.Reveal || IsGuessLayout;
     public bool ShowProgress => State is GameState.Draw or GameState.Reveal;
     public bool ShowOverlay => !ShowBody;
 
@@ -291,7 +298,14 @@ public sealed partial class GameViewModel(
         State = _session.State;
         UpdateHeader();
         CanStartTouch = _session.CanStartTouch;
-        HasGuessTimer = false;
+        // The guess timer (and the empty pin panel) is laid out already behind the countdown and the curtain.
+        HasGuessTimer = IsGuessLayout && _session.Config.GuessSeconds is not null;
+        if (State is GameState.Touching or GameState.Curtain)
+        {
+            HasPin = false;
+            PinZoneText = string.Empty;
+            if (_session.Config.GuessSeconds is { } preview) GuessTimerText = FormatClock(preview);
+        }
 
         switch (State)
         {
@@ -309,7 +323,6 @@ public sealed partial class GameViewModel(
             case GameState.Guessing:
                 HasPin = false;
                 PinZoneText = string.Empty;
-                HasGuessTimer = _session.Config.GuessSeconds is not null;
                 if (_session.Config.GuessSeconds is { } limit)
                 {
                     GuessTimerText = FormatClock(limit);
@@ -336,7 +349,7 @@ public sealed partial class GameViewModel(
             if (state is GameState.Curtain or GameState.Guessing or GameState.Touching)
             {
                 var debug = await _bridge.GetDebugStateAsync();
-                Console.WriteLine($"[BTG] secrecy {state}: view hasTarget={debug?.HasTarget} mode={debug?.Mode}");
+                Console.WriteLine($"[BTG] secrecy {state}: view hasTarget={debug?.HasTarget} mode={debug?.Mode} size={debug?.Width}x{debug?.Height} resizes={debug?.Resizes}");
                 if (debug?.HasTarget == true) Console.WriteLine($"[BTG] SECRECY VIOLATION in {state}");
             }
         }

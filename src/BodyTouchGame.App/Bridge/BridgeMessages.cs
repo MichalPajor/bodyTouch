@@ -29,7 +29,7 @@ public sealed record StatsMessage(double FpsAvg, double FpsMin, double FrameMsP9
 public sealed record ModelLoadedResult(int Triangles, double LoadMs, double PageMs);
 
 /// <summary>Result of getDebugState: what the view currently holds (target-secrecy check, spec 5).</summary>
-public sealed record ViewDebugState(string Mode, bool HasTarget, bool HasPin, bool HasReveal, int Arrows = 0);
+public sealed record ViewDebugState(string Mode, bool HasTarget, bool HasPin, bool HasReveal, int Arrows = 0, double Width = 0, double Height = 0, int Resizes = 0);
 
 /// <summary>C# -> JS: a custom point marker (editor, zone set preview).</summary>
 public sealed record CustomPointDto(long Id, int TriangleIndex, float BaryU, float BaryV, float RadiusCm, bool Highlighted);

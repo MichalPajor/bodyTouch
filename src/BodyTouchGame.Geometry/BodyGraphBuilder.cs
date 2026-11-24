@@ -58,13 +58,13 @@ public static class BodyGraphBuilder
             {
                 next.Clear();
                 foreach (var u in frontier)
-                foreach (var w in adjacency[u])
-                {
-                    if (stamp[w] == v + 1) continue;
-                    stamp[w] = v + 1;
-                    next.Add(w);
-                    ring.Add(w);
-                }
+                    foreach (var w in adjacency[u])
+                    {
+                        if (stamp[w] == v + 1) continue;
+                        stamp[w] = v + 1;
+                        next.Add(w);
+                        ring.Add(w);
+                    }
 
                 (frontier, next) = (next, frontier);
             }
@@ -100,11 +100,11 @@ public static class BodyGraphBuilder
         var vertexTriangles = new int[meshPositions.Length];
         Array.Fill(vertexTriangles, -1);
         for (var t = 0; t < triangleCount; t++)
-        for (var k = 0; k < 3; k++)
-        {
-            var v = meshIndices[t * 3 + k];
-            if (vertexTriangles[v] < 0) vertexTriangles[v] = t;
-        }
+            for (var k = 0; k < 3; k++)
+            {
+                var v = meshIndices[t * 3 + k];
+                if (vertexTriangles[v] < 0) vertexTriangles[v] = t;
+            }
 
         if (Array.IndexOf(vertexTriangles, -1) >= 0)
         {

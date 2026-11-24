@@ -83,7 +83,11 @@ public sealed class PlayerRepository(BodyTouchDatabase database) : IPlayerReposi
 
     private static PlayerEntity ToEntity(Player p) => new()
     {
-        Id = p.Id, Name = p.Name.Trim(), AvatarColor = p.AvatarColor, AvatarEmoji = p.AvatarEmoji, CreatedAt = Json.ToDb(p.CreatedAt),
+        Id = p.Id,
+        Name = p.Name.Trim(),
+        AvatarColor = p.AvatarColor,
+        AvatarEmoji = p.AvatarEmoji,
+        CreatedAt = Json.ToDb(p.CreatedAt),
     };
 }
 

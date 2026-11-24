@@ -1,0 +1,143 @@
+# ---------------------------------------------------------------------------
+# Body Touch Game – weryfikacja każdej zmiany (na wzór projektu testowy)
+# ---------------------------------------------------------------------------
+# restore → build → test → APK → artefakt.
+#
+# Dwa zadania równolegle. Biblioteki i testy (Core, Geometry, Data) celują w czysty net10.0
+# i budują się bez workloadu MAUI, więc odpowiedź „testy przechodzą” przychodzi szybko.
+# Zadanie androidowe instaluje workload, sprawdza formatowanie i buduje APK.
+# ---------------------------------------------------------------------------
+
+name: Weryfikacja
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Nowy commit na tej samej gałęzi unieważnia poprzedni przebieg.
+concurrency:
+  group: weryfikacja-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Directory.Build.props przekierowuje bin/obj poza repozytorium (lokalnie dysk Windows w WSL);
+  # w CI kierujemy je do znanego katalogu w obszarze roboczym.
+  BTG_BUILD_ROOT: ${{ github.workspace }}/out
+
+jobs:
+  testy:
+    name: Testy i pokrycie
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: .NET SDK
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Pamięć podręczna paczek NuGet
+        uses: actions/cache@v6
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      # Projekty testowe wymieniamy jawnie, zamiast budować całą solucję: solucja zawiera
+      # projekt aplikacji, a ten bez workloadu MAUI nie da się nawet wczytać.
+      - name: Odtworzenie paczek
+        run: |
+          for projekt in tests/*/*.csproj; do
+            dotnet restore "$projekt"
+          done
+
+      # Ostrzeżenia jako błędy – łatwiej trzymać zero ostrzeżeń, niż wracać do stu.
+      - name: Build
+        run: |
+          for projekt in tests/*/*.csproj; do
+            dotnet build "$projekt" --configuration Release --no-restore -warnaserror
+          done
+
+      # Testy czytają też prawdziwe dane aplikacji (model, strefy, tłumaczenia) – te pliki są w repozytorium.
+      - name: Testy z pomiarem pokrycia
+        run: |
+          for projekt in tests/*/*.csproj; do
+            dotnet test "$projekt" \
+              --configuration Release \
+              --no-build \
+              --collect:"XPlat Code Coverage" \
+              --results-directory pokrycie \
+              --logger "console;verbosity=normal"
+          done
+
+      - name: Raporty pokrycia jako artefakt
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pokrycie
+          path: pokrycie/**/*.cobertura.xml
+          if-no-files-found: warn
+
+  android:
+    name: Formatowanie i pakiet Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: .NET SDK
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Pamięć podręczna paczek NuGet
+        uses: actions/cache@v6
+        with:
+          path: ~/.nuget/packages
+          key: nuget-android-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: nuget-android-${{ runner.os }}-
+
+      # Tylko Android – tyle potrzebuje ten projekt i tyle się instaluje.
+      - name: Workload MAUI (Android)
+        run: dotnet workload install maui-android
+
+      - name: Odtworzenie paczek
+        run: dotnet restore BodyTouchGame.sln
+
+      # Formatowanie obejmuje całą solucję, a projekt aplikacji bez workloadu MAUI nie daje się
+      # wczytać – dlatego jest tutaj, a nie w zadaniu z testami.
+      - name: Formatowanie i styl
+        run: dotnet format BodyTouchGame.sln --verify-no-changes --no-restore
+
+      - name: Build solucji
+        run: dotnet build BodyTouchGame.sln --configuration Release --no-restore
+
+      # Debug z wbudowanymi bibliotekami: taki APK da się zainstalować bezpośrednio na telefonie
+      # (bez „Fast Deployment”, który działa tylko przy wdrażaniu z komputera).
+      - name: Pakiet APK (debug)
+        run: >
+          dotnet build src/BodyTouchGame.App/BodyTouchGame.App.csproj
+          --configuration Debug
+          --framework net10.0-android
+          -p:AndroidPackageFormat=apk
+          -p:EmbedAssembliesIntoApk=true
+
+      - name: APK jako artefakt
+        uses: actions/upload-artifact@v7
+        with:
+          name: body-touch-game-debug-apk
+          path: out/bin/BodyTouchGame.App/Debug/net10.0-android/*-Signed.apk
+          if-no-files-found: error

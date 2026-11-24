@@ -33,7 +33,6 @@
   <data name="ExcludedZones" xml:space="preserve"><value>Zonas excluidas</value></data>
   <data name="Sounds" xml:space="preserve"><value>Sonidos</value></data>
   <data name="ConfettiOnHit" xml:space="preserve"><value>Confeti al acertar</value></data>
-  <data name="VersionFormat" xml:space="preserve"><value>Body Touch Game · versión {0}</value></data>
 
   <!-- 3D view panel -->
   <data name="RotateHint" xml:space="preserve"><value>Gira con el dedo</value></data>
