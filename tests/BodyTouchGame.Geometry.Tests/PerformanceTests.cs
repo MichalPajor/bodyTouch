@@ -61,18 +61,31 @@ public class PerformanceTests(ITestOutputHelper output)
         var a = new SurfacePoint(10, 0.3f, 0.3f);
         var b = new SurfacePoint(Body.TriangleCount / 2, 0.3f, 0.3f);
         var zone = ZoneRegion.FromTriangles(Body, Enumerable.Range(2000, 50));
-        solver.DistanceToPoint(a, b);
-        solver.DistanceToZone(a, zone);
-
-        var before = GC.GetAllocatedBytesForCurrentThread();
-        for (var i = 0; i < 20; i++)
+        for (var i = 0; i < 50; i++)
         {
             solver.DistanceToPoint(a, b);
             solver.DistanceToZone(b, zone);
         }
 
-        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
-        Assert.Equal(0, allocated);
+        // The counter also includes one-off allocations of the runtime itself (e.g. while methods move between JIT
+        // tiers – seen on GitHub runners: 6336 B once, with a newer .NET than the development machine). The claim is
+        // "queries do not allocate", so a round of queries must allocate nothing: an allocation in the queries would
+        // show up in every round, a one-off runtime allocation only in one.
+        var rounds = new List<long>();
+        for (var round = 0; round < 5 && (rounds.Count == 0 || rounds[^1] != 0); round++)
+        {
+            var before = GC.GetAllocatedBytesForCurrentThread();
+            for (var i = 0; i < 20; i++)
+            {
+                solver.DistanceToPoint(a, b);
+                solver.DistanceToZone(b, zone);
+            }
+
+            rounds.Add(GC.GetAllocatedBytesForCurrentThread() - before);
+        }
+
+        output.WriteLine($"Allocated per round of 40 queries: {string.Join(", ", rounds)} B");
+        Assert.Equal(0, rounds.Min());
     }
 
     [Fact]
