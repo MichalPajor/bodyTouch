@@ -55,7 +55,13 @@ const state = {
   home: { target: new THREE.Vector3(), distance: 300 },
   pageStart: performance.now(),
   frames: [],
-  insets: { top: 0, bottom: 0 },
+  insets: { top: 0, bottom: 0 },   // CSS px covered by native overlays; the model is framed in the rest
+  shift: 0,                    // vertical picture shift applied now (CSS px); follows the insets, smoothly when animated
+  shiftTween: null,
+  // Horizontal direction (unit vector) from the home centre while the camera is in a home pose: reset view or turned
+  // towards a target, at the home distance. Such a pose is re-framed when the size or the free area changes; null
+  // after the user moves the camera or after a zoom / close-up.
+  homeDir: null,
   bench: null,
   userMoved: false,
 };
@@ -127,17 +133,28 @@ function resize() {
   state.resizes = (state.resizes || 0) + 1;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
-  // Shift the picture so its centre is the centre of the area not covered by overlays.
-  const shift = (state.insets.bottom - state.insets.top) / 2;
-  if (shift !== 0) camera.setViewOffset(w, h, 0, shift, w, h); else camera.clearViewOffset();
-  camera.updateProjectionMatrix();
+  if (!state.shiftTween) state.shift = targetShift();
+  applyProjection();
   if (state.body) {
     updateHome(state.body);
-    // A camera in a home pose (resetCamera, nobody touched it since) is re-framed for the new size, otherwise the
-    // model would appear scaled or shifted; then the frame is drawn at once, so no stretched picture is ever shown.
-    if (state.atHome && !state.cameraTween) resetCamera(state.homeView || 'Front');
+    // A camera in a home pose is re-framed for the new size at once (a running tween to a home pose follows the new
+    // home by itself), otherwise the model would appear scaled or shifted; then the frame is drawn immediately, so no
+    // stretched picture is ever shown.
+    if (state.homeDir && !state.cameraTween) placeAtHome(state.homeDir, false);
   }
   renderer.render(scene, camera);
+}
+
+/** Picture shift that puts the centre of the area not covered by overlays in the middle of the frame. */
+function targetShift() {
+  return (state.insets.bottom - state.insets.top) / 2;
+}
+
+function applyProjection() {
+  const w = container.clientWidth || 1;
+  const h = container.clientHeight || 1;
+  if (state.shift !== 0) camera.setViewOffset(w, h, 0, state.shift, w, h); else camera.clearViewOffset();
+  camera.updateProjectionMatrix();
 }
 new ResizeObserver(resize).observe(container);
 resize();
@@ -185,11 +202,7 @@ function setMode(mode, options = {}) {
 function resetCamera(view = 'Front', animate = false) {
   const angles = { Front: 0, Right: Math.PI / 2, Back: Math.PI, Left: -Math.PI / 2 };
   const a = angles[view] ?? 0;
-  const { target, distance } = state.home;
-  const position = new THREE.Vector3(target.x + distance * Math.sin(a), target.y, target.z + distance * Math.cos(a));
-  moveCamera(position, target, animate);
-  state.atHome = true;          // re-applied on resize until the camera is moved by the user or by a focus
-  state.homeView = view;
+  placeAtHome(new THREE.Vector3(Math.sin(a), 0, Math.cos(a)), animate);
   return true;
 }
 
@@ -447,10 +460,23 @@ function getDebugState() {
   };
 }
 
-/** CSS pixels at the top and bottom covered by native overlays; the model is framed in the remaining area. */
-function setViewInsets(top, bottom) {
-  state.insets = { top: Math.max(0, top || 0), bottom: Math.max(0, bottom || 0) };
-  resize();
+/**
+ * CSS pixels at the top and bottom covered by native overlays; the model is framed in the remaining area.
+ * animate: the picture glides to the new free area (texts appearing over the view, e.g. the result) instead of
+ * jumping; a camera in a home pose follows to the new framing in the same motion.
+ */
+function setViewInsets(top, bottom, animate = false) {
+  const insets = { top: Math.max(0, top || 0), bottom: Math.max(0, bottom || 0) };
+  if (insets.top === state.insets.top && insets.bottom === state.insets.bottom) return true;
+  state.insets = insets;
+  if (!animate || !state.body) {
+    state.shiftTween = null;
+    resize();
+    return true;
+  }
+  state.shiftTween = { start: performance.now(), from: state.shift };
+  updateHome(state.body);
+  if (state.homeDir && !state.cameraTween) placeAtHome(state.homeDir, true);
   return true;
 }
 
@@ -632,8 +658,16 @@ function applyColors(amount) {
 
 // ------------------------------------------------------------------ camera
 
-function moveCamera(position, target, animate) {
-  state.atHome = false;
+/** Camera on the home distance, looking at the home centre from the horizontal direction dir. */
+function placeAtHome(dir, animate) {
+  const { target, distance } = state.home;
+  const position = new THREE.Vector3(target.x + dir.x * distance, target.y, target.z + dir.z * distance);
+  moveCamera(position, target, animate, dir);
+}
+
+/** homeDir: the destination is a home pose (see state.homeDir) – a tween then follows changes of the home. */
+function moveCamera(position, target, animate, homeDir = null) {
+  state.homeDir = homeDir ? homeDir.clone() : null;
   if (!animate) {
     state.cameraTween = null;
     controls.target.copy(target);
@@ -649,20 +683,29 @@ function moveCamera(position, target, animate) {
   };
 }
 
+function easeInOut(k) {
+  return k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+}
+
 /** Turns the camera around the body so that the given direction faces the viewer (full body stays visible). */
 function rotateTowards(direction, animate) {
   const horizontal = new THREE.Vector3(direction.x, 0, direction.z);
   if (horizontal.lengthSq() < 1e-4) horizontal.set(0, 0, 1);
   horizontal.normalize();
-  const { target, distance } = state.home;
-  moveCamera(new THREE.Vector3(target.x + horizontal.x * distance, target.y, target.z + horizontal.z * distance), target, animate);
+  placeAtHome(horizontal, animate);
 }
 
 function stepCamera(now) {
   const t = state.cameraTween;
   if (!t) return;
   const k = Math.min(1, (now - t.start) / CAMERA_TWEEN_MS);
-  const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;   // ease in-out
+  const e = easeInOut(k);
+  if (state.homeDir) {
+    // Destination is a home pose: follow the current home (the free area may change while the camera turns).
+    const { target, distance } = state.home;
+    t.toTarget.copy(target);
+    t.toPos.set(target.x + state.homeDir.x * distance, target.y, target.z + state.homeDir.z * distance);
+  }
   controls.target.lerpVectors(t.fromTarget, t.toTarget, e);
   // Orbit around the target instead of cutting through the body.
   const from = t.fromPos.clone().sub(t.fromTarget);
@@ -679,6 +722,16 @@ function stepCamera(now) {
   camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(sph));
   camera.lookAt(controls.target);
   if (k >= 1) state.cameraTween = null;
+}
+
+/** Glides the picture shift towards the current insets (setViewInsets with animate). */
+function stepShift(now) {
+  const t = state.shiftTween;
+  if (!t) return;
+  const k = Math.min(1, (now - t.start) / CAMERA_TWEEN_MS);
+  state.shift = t.from + (targetShift() - t.from) * easeInOut(k);
+  if (k >= 1) state.shiftTween = null;
+  applyProjection();
 }
 
 // ------------------------------------------------------------------ helpers
@@ -789,7 +842,7 @@ function screenDistanceTo(object, clientX, clientY) {
 renderer.domElement.addEventListener('pointerdown', (e) => {
   pointers.set(e.pointerId, e);
   state.userMoved = true;
-  state.atHome = false;
+  state.homeDir = null;
   state.cameraTween = null;
   tapCandidate = pointers.size === 1 ? { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() } : null;
   // Touching an existing pin drags it ("Przytrzymaj, by przesunąć").
@@ -867,6 +920,7 @@ function frame(now) {
   requestAnimationFrame(frame);
   if (state.bench) stepBenchmark(now);
   stepCamera(now);
+  stepShift(now);
   if (state.highlight?.pulse) applyColors(0.55 + 0.45 * (0.5 + 0.5 * Math.sin(now / 1000 * Math.PI * 1.6)));
   if (state.revealAnim) {
     const a = state.revealAnim;
@@ -880,6 +934,7 @@ function frame(now) {
   }
   if (!state.cameraTween) controls.update();
   renderer.render(scene, camera);
+
 
   state.frames.push(now);
   while (state.frames.length && now - state.frames[0] > 1000) state.frames.shift();

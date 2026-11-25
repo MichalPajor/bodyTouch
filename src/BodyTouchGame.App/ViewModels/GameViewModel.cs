@@ -60,7 +60,7 @@ public sealed partial class GameViewModel(
 
     // ---- state flags (which panel is visible)
     [ObservableProperty, NotifyPropertyChangedFor(nameof(IsWhoIsNext), nameof(IsDraw), nameof(IsTouching), nameof(IsCurtain), nameof(IsGuessing),
-         nameof(IsReveal), nameof(IsSummary), nameof(ShowBody), nameof(ShowHeader), nameof(IsGuessLayout), nameof(ShowProgress), nameof(ShowOverlay))]
+         nameof(IsReveal), nameof(IsSummary), nameof(ShowBody), nameof(ShowHeader), nameof(IsGuessLayout), nameof(IsDrawLayout), nameof(ShowProgress), nameof(ShowOverlay))]
     public partial GameState State { get; set; } = GameState.Setup;
 
     public bool IsWhoIsNext => State == GameState.WhoIsNext;
@@ -75,11 +75,17 @@ public sealed partial class GameViewModel(
     /// players ("jump" after "Gotowe!", owner's remark). Nothing of the target is in this layout.
     /// </summary>
     public bool IsGuessLayout => State is GameState.Touching or GameState.Curtain or GameState.Guessing;
+
+    /// <summary>
+    /// The same for the draw: under the "Kto teraz" screen the Draw layout (header with the pair, tiles, button) is
+    /// already in place, so "Dalej" does not resize the 3D view. The target itself appears only in Draw.
+    /// </summary>
+    public bool IsDrawLayout => State is GameState.WhoIsNext or GameState.Draw;
     public bool IsReveal => State == GameState.Reveal;
     public bool IsSummary => State == GameState.SessionSummary;
     public bool ShowBody => State is GameState.Draw or GameState.Guessing or GameState.Reveal;
-    public bool ShowHeader => State is GameState.Draw or GameState.Reveal || IsGuessLayout;
-    public bool ShowProgress => State is GameState.Draw or GameState.Reveal;
+    public bool ShowHeader => State is GameState.Reveal || IsDrawLayout || IsGuessLayout;
+    public bool ShowProgress => State is GameState.Reveal || IsDrawLayout;
     public bool ShowOverlay => !ShowBody;
 
     // ---- header
@@ -377,7 +383,7 @@ public sealed partial class GameViewModel(
         };
         SubHeader = State switch
         {
-            GameState.Draw => string.Format(Culture, AppResources.PairFormat, s.Model.Name, s.Guesser.Name),
+            GameState.WhoIsNext or GameState.Draw => string.Format(Culture, AppResources.PairFormat, s.Model.Name, s.Guesser.Name),
             GameState.Reveal => string.Format(Culture, AppResources.ResultForFormat, s.Guesser.Name),
             _ => string.Empty,
         };

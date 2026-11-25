@@ -11,6 +11,12 @@
              x:DataType="vm:GameViewModel">
     <ContentPage.Resources>
         <toolkit:InvertedBoolConverter x:Key="Not" />
+        <!-- Under texts lying over the 3D view: the panel colour fading into the view (readable over a close-up). -->
+        <LinearGradientBrush x:Key="TopScrim" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#F2171329" Offset="0" />
+            <GradientStop Color="#D9171329" Offset="0.75" />
+            <GradientStop Color="#00171329" Offset="1" />
+        </LinearGradientBrush>
         <Style x:Key="BigTitle" TargetType="Label">
             <Setter Property="FontFamily" Value="{StaticResource FontTitle}" />
             <Setter Property="FontSize" Value="30" />
@@ -26,43 +32,70 @@
     <Grid>
         <controls:ConfettiBackground />
 
-        <!-- ============ Layer 1: header + 3D panel + footer (Draw, Guessing, Reveal) ============ -->
+        <!-- ============ Layer 1: header + 3D panel + footer (Draw, Guessing, Reveal) ============
+             The 3D view must keep its size whenever it is on screen: a resize of the WebView shows a stretched or a stale
+             picture for a moment (owner's remarks after stage 11). Therefore:
+             - header and footer reserve the same space on the guessing and the result screen (invisible templates below),
+             - texts inside the panel (target, result, legend) lie over the view; the model glides into the free area,
+             - behind the opaque screens the layout of the next screen is already in place (WhoIsNext → Draw layout,
+               countdown and curtain → guessing layout), so the size changes only where nobody sees it. -->
         <Grid RowDefinitions="Auto,*,Auto" RowSpacing="12" Padding="20,12,20,16">
-            <!-- Header -->
-            <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding ShowHeader}">
-                <VerticalStackLayout Spacing="2">
-                    <Label Text="{Binding Header}" Style="{StaticResource Caption}" />
-                    <Label Text="{Binding SubHeader}" Style="{StaticResource SubTitle}" IsVisible="{Binding ShowProgress}" />
+            <!-- Header. Row 0: caption + corner (progress / guess timer, both always laid out, shown with Opacity);
+                 row 1 over the full width: the pair (draw), the result (reveal) or the guessing title. -->
+            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="2" ColumnSpacing="12" IsVisible="{Binding ShowHeader}">
+                <Label Text="{Binding Header}" Style="{StaticResource Caption}" MaxLines="1" LineBreakMode="TailTruncation" VerticalOptions="Center" />
+                <Grid Grid.Column="1" InputTransparent="True">
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Progress}" Spacing="4" VerticalOptions="Center" HorizontalOptions="End" Opacity="0">
+                        <HorizontalStackLayout.Triggers>
+                            <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding ShowProgress}" Value="True">
+                                <Setter Property="Opacity" Value="1" />
+                            </DataTrigger>
+                        </HorizontalStackLayout.Triggers>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ProgressSegment">
+                                <BoxView Color="{Binding Color}" WidthRequest="{Binding Width}" HeightRequest="6" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+                    <Border BackgroundColor="{StaticResource PartyCyan}" StrokeThickness="0" Padding="10,2" VerticalOptions="Center" HorizontalOptions="End" Opacity="0">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding HasGuessTimer}" Value="True">
+                                <Setter Property="Opacity" Value="1" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="{Binding GuessTimerText}" FontFamily="{StaticResource FontExtraBold}" FontSize="15" TextColor="{StaticResource OnPrimary}" />
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                    <!-- Height template: the guessing title, on every screen. -->
+                    <Label Text="{x:Static res:AppResources.WhereTouched}" FontFamily="{StaticResource FontTitle}" FontSize="24" LineHeight="0.9"
+                           Opacity="0" InputTransparent="True" AutomationProperties.ExcludedWithChildren="True" />
+                    <Label Text="{Binding SubHeader}" Style="{StaticResource SubTitle}" IsVisible="{Binding IsDrawLayout}" VerticalOptions="Center" />
+                    <Label Text="{Binding SubHeader}" Style="{StaticResource SubTitle}" IsVisible="{Binding IsReveal}" MaxLines="1" LineBreakMode="TailTruncation"
+                           VerticalOptions="Center" />
                     <Label Text="{x:Static res:AppResources.WhereTouched}" FontFamily="{StaticResource FontTitle}" FontSize="24" LineHeight="0.9"
                            IsVisible="{Binding IsGuessLayout}" />
-                </VerticalStackLayout>
-                <HorizontalStackLayout Grid.Column="1" BindableLayout.ItemsSource="{Binding Progress}" Spacing="4" VerticalOptions="Start" Margin="0,12,0,0"
-                                       IsVisible="{Binding ShowProgress}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="vm:ProgressSegment">
-                            <BoxView Color="{Binding Color}" WidthRequest="{Binding Width}" HeightRequest="6" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </HorizontalStackLayout>
-                <Border Grid.Column="1" BackgroundColor="{StaticResource PartyCyan}" StrokeThickness="0" Padding="12,6" VerticalOptions="Start"
-                        IsVisible="{Binding HasGuessTimer}">
-                    <Label Text="{Binding GuessTimerText}" FontFamily="{StaticResource FontExtraBold}" FontSize="17" TextColor="{StaticResource OnPrimary}" />
-                </Border>
+                </Grid>
             </Grid>
 
-            <!-- 3D panel -->
+            <!-- 3D panel: the view fills it; texts lie over it (InputTransparent – gestures reach the model). -->
             <Border Grid.Row="1" Padding="0">
-                <Grid RowDefinitions="Auto,*,Auto">
+                <Grid>
+                    <controls:BodyView x:Name="Body" IsFramed="False" />
+
                     <!-- Draw: target -->
-                    <VerticalStackLayout Spacing="4" Padding="16,18,16,0" IsVisible="{Binding IsDraw}">
+                    <VerticalStackLayout x:Name="DrawInfo" Spacing="4" Padding="16,18,16,14" VerticalOptions="Start" InputTransparent="True" IsVisible="{Binding IsDraw}"
+                                         Background="{StaticResource TopScrim}">
                         <Label Text="{Binding TargetTitle}" FontFamily="{StaticResource FontBold}" FontSize="13" CharacterSpacing="1.5"
                                TextColor="{StaticResource Muted}" HorizontalTextAlignment="Center" />
                         <Label Text="{Binding TargetName}" Style="{StaticResource BigTitle}" FontSize="{Binding TargetNameSize}" TextColor="{StaticResource Primary}" IsVisible="{Binding ShowTargetHint, Converter={StaticResource Not}}" />
                         <Label Text="{x:Static res:AppResources.ChooseTargetHint}" FontFamily="{StaticResource FontBold}" FontSize="18" TextColor="{StaticResource Primary}"
                                HorizontalTextAlignment="Center" IsVisible="{Binding ShowTargetHint}" />
                     </VerticalStackLayout>
+
                     <!-- Reveal: distance, points, comment -->
-                    <VerticalStackLayout Spacing="6" Padding="16,18,16,0" IsVisible="{Binding IsReveal}">
+                    <VerticalStackLayout x:Name="RevealInfo" Spacing="6" Padding="16,18,16,14" VerticalOptions="Start" InputTransparent="True" IsVisible="{Binding IsReveal}"
+                                         Background="{StaticResource TopScrim}">
                         <HorizontalStackLayout Spacing="14" HorizontalOptions="Center">
                             <Label Text="{Binding DistanceText}" FontFamily="{StaticResource FontTitle}" FontSize="38" VerticalOptions="Center" />
                             <controls:PartyButton Text="{Binding PointsText}" ButtonHeight="34" FontSize="15" ShadowOffset="4" VerticalOptions="Center" InputTransparent="True" />
@@ -70,53 +103,63 @@
                         <Label Text="{Binding CommentText}" FontSize="14" TextColor="{StaticResource Muted}" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
 
-                    <controls:BodyView x:Name="Body" Grid.Row="1" IsFramed="False" />
-
-                    <!-- Reveal: legend -->
-                    <FlexLayout Grid.Row="2" Wrap="Wrap" JustifyContent="Center" Padding="12,0,12,10" IsVisible="{Binding IsReveal}">
-                        <HorizontalStackLayout Spacing="6" Margin="8,0,8,4">
-                            <Ellipse Fill="{StaticResource Pin}" WidthRequest="10" HeightRequest="10" VerticalOptions="Center" />
-                            <Label Text="{Binding LegendPin}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Spacing="6" Margin="8,0,8,4">
-                            <Ellipse Stroke="{StaticResource Primary}" StrokeThickness="2" WidthRequest="11" HeightRequest="11" VerticalOptions="Center" />
-                            <Label Text="{Binding LegendTarget}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                    </FlexLayout>
+                    <!-- Reveal: legend (in a stack: a FlexLayout alone reports the whole available height) -->
+                    <VerticalStackLayout x:Name="RevealLegend" VerticalOptions="End" InputTransparent="True" IsVisible="{Binding IsReveal}">
+                        <FlexLayout Wrap="Wrap" JustifyContent="Center" Padding="12,0,12,10">
+                            <HorizontalStackLayout Spacing="6" Margin="8,0,8,4">
+                                <Ellipse Fill="{StaticResource Pin}" WidthRequest="10" HeightRequest="10" VerticalOptions="Center" />
+                                <Label Text="{Binding LegendPin}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Spacing="6" Margin="8,0,8,4">
+                                <Ellipse Stroke="{StaticResource Primary}" StrokeThickness="2" WidthRequest="11" HeightRequest="11" VerticalOptions="Center" />
+                                <Label Text="{Binding LegendTarget}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </FlexLayout>
+                    </VerticalStackLayout>
                 </Grid>
             </Border>
 
-            <!-- Footer: Draw -->
-            <VerticalStackLayout Grid.Row="2" Spacing="12" IsVisible="{Binding IsDraw}">
-                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+            <!-- Footer: row 0 = info (tiles / pin / total), row 1 = the action button. -->
+            <Grid Grid.Row="2" RowDefinitions="Auto,Auto" RowSpacing="12">
+                <!-- Height template: the pin panel, on every screen (the result row takes the same height). -->
+                <Border Padding="0" Opacity="0" InputTransparent="True" AutomationProperties.ExcludedWithChildren="True">
+                    <Grid ColumnDefinitions="3,*,Auto">
+                        <VerticalStackLayout Grid.Column="1" Padding="16,10" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{x:Static res:AppResources.YourPin}" FontSize="13" MaxLines="1" />
+                            <Label Text="X" FontFamily="{StaticResource FontBold}" FontSize="15" MaxLines="1" LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Draw -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8" IsVisible="{Binding IsDrawLayout}">
                     <controls:InfoTile Caption="{x:Static res:AppResources.TileTouch}" Value="{Binding TouchText}" AccentColor="{StaticResource PartyPink}" />
                     <controls:InfoTile Grid.Column="1" Caption="{x:Static res:AppResources.TileMovement}" Value="{Binding MovementText}" AccentColor="{StaticResource PartyCyan}" />
                     <controls:InfoTile Grid.Column="2" Caption="{x:Static res:AppResources.TileTime}" Value="{Binding TimeText}" AccentColor="{StaticResource PartyViolet}" />
                 </Grid>
-                <controls:PartyButton Text="{x:Static res:AppResources.StartTouch}" Command="{Binding StartTouchCommand}" Margin="0,0,-5,-5" />
-            </VerticalStackLayout>
+                <controls:PartyButton Grid.Row="1" Text="{x:Static res:AppResources.StartTouch}" Command="{Binding StartTouchCommand}" Margin="0,0,-5,-5"
+                                      IsVisible="{Binding IsDrawLayout}" />
 
-            <!-- Footer: Guessing -->
-            <VerticalStackLayout Grid.Row="2" Spacing="12" IsVisible="{Binding IsGuessLayout}">
-                <Border Padding="0">
+                <!-- Guessing -->
+                <Border Padding="0" IsVisible="{Binding IsGuessLayout}">
                     <Grid ColumnDefinitions="3,*,Auto">
                         <BoxView Color="{StaticResource Pin}" />
-                        <VerticalStackLayout Grid.Column="1" Padding="16,10" Spacing="2">
-                            <Label Text="{x:Static res:AppResources.YourPin}" FontSize="13" TextColor="{StaticResource Muted}" />
-                            <Label Text="{Binding PinText}" FontFamily="{StaticResource FontBold}" FontSize="15" />
+                        <VerticalStackLayout Grid.Column="1" Padding="16,10" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{x:Static res:AppResources.YourPin}" FontSize="13" TextColor="{StaticResource Muted}" MaxLines="1" />
+                            <Label Text="{Binding PinText}" FontFamily="{StaticResource FontBold}" FontSize="15" MaxLines="1" LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                         <Label Grid.Column="2" Text="{x:Static res:AppResources.HoldToMove}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center"
-                               Margin="0,0,14,0" IsVisible="{Binding HasPin}" />
+                               Margin="0,0,14,0" MaxLines="2" IsVisible="{Binding HasPin}" />
                     </Grid>
                 </Border>
-                <controls:PartyButton Text="{x:Static res:AppResources.Confirm}" Command="{Binding ConfirmCommand}" Margin="0,0,-5,-5" />
-            </VerticalStackLayout>
+                <controls:PartyButton Grid.Row="1" Text="{x:Static res:AppResources.Confirm}" Command="{Binding ConfirmCommand}" Margin="0,0,-5,-5"
+                                      IsVisible="{Binding IsGuessLayout}" />
 
-            <!-- Footer: Reveal -->
-            <VerticalStackLayout Grid.Row="2" Spacing="12" IsVisible="{Binding IsReveal}">
-                <controls:AccentRow Caption="{Binding GuesserName}" Value="{Binding TotalText}" AccentColor="{StaticResource PartyCyan}" />
-                <controls:PartyButton Text="{Binding NextButtonText}" Command="{Binding NextRoundCommand}" Margin="0,0,-5,-5" />
-            </VerticalStackLayout>
+                <!-- Reveal -->
+                <controls:AccentRow Caption="{Binding GuesserName}" Value="{Binding TotalText}" AccentColor="{StaticResource PartyCyan}" IsVisible="{Binding IsReveal}" />
+                <controls:PartyButton Grid.Row="1" Text="{Binding NextButtonText}" Command="{Binding NextRoundCommand}" Margin="0,0,-5,-5"
+                                      IsVisible="{Binding IsReveal}" />
+            </Grid>
         </Grid>
 
         <!-- ============ Layer 2: opaque screens without the model ============ -->

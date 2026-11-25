@@ -53,7 +53,11 @@
                     </BoxView>
                     <Label Grid.Column="2" Text="{x:Static res:AppResources.LegendHits}" FontSize="12" TextColor="{StaticResource Muted}" VerticalOptions="Center" />
                 </Grid>
-                <Label Text="{Binding InfoText}" FontFamily="{StaticResource FontBold}" FontSize="14" />
+                <!-- Always two lines high (invisible template), so tapping a zone does not resize the 3D view. -->
+                <Grid>
+                    <Label Text="X&#10;X" FontFamily="{StaticResource FontBold}" FontSize="14" Opacity="0" InputTransparent="True" AutomationProperties.ExcludedWithChildren="True" />
+                    <Label Text="{Binding InfoText}" FontFamily="{StaticResource FontBold}" FontSize="14" MaxLines="2" LineBreakMode="TailTruncation" />
+                </Grid>
             </VerticalStackLayout>
 
             <Border Grid.Row="5" Padding="0">

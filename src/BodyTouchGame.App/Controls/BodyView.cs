@@ -24,6 +24,11 @@ public sealed class BodyView : ContentView
     private readonly Border _frame;
     private readonly HybridWebView _webView;
     private readonly View[] _overlays;
+    private readonly View _hint;
+    private readonly View _zoom;
+    private readonly View _views;
+    private double _contentTop;
+    private double _contentBottom;
     private readonly Dictionary<string, Button> _viewButtons = [];
     private readonly TaskCompletionSource<ModelLoadedResult?> _modelLoaded = new(TaskCreationOptions.RunContinuationsAsynchronously);
     private bool _sideIsLeft = true;
@@ -82,6 +87,7 @@ public sealed class BodyView : ContentView
         };
         SelectView("Front");
 
+        (_hint, _zoom, _views) = (hint, zoom, views);
         _overlays = [hint, zoom, views];
         _frame = new Border
         {
@@ -105,12 +111,48 @@ public sealed class BodyView : ContentView
     /// <summary>Height of the bottom overlay (view buttons + margins), kept free when framing the model.</summary>
     private const double BottomOverlayHeight = 44 + 14 + 8;
 
+    /// <summary>
+    /// Native content laid over the top / bottom of the view (e.g. the target name or the result above the model).
+    /// The view keeps its size – only the camera controls move and the model glides into the free area – so the
+    /// picture never jumps when a screen with such content appears (owner's remark after stage 11).
+    /// </summary>
+    public void SetContentInsets(double top, double bottom)
+    {
+        top = Math.Max(0, Math.Round(top));
+        bottom = Math.Max(0, Math.Round(bottom));
+        if (top == _contentTop && bottom == _contentBottom) return;
+        (_contentTop, _contentBottom) = (top, bottom);
+        _hint.Margin = new Thickness(14, 18 + top, 0, 0);
+        // Under a text over the view the hint would sit on the model's head; it stays where the view is bare.
+        _hint.IsVisible = ShowCameraControls && top == 0;
+        _zoom.Margin = new Thickness(0, 14 + top, 12, 0);
+        _views.Margin = new Thickness(0, 0, 0, 14 + bottom);
+        if (_modelLoaded.Task.IsCompleted) PushInsets();
+    }
+
+    private async void PushInsets()
+    {
+        try
+        {
+            await ApplyInsetsAsync(animate: true);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[BTG] view insets failed: {e.Message}");
+        }
+    }
+
+    private Task ApplyInsetsAsync(bool animate) =>
+        Bridge.SetViewInsetsAsync(_contentTop, _contentBottom + (ShowCameraControls ? BottomOverlayHeight : 0), animate);
+
     private async Task LoadModelAsync()
     {
         try
         {
-            await Bridge.SetViewInsetsAsync(0, ShowCameraControls ? BottomOverlayHeight : 0);
-            _modelLoaded.TrySetResult(await Bridge.LoadModelAsync(DefaultModelUrl));
+            await ApplyInsetsAsync(animate: false);
+            var result = await Bridge.LoadModelAsync(DefaultModelUrl);
+            await ApplyInsetsAsync(animate: false);   // insets set while the model was loading
+            _modelLoaded.TrySetResult(result);
         }
         catch (Exception e)
         {
@@ -122,6 +164,7 @@ public sealed class BodyView : ContentView
     private void SetControlsVisible(bool visible)
     {
         foreach (var overlay in _overlays) overlay.IsVisible = visible;
+        _hint.IsVisible = visible && _contentTop == 0;
     }
 
     private static Button ToolButton(string text, string description, Func<Task> action)

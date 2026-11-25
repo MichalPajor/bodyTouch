@@ -12,6 +12,25 @@ public partial class GamePage : ContentPage
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
         viewModel.ConfettiRequested += (_, _) => Confetti.Play();
+
+        // Texts over the 3D view: the model is framed in the area they leave free (the view itself keeps its size).
+        DrawInfo.SizeChanged += (_, _) => UpdateBodyInsets();
+        RevealInfo.SizeChanged += (_, _) => UpdateBodyInsets();
+        RevealLegend.SizeChanged += (_, _) => UpdateBodyInsets();
+        viewModel.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(GameViewModel.State)) UpdateBodyInsets();
+        };
+    }
+
+    /// <summary>Bottom part of the text blocks' scrim that fades out; the model may reach under it.</summary>
+    private const double ScrimFade = 10;
+
+    private void UpdateBodyInsets()
+    {
+        var top = _viewModel.IsDraw ? DrawInfo.Height - ScrimFade : _viewModel.IsReveal ? RevealInfo.Height - ScrimFade : 0;
+        var bottom = _viewModel.IsReveal ? RevealLegend.Height : 0;
+        Body.SetContentInsets(Math.Max(0, top), Math.Max(0, bottom));
     }
 
     protected override async void OnAppearing()

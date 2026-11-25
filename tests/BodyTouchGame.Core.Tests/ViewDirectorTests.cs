@@ -120,6 +120,21 @@ public class ViewDirectorTests
     }
 
     [Fact]
+    public void WhoIsNextResetsTheCameraBehindTheScreen()
+    {
+        var (session, _, _) = TestData.Session(TestData.Config(), [TestData.Ola, TestData.Kuba]);
+        session.Start();
+        Assert.Equal(GameState.WhoIsNext, session.State);
+
+        var commands = ViewDirector.For(session);
+
+        Assert.IsType<ClearTarget>(commands[0]);
+        Assert.Contains(new ClearPin(), commands);
+        Assert.Contains(new ResetCamera("Front"), commands);
+        Assert.Contains(new SetViewMode(ViewMode.View), commands);
+    }
+
+    [Fact]
     public void DrawFocusesTheTargetAndRevealShowsTheResult()
     {
         var (session, clock, _) = TestData.Session(TestData.Config(), [TestData.Ola, TestData.Kuba]);

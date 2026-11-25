@@ -68,6 +68,10 @@ public static class ViewDirector
             // no pin), so nothing jumps when the guesser's screen appears (owner's remark after stage 8).
             GameState.Touching or GameState.Curtain =>
                 [new ClearTarget(), new ClearPin(), new ResetCamera("Front"), new SetViewMode(ViewMode.View)],
+            // Behind "Kto teraz" the camera returns to the front view (from the result's pose), so every draw starts its
+            // turn to the target from the same place and nothing moves when the screen appears.
+            GameState.WhoIsNext =>
+                [new ClearTarget(), new ClearPin(), new ResetCamera("Front"), new SetViewMode(ViewMode.View)],
             _ => [new ClearTarget(), new ClearPin(), new SetViewMode(ViewMode.View)],
         };
     }

@@ -71,9 +71,11 @@ public sealed class BodyViewBridge
 
     public Task ZoomByAsync(double factor) => Invoke("bodyView.zoomBy", [factor], [BridgeJsonContext.Default.Double]);
 
-    /// <summary>CSS pixels covered by native overlays at the top / bottom; the model is framed between them.</summary>
-    public Task SetViewInsetsAsync(double top, double bottom) =>
-        Invoke("bodyView.setViewInsets", [top, bottom], [BridgeJsonContext.Default.Double, BridgeJsonContext.Default.Double]);
+    /// <summary>CSS pixels covered by native overlays at the top / bottom; the model is framed between them.
+    /// <paramref name="animate"/>: the picture glides to the new framing instead of jumping.</summary>
+    public Task SetViewInsetsAsync(double top, double bottom, bool animate = false) =>
+        Invoke("bodyView.setViewInsets", [top, bottom, animate],
+            [BridgeJsonContext.Default.Double, BridgeJsonContext.Default.Double, BridgeJsonContext.Default.Boolean]);
 
     /// <summary>Diagnostic FPS counter in the page (hidden by default).</summary>
     public Task SetStatsVisibleAsync(bool visible) => Invoke("bodyView.setStatsVisible", [visible], [BridgeJsonContext.Default.Boolean]);

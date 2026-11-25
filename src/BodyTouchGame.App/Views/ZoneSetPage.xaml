@@ -5,8 +5,12 @@
              xmlns:controls="clr-namespace:BodyTouchGame.App.Controls"
              xmlns:vm="clr-namespace:BodyTouchGame.App.ViewModels"
              xmlns:res="clr-namespace:BodyTouchGame.App.Resources.Strings"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="BodyTouchGame.App.Views.ZoneSetPage"
              x:DataType="vm:ZoneSetViewModel">
+    <ContentPage.Resources>
+        <toolkit:InvertedBoolConverter x:Key="Not" />
+    </ContentPage.Resources>
     <Grid>
         <controls:ConfettiBackground />
 
@@ -42,7 +46,13 @@
             <controls:BodyView x:Name="Body" Grid.Row="2" />
 
             <VerticalStackLayout Grid.Row="3" Spacing="8">
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{Binding HasManual}">
+                <!-- Always laid out (shown with Opacity), so tapping a zone on the model does not resize the 3D view. -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Opacity="0" InputTransparent="{Binding HasManual, Converter={StaticResource Not}}">
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding HasManual}" Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Grid.Triggers>
                     <Label Text="{Binding ManualText}" FontSize="13" TextColor="{StaticResource PartyCyan}" MaxLines="2" LineBreakMode="TailTruncation" VerticalOptions="Center" />
                     <Button Grid.Column="1" Text="{x:Static res:AppResources.ClearManual}" HeightRequest="40" MinimumHeightRequest="40" Command="{Binding ClearManualCommand}" />
                 </Grid>
