@@ -32,8 +32,8 @@
 		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<!-- API 23 (Android 6.0): required by Google Mobile Ads / Play Billing (stage 11). -->
-		<SupportedOSPlatformVersion>23.0</SupportedOSPlatformVersion>
+		<!-- API 24 (Android 7.0): the minimum Google Play accepts for new apps (Google Mobile Ads / Play Billing need 23). -->
+		<SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
