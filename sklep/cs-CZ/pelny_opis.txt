@@ -1,0 +1,27 @@
+Zakryj oči. Dotkni se. Hádej.
+
+Body Touch Game je společenská hra pro 2–8 lidí na jednom telefonu. Jeden hráč je model, druhý hádá. Model vidí na displeji náhodně vylosované místo na těle a dovede tam ruku hádajícího, který má zakryté oči. Potom hádající umístí špendlík na 3D model do místa doteku. Zní to jednoduše? Překvapí tě, jak těžké je se zavřenýma očima rozeznat loket od předloktí!
+
+JAK TO FUNGUJE
+• Model vidí cíl, hádající si zakryje oči
+• Dotek – přesně tak a tak dlouho, jak ukazuje telefon
+• Hádající umístí špendlík na 3D model, který lze otáčet a přibližovat
+• Aplikace měří vzdálenost po povrchu těla – čím blíž, tím víc bodů. Přesný zásah znamená 100 bodů a konfety!
+
+CO HRA NABÍZÍ
+• Realistický 3D model těla – otáčení prstem, přiblížení, pohled zepředu, z boku i zezadu
+• Čtyři herní režimy: Snadný, Střední, Těžký a Hardcore – od velkých oblastí těla po malé body
+• Způsob doteku: celá dlaň, dva prsty, jeden prst nebo ťuknutí; doba doteku 5 až 30 sekund
+• Cíl vylosovaný nebo zvolený modelem
+• Každý s každým – dvojice se střídají automaticky
+• Profily hráčů, žebříčky, statistiky a tepelná mapa zásahů i omylů
+• Vyloučené zóny – každý může vypnout místa, která ve hře nechce
+• Editor zón a vlastní body na těle
+• Animovaný návod
+• 12 jazyků, hra funguje bez internetu
+
+Hra je zdarma a mezi koly zobrazuje reklamy na celou obrazovku (nejvýš jednou za několik kol). Jednorázový nákup „Odstranit reklamy“ je vypne navždy.
+
+Ideální na párty, večery s přáteli i teambuildingy. Hrajte s respektem k hranicím každého.
+
+Dostupné v češtině, angličtině, polštině, němčině, italštině, francouzštině, španělštině, portugalštině, turečtině, slovenštině, ukrajinštině a nizozemštině.

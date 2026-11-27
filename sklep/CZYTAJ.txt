@@ -1,0 +1,27 @@
+Materiały do karty sklepu Google Play – Body Touch Game
+
+<język>/   nazwa.txt (max 30 znaków), krotki_opis.txt (max 80), pelny_opis.txt (max 4000)
+           Nazwy katalogów to kody języków z Play Console:
+           en-US  angielski (Stany Zjednoczone) – język domyślny karty
+           pl-PL  polski
+           de-DE  niemiecki
+           it-IT  włoski
+           fr-FR  francuski
+           es-ES  hiszpański (Hiszpania)
+           pt-BR  portugalski (Brazylia)
+           tr-TR  turecki
+           cs-CZ  czeski
+           sk     słowacki
+           uk     ukraiński
+           nl-NL  niderlandzki
+
+           Teksty używają tych samych nazw co aplikacja (tryby Łatwy/Średni/Trudny/Hardcore, rodzaje
+           dotyku, „Usuń reklamy”) i zgadzają się z polityką prywatności
+           (https://michalpajor.github.io/bodytouchgame/) – reklamy AdMob między rundami, jednorazowy
+           zakup usuwający reklamy, dane graczy tylko na telefonie.
+
+screens/   zrzuty ekranu i grafiki do karty sklepu (wymagania w screens/CZYTAJ.txt)
+
+Jak wgrać teksty: Play Console → Rozwój → Obecność w sklepie → Główna strona aplikacji w Google Play.
+Najpierw uzupełnij język domyślny (en-US), potem „Zarządzaj tłumaczeniami” → „Dodaj własne
+tłumaczenia” i dla każdego języka wklej trzy pliki z jego katalogu.
