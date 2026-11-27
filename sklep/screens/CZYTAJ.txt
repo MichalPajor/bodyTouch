@@ -1,0 +1,21 @@
+Grafiki do karty sklepu Google Play – Body Touch Game
+
+Nazwy plików: <język>-<numer>.png
+  <język>-baner.png           grafika promocyjna 1024 x 500 (pole „Grafika promocyjna”)
+  <język>-01 … 03.png         zrzuty promocyjne z hasłem i ramką telefonu, 1080 x 1920
+  <język>-04 … 08.png         zwykłe zrzuty z aplikacji, 1080 x 1920
+                              04 start · 05 „Kto teraz” · 06 odliczanie dotyku · 07 podsumowanie gry · 08 ustawienia gry
+  <język>-tablet-01 … 03.png  zrzuty z tabletu 10", 1600 x 2560 (pasują też do pola „tablet 7"”)
+                              01 losowanie · 02 wynik rundy · 03 podsumowanie
+
+Kody języków w nazwach → katalog z tekstami / język w Play Console:
+  pl → pl-PL   en → en-US   de → de-DE   it → it-IT   fr → fr-FR   es → es-ES
+  pt → pt-BR   tr → tr-TR   cs → cs-CZ   sk → sk      uk → uk      nl → nl-NL
+
+Zrzuty telefonu wgrywaj w kolejności numerów (01–08), tabletu 01–03.
+
+Wymagania Google Play: ikona 512 x 512 PNG; grafika promocyjna 1024 x 500; zrzuty: 2–8 sztuk, PNG/JPEG,
+dłuższy bok najwyżej 2 razy dłuższy od krótszego.
+
+Grafiki generuje skrypt tools/store/promo.py ze zrzutów zebranych przez tools/store/capture.py (emulator).
+Katalog jest w gicie dzięki wyjątkowi „!sklep/screens/” w .gitignore (pozostałe katalogi screens/ zostają lokalnie).

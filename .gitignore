@@ -43,3 +43,5 @@ screens/
 # ...except the pages that are application code: the 3D view and the animated tutorial
 !src/BodyTouchGame.App/Resources/Raw/wwwroot/index.html
 !src/BodyTouchGame.App/Resources/Raw/tutorial/tutorial.html
+# ...and the Google Play store listing graphics
+!sklep/screens/
